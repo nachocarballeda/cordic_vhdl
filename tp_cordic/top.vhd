@@ -48,7 +48,7 @@ architecture top_level_arq of top_level is
 			);
 	end component;
 	
-		component uart
+	component uart
 		generic(F: natural; min_baud: natural; num_data_bits: natural);
 		port(
 			Rx: in std_logic;
@@ -64,7 +64,22 @@ architecture top_level_arq of top_level is
 			rst: in std_logic
 		);
 	end component;
-
+	
+	component dpram is
+	generic (
+		BYTES_WIDTH : natural := 1; -- Ancho de palabra de la memoria medido en bytes
+		ADDR_BITS : natural := 8 -- Cantidad de bits de address (tamaño de la memoria es 2^ADDRS_BITS
+	);
+	port (
+		rst : in std_logic;
+		clk : in std_logic;
+		data_wr : in std_logic_vector(BYTES_WIDTH*8-1 downto 0);
+		addr_wr : in std_logic_vector(ADDR_BITS-1 downto 0);
+		ena_wr : in std_logic;
+		addr_rd : in std_logic_vector(ADDR_BITS-1 downto 0);
+		data_rd : out std_logic_vector(BYTES_WIDTH*8-1 downto 0)
+	);
+	end component;
 	
 ---------------------------------------------------------
 
@@ -76,16 +91,14 @@ architecture top_level_arq of top_level is
 	constant LINES_TO_RECEIVE: natural := 11946;
     constant BYTES_TO_RECEIVE: natural := 3*LINES_TO_RECEIVE;
 	constant COORDS_WIDTH: natural := 8;
+	-- Dual Port RAM
+	constant ADDR_BITS: natural := 8;
+	constant BYTES_WIDTH: natural := 8;
 
 -- Variables auxiliares para pasar datos a las funciones --
 
 	signal aux_pixel_x_i: std_logic_vector(9 downto 0) := "0000000000";
 	signal aux_pixel_y_i: std_logic_vector(9 downto 0) := "0000000000";
-	
-	-- para printer villero
-	signal red_enable_tl: std_logic := '0';
-	signal green_enable_tl: std_logic := '0';
-	signal blue_enable_tl: std_logic := '0';
 
     -- Utilizada para entender si estamos leyendo un valor de X, Y o Z (de RAM)
     signal xyz_selector_current, xyz_selector_next: natural := 0;
@@ -113,6 +126,13 @@ architecture top_level_arq of top_level is
     signal address_in: std_logic_vector(ADDRESS_WIDTH-1 downto 0) := (others => '0');
     signal data_out: std_logic_vector(DATA_WIDTH-1 downto 0);
 
+	-- Dual Port RAM (for video)
+	signal vram_data_wr : in std_logic_vector(BYTES_WIDTH*8-1 downto 0);
+	signal vram_addr_wr : in std_logic_vector(ADDR_BITS-1 downto 0);
+	signal vram_ena_wr : in std_logic;
+	signal vram_addr_rd : in std_logic_vector(ADDR_BITS-1 downto 0);
+	signal vram_data_rd : out std_logic_vector(BYTES_WIDTH*8-1 downto 0);
+		
     -- State Machine
     type state_t is (initial_state, waiting_for_uart, waiting_for_sram,
     reading_from_uart, write_sram, uart_end_data_reception, idle, print);
@@ -207,16 +227,6 @@ begin
         end case;
     end process;
 	
-	-- print villero, agarra coordenadas y manda pixeles donde se le canta
-    process(clk)
-    begin
-		if (aux_pixel_x_i = x_coord_current) then -- esto no va a darse nunca, y si se da es casualidad, por cada coordenada, deberiamos chechear en TODOS los pixeles si es que coincide, debemos hacer un driver para graficar...
-			red_enable_tl <= '1';
-		else
-			red_enable_tl <= '0';
-		end if;
-	end process;
-	
 ---Instancias de las funciones utilizadas en la entity---
 
 	-- VGA	
@@ -271,5 +281,20 @@ begin
 		clk	=> clk,
 		rst	=> rst
 	);
-
+	
+	DUT: dpram
+	generic map(
+		BYTES_WIDTH => BYTES_WIDTH,
+		ADDR_BITS => ADDR_BITS
+	)
+	port map(
+		rst => vram_rst,
+		clk => clk,
+		data_wr => vram_data_wr,
+		addr_wr => vram_addr_wr,
+		ena_wr  => vram_ena_wr,
+		data_rd => vram_data_rd,
+		addr_rd => vram_addr_rd
+	);
+	
 end top_level_arq;

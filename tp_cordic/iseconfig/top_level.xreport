@@ -1,11 +1,11 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <report-views version="2.0" >
  <header>
-  <DateModified>2020-07-19T21:38:53</DateModified>
+  <DateModified>2020-07-20T16:31:50</DateModified>
   <ModuleName>top_level</ModuleName>
-  <SummaryTimeStamp>2020-07-18T14:16:14</SummaryTimeStamp>
-  <SavedFilePath>/home/ignatius/Documents/fiuba/SistemasDigitales/tp_cordic_carballeda/tp_cordic/iseconfig/top_level.xreport</SavedFilePath>
-  <ImplementationReportsDirectory>/home/ignatius/Documents/fiuba/SistemasDigitales/tp_cordic_carballeda/tp_cordic/</ImplementationReportsDirectory>
+  <SummaryTimeStamp>2020-07-20T16:19:28</SummaryTimeStamp>
+  <SavedFilePath>/home/ignatius/Documents/repos/cordic_vhdl/tp_cordic/iseconfig/top_level.xreport</SavedFilePath>
+  <ImplementationReportsDirectory>/home/ignatius/Documents/repos/cordic_vhdl/tp_cordic/</ImplementationReportsDirectory>
   <DateInitialized>2020-07-11T19:05:22</DateInitialized>
   <EnableMessageFiltering>false</EnableMessageFiltering>
  </header>

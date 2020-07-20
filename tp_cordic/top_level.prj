@@ -1,8 +1,0 @@
-vhdl work "ipcore_dir/RAM.vhd"
-vhdl work "../../mis_viejos_tps/tul1-sistemas-digitales-708d9dac95a2/TP4/UART/uart_comps.vhd"
-vhdl work "../../mis_viejos_tps/tul1-sistemas-digitales-708d9dac95a2/TP4/UART/transmit.vhd"
-vhdl work "../../mis_viejos_tps/tul1-sistemas-digitales-708d9dac95a2/TP4/UART/timing.vhd"
-vhdl work "../../mis_viejos_tps/tul1-sistemas-digitales-708d9dac95a2/TP4/UART/receive.vhd"
-vhdl work "remote_sources/_/_/_/mis_viejos_tps/tul1-sistemas-digitales-708d9dac95a2/TP2/src/VGA/VGActrl.vhd"
-vhdl work "../../mis_viejos_tps/tul1-sistemas-digitales-708d9dac95a2/TP4/UART/uart.vhd"
-vhdl work "top.vhd"
