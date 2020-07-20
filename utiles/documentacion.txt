@@ -1,0 +1,11 @@
+Los datos de las cordenadas fueron diezmados por falta de memoria RAM
+
+https://docs.google.com/spreadsheets/d/1usu_TmCv6TyuslaKKAZI-0isHwiCOiuQOFLVMixh2tU/edit#gid=1090742701
+
+2987 lineas de 3 coords , cada una de 16 bits, es decir necesitamos una memoria de 
+16*3*2987 bits = 143376 bits = approx 18 KBytes 
+
+generamos una RAM con el Ip Core generator de width 10 bits, depth 3*2987 = 8961
+
+
+

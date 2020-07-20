@@ -1,0 +1,25 @@
+//! **************************************************************************
+// Written by: Map P.20131013 on Sat Jul 18 23:37:03 2020
+//! **************************************************************************
+
+SCHEMATIC START;
+COMP "rx" LOCATE = SITE "P75" LEVEL 1;
+COMP "tx" LOCATE = SITE "P76" LEVEL 1;
+COMP "clk" LOCATE = SITE "P184" LEVEL 1;
+COMP "red_out_tl<0>" LOCATE = SITE "P96" LEVEL 1;
+COMP "red_out_tl<1>" LOCATE = SITE "P98" LEVEL 1;
+COMP "red_out_tl<2>" LOCATE = SITE "P100" LEVEL 1;
+COMP "grn_out_tl<0>" LOCATE = SITE "P106" LEVEL 1;
+COMP "grn_out_tl<1>" LOCATE = SITE "P108" LEVEL 1;
+COMP "grn_out_tl<2>" LOCATE = SITE "P102" LEVEL 1;
+COMP "hs_tl" LOCATE = SITE "P115" LEVEL 1;
+COMP "vs_tl" LOCATE = SITE "P113" LEVEL 1;
+COMP "led<0>" LOCATE = SITE "P68" LEVEL 1;
+COMP "led<1>" LOCATE = SITE "P78" LEVEL 1;
+COMP "led<2>" LOCATE = SITE "P83" LEVEL 1;
+COMP "led<3>" LOCATE = SITE "P89" LEVEL 1;
+COMP "blu_out_tl<0>" LOCATE = SITE "P94" LEVEL 1;
+COMP "blu_out_tl<1>" LOCATE = SITE "P97" LEVEL 1;
+NET "clk_BUFGP/IBUFG" BEL "clk_BUFGP/BUFG.GCLKMUX" USELOCALCONNECT;
+SCHEMATIC END;
+

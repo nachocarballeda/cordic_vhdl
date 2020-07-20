@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- IMPORTANT: This is an internal file that has been generated   -->
+<!--     by the Xilinx ISE software.  Any direct editing or        -->
+<!--     changes made to this file may result in unpredictable     -->
+<!--     behavior or data corruption.  It is strongly advised that -->
+<!--     users do not edit the contents of this file.              -->
+<!--                                                               -->
+<!-- Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.    -->
+
+<messages>
+<msg type="info" file="ProjectMgmt" num="1061" ><arg fmt="%s" index="1">Parsing VHDL file &quot;/home/ignatius/Documents/fiuba/SistemasDigitales/mis_viejos_tps/tul1-sistemas-digitales-708d9dac95a2/TP4/UART/receive.vhd&quot; into library work</arg>
+</msg>
+
+<msg type="info" file="ProjectMgmt" num="1061" ><arg fmt="%s" index="1">Parsing VHDL file &quot;/home/ignatius/Documents/fiuba/SistemasDigitales/mis_viejos_tps/tul1-sistemas-digitales-708d9dac95a2/TP4/UART/timing.vhd&quot; into library work</arg>
+</msg>
+
+<msg type="info" file="ProjectMgmt" num="1061" ><arg fmt="%s" index="1">Parsing VHDL file &quot;/home/ignatius/Documents/fiuba/SistemasDigitales/mis_viejos_tps/tul1-sistemas-digitales-708d9dac95a2/TP4/UART/transmit.vhd&quot; into library work</arg>
+</msg>
+
+<msg type="info" file="ProjectMgmt" num="1061" ><arg fmt="%s" index="1">Parsing VHDL file &quot;/home/ignatius/Documents/fiuba/SistemasDigitales/mis_viejos_tps/tul1-sistemas-digitales-708d9dac95a2/TP4/UART/uart.vhd&quot; into library work</arg>
+</msg>
+
+<msg type="info" file="ProjectMgmt" num="1061" ><arg fmt="%s" index="1">Parsing VHDL file &quot;/home/ignatius/Documents/fiuba/SistemasDigitales/mis_viejos_tps/tul1-sistemas-digitales-708d9dac95a2/TP4/UART/uart_comps.vhd&quot; into library work</arg>
+</msg>
+
+<msg type="info" file="ProjectMgmt" num="1061" ><arg fmt="%s" index="1">Parsing VHDL file &quot;/home/ignatius/Documents/fiuba/SistemasDigitales/tp_cordic_carballeda/tp_cordic/remote_sources/_/_/_/mis_viejos_tps/tul1-sistemas-digitales-708d9dac95a2/TP2/src/VGA/VGActrl.vhd&quot; into library work</arg>
+</msg>
+
+<msg type="info" file="ProjectMgmt" num="1061" ><arg fmt="%s" index="1">Parsing VHDL file &quot;/home/ignatius/Documents/fiuba/SistemasDigitales/tp_cordic_carballeda/tp_cordic/top.vhd&quot; into library work</arg>
+</msg>
+
+</messages>
+
