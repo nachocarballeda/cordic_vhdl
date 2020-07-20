@@ -8,3 +8,8 @@ Lang: VHDL
 IDE: Xilinx 14.7
 
 
+Uso:
+
+1) Conectar conversor serie
+2) Ejecutar coord loader (python program in utils)
+3) Presionar botones para rotar la figura en la pantalla
