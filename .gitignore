@@ -19,4 +19,7 @@ top_level_guide.ncd
 *.html
 *.xreport
 xmsgs
+tp_cordic/top_level_guide.ncd
+tp_cordic/top_level_summary.html
+tp_cordic/tp_cordic.gise
 

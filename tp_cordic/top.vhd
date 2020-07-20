@@ -15,7 +15,7 @@ entity top_level is
 		-- UART
 		rx_tl :	in std_logic;
 		tx_tl :	out std_logic;
-		-- CORE LEDS
+		-- LEDS
 		led_tl: out std_logic_vector(3 downto 0)
 		);
 end entity;
@@ -43,7 +43,7 @@ architecture top_level_arq of top_level is
 			);
 	end component;
 	
-	component uart
+	component uart is
 		generic(F: natural; min_baud: natural; num_data_bits: natural);
 		port(
 			Rx: in std_logic;
@@ -232,7 +232,7 @@ begin
 ---Instancias de las funciones utilizadas en la entity---
 
 	-- VGA	
-	VGA_control : vga_ctrl
+	vga_control : vga_ctrl
 	port map(
 			mclk => clk_tl,
 			hs => hs_tl,
@@ -264,7 +264,7 @@ begin
 	address_in <= std_logic_vector(to_unsigned(address_current, ADDRESS_WIDTH));
 	
 	-- UART Instanciation :
-	UUT : uart
+	uart_load_data : uart
 	generic map (
 		F 	=> 50000,
 		min_baud => 1200,
@@ -284,7 +284,7 @@ begin
 		rst	=> rst_tl
 	);
 	
-	DPRAM_VRAM: dpram
+	dpram_vram : dpram
 	generic map(
 		BYTES_WIDTH => DPRAM_BYTES_WIDTH,
 		ADDR_BITS => DPRAM_ADDR_BITS
