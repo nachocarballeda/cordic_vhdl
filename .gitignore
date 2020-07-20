@@ -1,4 +1,5 @@
 *.ncd
+top_level_guide.ncd
 *.wdb
 *.xml
 *.ini
