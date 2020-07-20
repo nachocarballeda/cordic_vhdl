@@ -5,7 +5,7 @@ use IEEE.NUMERIC_STD.all;
 entity top_level is
 	port(
 		-- VGA
-		clk, enable, rst:	in std_logic;
+		clk_tl, enable_tl, rst_tl:	in std_logic;
 		hs_tl, vs_tl:	out std_logic;
 		pixel_row_tl:	out std_logic_vector(9 downto 0);
 		pixel_col_tl:	out std_logic_vector(9 downto 0);
@@ -13,15 +13,10 @@ entity top_level is
 		grn_out_tl:	out std_logic_vector(2 downto 0);
 		blu_out_tl:	out std_logic_vector(1 downto 0);
 		-- UART
-		rx :	in std_logic;
-		tx :	out std_logic;
-		-- RAM
-		wea :	in std_logic_vector(0 downto 0);		-- RAM write enable 
-		addra :	in std_logic_vector(13 downto 0); 		-- RAM Address
-		dina :	in std_logic_vector(7 downto 0);		-- RAM Data In
-		douta :	out std_logic_vector(7 downto 0);		-- RAM Data Oout
+		rx_tl :	in std_logic;
+		tx_tl :	out std_logic;
 		-- CORE LEDS
-		led: out std_logic_vector(3 downto 0)
+		led_tl: out std_logic_vector(3 downto 0)
 		);
 end entity;
 
@@ -84,6 +79,7 @@ architecture top_level_arq of top_level is
 ---------------------------------------------------------
 
 -- Constantes a utilizar --
+	-- RAM Single Port
 	constant DATA_WIDTH: integer := 8;
 	constant ADDRESS_WIDTH: integer := 14;
 	constant CYCLES_TO_WAIT: integer := 4000;
@@ -92,8 +88,8 @@ architecture top_level_arq of top_level is
     constant BYTES_TO_RECEIVE: natural := 3*LINES_TO_RECEIVE;
 	constant COORDS_WIDTH: natural := 8;
 	-- Dual Port RAM
-	constant ADDR_BITS: natural := 8;
-	constant BYTES_WIDTH: natural := 8;
+	constant DPRAM_ADDR_BITS: natural := 8;
+	constant DPRAM_BYTES_WIDTH: natural := 8;
 
 -- Variables auxiliares para pasar datos a las funciones --
 
@@ -103,12 +99,17 @@ architecture top_level_arq of top_level is
     -- Utilizada para entender si estamos leyendo un valor de X, Y o Z (de RAM)
     signal xyz_selector_current, xyz_selector_next: natural := 0;
 	
+	-- VGA
+	signal blue_enable: std_logic;
+	signal red_enable: std_logic;
+	signal green_enable: std_logic;
+	
 	-- Coordenadas
     signal x_coord_current, x_coord_next: std_logic_vector(COORDS_WIDTH-1 downto 0) := (others => '0');
     signal y_coord_current, y_coord_next: std_logic_vector(COORDS_WIDTH-1 downto 0) := (others => '0');
     signal z_coord_current, z_coord_next: std_logic_vector(COORDS_WIDTH-1 downto 0) := (others => '0');
 	
-	-- LEDS del CORE
+	-- LEDS
 	signal led_aux: std_logic_vector(3 downto 0) := "0000";
 	
 	-- UART
@@ -127,11 +128,12 @@ architecture top_level_arq of top_level is
     signal data_out: std_logic_vector(DATA_WIDTH-1 downto 0);
 
 	-- Dual Port RAM (for video)
-	signal vram_data_wr : in std_logic_vector(BYTES_WIDTH*8-1 downto 0);
-	signal vram_addr_wr : in std_logic_vector(ADDR_BITS-1 downto 0);
-	signal vram_ena_wr : in std_logic;
-	signal vram_addr_rd : in std_logic_vector(ADDR_BITS-1 downto 0);
-	signal vram_data_rd : out std_logic_vector(BYTES_WIDTH*8-1 downto 0);
+	signal vram_rst : std_logic;
+	signal vram_data_wr : std_logic_vector(DPRAM_BYTES_WIDTH*8-1 downto 0);
+	signal vram_addr_wr : std_logic_vector(DPRAM_ADDR_BITS-1 downto 0);
+	signal vram_ena_wr : std_logic;
+	signal vram_addr_rd : std_logic_vector(DPRAM_ADDR_BITS-1 downto 0);
+	signal vram_data_rd : std_logic_vector(DPRAM_BYTES_WIDTH*8-1 downto 0);
 		
     -- State Machine
     type state_t is (initial_state, waiting_for_uart, waiting_for_sram,
@@ -149,9 +151,9 @@ architecture top_level_arq of top_level is
 
 begin
   -- Update state & data registers
-    process(clk)
+    process(clk_tl)
     begin
-    if (clk'event and clk='1') then
+    if (clk_tl'event and clk_tl='1') then
         state_current <= state_next;
         address_current <= address_next;
         rw_current <= rw_next;
@@ -164,7 +166,7 @@ begin
 
   -- next state logic
     process(r_data, address_current, state_current, rw_current, xyz_selector_current,
-    data_in_current, address_current, cycles_current, rst, bytes_received_current)
+    data_in_current, address_current, cycles_current, rst_tl, bytes_received_current)
     begin
         -- default values
         rw_next <= rw_current;
@@ -232,27 +234,27 @@ begin
 	-- VGA	
 	VGA_control : vga_ctrl
 	port map(
-			mclk => clk,
+			mclk => clk_tl,
 			hs => hs_tl,
 			vs => vs_tl,
 			red_o => red_out_tl,
 			grn_o => grn_out_tl,
 			blu_o => blu_out_tl,
-			red_i => red_enable_tl,
-			grn_i => green_enable_tl,
-			blu_i => blue_enable_tl,
+			red_i => red_enable,
+			grn_i => green_enable,
+			blu_i => blue_enable,
 			pixel_row => aux_pixel_y_i,
 			pixel_col => aux_pixel_x_i
 			);
 	
 	
 	-- LEDS
-	led <= not led_aux;
+	led_tl <= not led_aux;
 	
 	-- RAM
 	ram_internal : RAM
 	port map (
-		clka => clk,
+		clka => clk_tl,
 		wea => rw_current,
 		addra => address_in,
 		dina => data_in_current,
@@ -269,8 +271,8 @@ begin
 		num_data_bits => 8
 	)
 	port map (
-		Rx	=> rx,
-	 	Tx	=> tx,
+		Rx	=> rx_tl,
+	 	Tx	=> tx_tl,
 	 	Din => sig_Din,
 	 	StartTx => sig_StartTx,
 		TxBusy => sig_TxBusy,
@@ -278,18 +280,18 @@ begin
 		RxRdy	=> sig_RxRdy,
 		RxErr	=> sig_RxErr,
 		Divisor	=> Divisor,
-		clk	=> clk,
-		rst	=> rst
+		clk	=> clk_tl,
+		rst	=> rst_tl
 	);
 	
-	DUT: dpram
+	DPRAM_VRAM: dpram
 	generic map(
-		BYTES_WIDTH => BYTES_WIDTH,
-		ADDR_BITS => ADDR_BITS
+		BYTES_WIDTH => DPRAM_BYTES_WIDTH,
+		ADDR_BITS => DPRAM_ADDR_BITS
 	)
 	port map(
 		rst => vram_rst,
-		clk => clk,
+		clk => clk_tl,
 		data_wr => vram_data_wr,
 		addr_wr => vram_addr_wr,
 		ena_wr  => vram_ena_wr,

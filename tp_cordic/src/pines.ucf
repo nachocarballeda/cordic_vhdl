@@ -1,0 +1,28 @@
+## Pin def for SPARTAN3E BOARD
+
+## CLK
+NET "clk_tl"         LOC = "p184"; 
+
+## VGA Connector 
+NET "red_out_tl<0>"   LOC = "p96";
+NET "red_out_tl<1>"   LOC = "p98";
+NET "red_out_tl<2>"   LOC = "p100";
+NET "grn_out_tl<0>"   LOC = "p106";
+NET "grn_out_tl<1>"   LOC = "p108";
+NET "grn_out_tl<2>"   LOC = "p102";
+NET "blu_out_tl<0>"   LOC = "p94";
+NET "blu_out_tl<1>"   LOC = "p97";
+
+NET "hs_tl"       LOC = "p115";
+NET "vs_tl"       LOC = "p113";
+
+## SERIAL INTERFACE
+NET "tx_tl"  LOC = "p76"  ;
+NET "rx_tl"  LOC = "p75"  ;
+
+## CORE LEDS
+NET "led_tl[0]"  LOC = "P68"  ;
+NET "led_tl[1]"  LOC = "P78"  ;
+NET "led_tl[2]"  LOC = "P83"  ;
+NET "led_tl[3]"  LOC = "P89"  ;
+

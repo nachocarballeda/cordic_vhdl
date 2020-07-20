@@ -11,5 +11,11 @@
 *.xrpt
 *.csv
 *.ngc
+*.gise
+*.xise
+*.ncd
+*.xwbt
+*.html
+*.xreport
 xmsgs
 

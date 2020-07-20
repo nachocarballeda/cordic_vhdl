@@ -34,16 +34,16 @@ architecture vga_ctrl_arq of vga_ctrl is
 
 	-- Contadores (horizontal y vertical)
 	signal hc, vc: unsigned(9 downto 0):="0000000000";
-	-- Flag para obtener una habilitación cada dos ciclos de clock
+	-- Flag para obtener una habilitaci?n cada dos ciclos de clock
 	signal clkdiv_flag: std_logic:='1';
-	-- Senal para habilitar la visualización de datos
+	-- Senal para habilitar la visualizaci?n de datos
 	signal vidon: std_logic;
 	-- Senal para habilitar el contador vertical
 	signal vsenable: std_logic;
 	
 
 begin
-    -- División de la frecuencia del reloj
+    -- Divisi?n de la frecuencia del reloj
     process(mclk)
     begin
         if rising_edge(mclk) then
@@ -57,8 +57,8 @@ begin
         if rising_edge(mclk) then
             if clkdiv_flag = '1' then
                 if hc = hpixels then														
-                    hc <= (others => '0');	-- El cont horiz se resetea cuando alcanza la cuenta máxima de pixeles
-                    vsenable <= '1';		-- Habilitación del cont vert
+                    hc <= (others => '0');	-- El cont horiz se resetea cuando alcanza la cuenta m?xima de pixeles
+                    vsenable <= '1';		-- Habilitaci?n del cont vert
                 else
                     hc <= hc + 1;			-- Incremento del cont horiz
                     vsenable <= '0';		-- El cont vert se mantiene deshabilitado
@@ -71,7 +71,7 @@ begin
     process(mclk)
     begin
         if rising_edge(mclk) then			 
-            if clkdiv_flag = '1' then           -- Flag que habilita la operación una vez cada dos ciclos (25 MHz)
+            if clkdiv_flag = '1' then           -- Flag que habilita la operaci?n una vez cada dos ciclos (25 MHz)
                 if vsenable = '1' then          -- Cuando el cont horiz llega al m?ximo de su cuenta habilita al cont vert
                     if vc = vlines then															 
                         vc <= (others => '0');  -- El cont vert se resetea cuando alcanza la cantidad maxima de lineas
@@ -84,16 +84,16 @@ begin
     end process;
 
 
-    hs <= '1' when (hc < "0001100001") else '0';   -- Generación de la señal de sincronismo horizontal
-    vs <= '1' when (vc < "0000000011") else '0';   -- Generación de la señal de sincronismo vertical
+    hs <= '1' when (hc < "0001100001") else '0';   -- Generaci?n de la se?al de sincronismo horizontal
+    vs <= '1' when (vc < "0000000011") else '0';   -- Generaci?n de la se?al de sincronismo vertical
 
     pixel_col <= std_logic_vector(hc - 144) when (vidon = '1') else std_logic_vector(hc);    
     pixel_row <= std_logic_vector(vc - 31) when (vidon = '1') else std_logic_vector(vc);
 	
-	-- Habilitación de la salida de datos por el display cuando se encuentra entre los porches
+	-- Habilitaci?n de la salida de datos por el display cuando se encuentra entre los porches
     vidon <= '1' when (((hc < hfp) and (hc > hbp)) and ((vc < vfp) and (vc > vbp))) else '0';
 
-	-- Pinta la pantalla del color formado por la combinación de las entradas red_i, grn_i y blu_i (switches)
+	-- Pinta la pantalla del color formado por la combinaci?n de las entradas red_i, grn_i y blu_i (switches)
 	red_o <= "111" when (red_i = '1' and vidon = '1') else "000";
 	grn_o <= "111" when (grn_i = '1' and vidon = '1') else "000";
 	blu_o <= "11" when (blu_i = '1' and vidon = '1') else "00";
