@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 import serial
 
 COORDS_WIDTH = 7
@@ -21,4 +23,4 @@ with open('coords.txt') as fp, serial.Serial('/dev/ttyUSB0', 115200, timeout=1) 
             serial.write((z).to_bytes(1, 'big', signed=z_signed))
 	
             # imprimo coordenadas por pantalla a medida que las voy enviando, junto con su address 
-            print(f"line {line_number} (mem_address: {line_number*3}): {hex(x)} {hex(y)} {hex(z)}")
+            print(f"Line {line_number}, RAM Address: {line_number*3}: X={hex(x)} Y={hex(y)} Z={hex(z)}")

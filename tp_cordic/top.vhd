@@ -5,7 +5,7 @@ use IEEE.NUMERIC_STD.all;
 entity top_level is
 	port(
 		-- VGA
-		clk_tl, enable_tl, rst_tl	:	in std_logic;
+		clk_tl			:	in std_logic;
 		hs_tl, vs_tl	:	out std_logic;
 		pixel_row_tl	:	out std_logic_vector(9 downto 0);
 		pixel_col_tl	:	out std_logic_vector(9 downto 0);
@@ -46,9 +46,9 @@ architecture top_level_arq of top_level is
 	component uart is
 		generic(F: natural; min_baud: natural; num_data_bits: natural);
 		port(
-			Rx	:	in std_logic;
-			Tx	:	out std_logic;
-			Din	:	in std_logic_vector(7 downto 0);
+			Rx		:	in std_logic;
+			Tx		:	out std_logic;
+			Din		:	in std_logic_vector(7 downto 0);
 			StartTx	:	in std_logic;
 			TxBusy	:	out std_logic;
 			Dout	:	out std_logic_vector(7 downto 0);
@@ -66,11 +66,11 @@ architecture top_level_arq of top_level is
 		ADDR_BITS : natural := 8 -- Cantidad de bits de address (tamaño de la memoria es 2^ADDRS_BITS
 	);
 	port (
-		rst	: in std_logic;
-		clk	: in std_logic;
+		rst		: in std_logic;
+		clk		: in std_logic;
 		data_wr : in std_logic_vector(BYTES_WIDTH*8-1 downto 0);
 		addr_wr : in std_logic_vector(ADDR_BITS-1 downto 0);
-		ena_wr : in std_logic;
+		ena_wr 	: in std_logic;
 		addr_rd : in std_logic_vector(ADDR_BITS-1 downto 0);
 		data_rd : out std_logic_vector(BYTES_WIDTH*8-1 downto 0)
 	);
@@ -80,15 +80,15 @@ architecture top_level_arq of top_level is
 
 -- Constantes a utilizar --
 	-- RAM Single Port
-	constant DATA_WIDTH: integer := 8;
-	constant ADDRESS_WIDTH: integer := 14;
-	constant CYCLES_TO_WAIT: integer := 4000;
-	constant CYCLES_TO_WAIT_WIDTH : natural := 12;
-	constant LINES_TO_RECEIVE: natural := 11946;
-    constant BYTES_TO_RECEIVE: natural := 3*LINES_TO_RECEIVE;
-	constant COORDS_WIDTH: natural := 8;
+	constant DATA_WIDTH		: integer := 8;
+	constant ADDRESS_WIDTH	: integer := 14;
+	constant CYCLES_TO_WAIT	: integer := 4000;
+	constant CYCLES_TO_WAIT_WIDTH 	: natural := 12;
+	constant LINES_TO_RECEIVE		: natural := 11946;
+    constant BYTES_TO_RECEIVE		: natural := 3*LINES_TO_RECEIVE;
+	constant COORDS_WIDTH			: natural := 8;
 	-- Dual Port RAM
-	constant DPRAM_ADDR_BITS: natural := 8;
+	constant DPRAM_ADDR_BITS: natural 	:= 8;
 	constant DPRAM_BYTES_WIDTH: natural := 8;
 
 -- Variables auxiliares para pasar datos a las funciones --
@@ -113,14 +113,14 @@ architecture top_level_arq of top_level is
 	signal sig_led_aux: std_logic_vector(3 downto 0) := "0000";
 	
 	-- UART
-	constant Divisor : std_logic_vector := "000000011011"; -- Divisor=27 para 115200 baudios
-	signal sig_uart_data_in	: std_logic_vector(7 downto 0);
+	constant Divisor 			: std_logic_vector := "000000011011"; -- Divisor=27 para 115200 baudios
+	signal sig_uart_data_in		: std_logic_vector(7 downto 0);
 	signal sig_uart_data_out	: std_logic_vector(7 downto 0);
 	signal sig_uart_rx_error	: std_logic;
 	signal sig_uart_rx_ready	: std_logic;
-	signal sig_uart_tx_busy	: std_logic;
-	signal sig_uart_tx_start: std_logic;
-	signal sig_uart_readed_data: std_logic_vector(7 downto 0);
+	signal sig_uart_tx_busy		: std_logic;
+	signal sig_uart_tx_start	: std_logic;
+	signal sig_uart_readed_data	: std_logic_vector(7 downto 0);
 
     -- RAM
     signal sig_ram_address_in: std_logic_vector(ADDRESS_WIDTH-1 downto 0) := (others => '0');
@@ -138,11 +138,11 @@ architecture top_level_arq of top_level is
     type state_t is (initial_state, waiting_for_uart, waiting_for_sram,
     reading_from_uart, write_sram, uart_end_data_reception, idle, print);
     signal state_current, state_next : state_t := initial_state;
-    signal address_current, address_next: natural := 0;
-    signal rw_current, rw_next: std_logic_vector(0 downto 0) := "0";
-    signal data_in_current, data_in_next: std_logic_vector(DATA_WIDTH-1 downto 0) := (others => '0');
+    signal sig_ram_address_current, sig_ram_address_next: natural := 0;
+    signal sig_ram_rw_current, sig_ram_rw_next: std_logic_vector(0 downto 0) := "0";
+    signal sig_ram_data_in_current, sig_ram_data_in_next: std_logic_vector(DATA_WIDTH-1 downto 0) := (others => '0');
 	signal cycles_current, cycles_next: natural := CYCLES_TO_WAIT;
-    signal bytes_received_current, bytes_received_next: natural := 0;
+    signal sig_uart_bytes_received_current, sig_uart_bytes_received_next: natural := 0;
 
 ---------------------------------------------------------
 
@@ -154,24 +154,24 @@ begin
     begin
     if (clk_tl'event and clk_tl='1') then
         state_current <= state_next;
-        address_current <= address_next;
-        rw_current <= rw_next;
-        data_in_current <= data_in_next;
+        sig_ram_address_current <= sig_ram_address_next;
+        sig_ram_rw_current <= sig_ram_rw_next;
+        sig_ram_data_in_current <= sig_ram_data_in_next;
         cycles_current <= cycles_next;
-        bytes_received_current <= bytes_received_next;
+        sig_uart_bytes_received_current <= sig_uart_bytes_received_next;
 		xyz_selector_current <= xyz_selector_next;
     end if;
     end process;
 
   -- next state logic
-    process(sig_uart_readed_data, address_current, state_current, rw_current, xyz_selector_current,
-    data_in_current, address_current, cycles_current, rst_tl, bytes_received_current)
+    process(sig_uart_readed_data, sig_ram_address_current, state_current, sig_ram_rw_current, xyz_selector_current,
+    sig_ram_data_in_current, sig_ram_address_current, cycles_current, sig_uart_bytes_received_current)
     begin
         -- default values
-        rw_next <= rw_current;
-        data_in_next <= data_in_current;
-        address_next <= address_current;
-        bytes_received_next <= bytes_received_current;
+        sig_ram_rw_next <= sig_ram_rw_current;
+        sig_ram_data_in_next <= sig_ram_data_in_current;
+        sig_ram_address_next <= sig_ram_address_current;
+        sig_uart_bytes_received_next <= sig_uart_bytes_received_current;
         case state_current is
             when initial_state =>
 				sig_led_aux <= "0000";
@@ -185,26 +185,26 @@ begin
 				sig_led_aux <= "0001";
                 if sig_uart_rx_ready = '1' then
                     state_next <= reading_from_uart;
-                elsif bytes_received_current = BYTES_TO_RECEIVE then
+                elsif sig_uart_bytes_received_current = BYTES_TO_RECEIVE then
                     state_next <= uart_end_data_reception;
                 else
                     state_next <= waiting_for_uart;
                 end if;
             when reading_from_uart =>
-				data_in_next <= sig_uart_readed_data;
+				sig_ram_data_in_next <= sig_uart_readed_data;
 				state_next <= write_sram;
-				bytes_received_next <= bytes_received_current + 1;
+				sig_uart_bytes_received_next <= sig_uart_bytes_received_current + 1;
             when write_sram =>
-				rw_next <= "1";
+				sig_ram_rw_next <= "1";
 				state_next <= waiting_for_sram;
             when waiting_for_sram =>
-				address_next <= address_current + 1;
-				rw_next <= "1";  -- Necesitamos escribir
+				sig_ram_address_next <= sig_ram_address_current + 1;
+				sig_ram_rw_next <= "1";  -- Necesitamos escribir
 				state_next <= waiting_for_uart;
             when uart_end_data_reception =>
                 state_next <= idle;
-				rw_next <= "0"; -- Vamos a necesitar leer
-                address_next <= 0; -- La prox address de RAM que nos interesa es 0
+				sig_ram_rw_next <= "0"; -- Vamos a necesitar leer
+                sig_ram_address_next <= 0; -- La prox address de RAM que nos interesa es 0
 			when idle =>
 				sig_led_aux <= "0010";
 				state_next <= print;
@@ -223,7 +223,7 @@ begin
 					when others =>
 						xyz_selector_next <= 0;
 					end case;
-				address_next <= address_current + 1;
+				sig_ram_address_next <= sig_ram_address_current + 1;
 				state_next <= print;
         end case;
     end process;
@@ -254,13 +254,13 @@ begin
 	ram_internal : RAM
 	port map (
 		clka => clk_tl,
-		wea => rw_current,
+		wea => sig_ram_rw_current,
 		addra => sig_ram_address_in,
-		dina => data_in_current,
+		dina => sig_ram_data_in_current,
 		douta => sig_ram_data_out
 	);
 	
-	sig_ram_address_in <= std_logic_vector(to_unsigned(address_current, ADDRESS_WIDTH));
+	sig_ram_address_in <= std_logic_vector(to_unsigned(sig_ram_address_current, ADDRESS_WIDTH));
 	
 	-- UART Instanciation :
 	uart_load_data : uart
@@ -280,7 +280,7 @@ begin
 		RxErr	=> sig_uart_rx_error,
 		Divisor	=> Divisor,
 		clk	=> clk_tl,
-		rst	=> rst_tl
+		rst	=> '0'
 	);
 	
 	dpram_vram : dpram
