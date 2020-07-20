@@ -5,16 +5,16 @@ use IEEE.NUMERIC_STD.all;
 entity top_level is
 	port(
 		-- VGA
-		clk_tl, enable_tl, rst_tl:	in std_logic;
-		hs_tl, vs_tl:	out std_logic;
-		pixel_row_tl:	out std_logic_vector(9 downto 0);
-		pixel_col_tl:	out std_logic_vector(9 downto 0);
-		red_out_tl:		out std_logic_vector(2 downto 0);
-		grn_out_tl:	out std_logic_vector(2 downto 0);
-		blu_out_tl:	out std_logic_vector(1 downto 0);
+		clk_tl, enable_tl, rst_tl	:	in std_logic;
+		hs_tl, vs_tl	:	out std_logic;
+		pixel_row_tl	:	out std_logic_vector(9 downto 0);
+		pixel_col_tl	:	out std_logic_vector(9 downto 0);
+		red_out_tl	:	out std_logic_vector(2 downto 0);
+		grn_out_tl	:	out std_logic_vector(2 downto 0);
+		blu_out_tl	:	out std_logic_vector(1 downto 0);
 		-- UART
-		rx_tl :	in std_logic;
-		tx_tl :	out std_logic;
+		rx_tl	:	in std_logic;
+		tx_tl	:	out std_logic;
 		-- LEDS
 		led_tl: out std_logic_vector(3 downto 0)
 		);
@@ -24,39 +24,39 @@ architecture top_level_arq of top_level is
 	--- Prototipos ---
 	component vga_ctrl is
 		port(
-			mclk, red_i, grn_i, blu_i: in std_logic;
-			hs, vs: out std_logic;
-			red_o: out std_logic_vector(2 downto 0);
-			grn_o: out std_logic_vector(2 downto 0);
-			blu_o: out std_logic_vector(1 downto 0);
+			mclk, red_i, grn_i, blu_i	: in std_logic;
+			hs, vs	: out std_logic;
+			red_o	: out std_logic_vector(2 downto 0);
+			grn_o	: out std_logic_vector(2 downto 0);
+			blu_o	: out std_logic_vector(1 downto 0);
 			pixel_row, pixel_col: out std_logic_vector(9 downto 0)
 			);
 	end component;
 	
 	component RAM is
 		port(
-			clka : in std_logic;
-			wea : in std_logic_vector(0 downto 0);
-			addra : in std_logic_vector(13 downto 0);
-			dina : in std_logic_vector(7 downto 0);
-			douta : out std_logic_vector(7 downto 0)
+			clka	:	in std_logic;
+			wea		:	in std_logic_vector(0 downto 0);
+			addra	:	in std_logic_vector(13 downto 0);
+			dina	:	in std_logic_vector(7 downto 0);
+			douta	:	out std_logic_vector(7 downto 0)
 			);
 	end component;
 	
 	component uart is
 		generic(F: natural; min_baud: natural; num_data_bits: natural);
 		port(
-			Rx: in std_logic;
-			Tx: out std_logic;
-			Din: in std_logic_vector(7 downto 0);
-			StartTx: in std_logic;
-			TxBusy: out std_logic;
-			Dout: out std_logic_vector(7 downto 0);
-			RxRdy: out std_logic;
-			RxErr: out std_logic;
-			Divisor: in std_logic_vector; 
-			clk: in std_logic;
-			rst: in std_logic
+			Rx	:	in std_logic;
+			Tx	:	out std_logic;
+			Din	:	in std_logic_vector(7 downto 0);
+			StartTx	:	in std_logic;
+			TxBusy	:	out std_logic;
+			Dout	:	out std_logic_vector(7 downto 0);
+			RxRdy	:	out std_logic;
+			RxErr	:	out std_logic;
+			Divisor	:	in std_logic_vector; 
+			clk		:	in std_logic;
+			rst		:	in std_logic
 		);
 	end component;
 	
@@ -66,8 +66,8 @@ architecture top_level_arq of top_level is
 		ADDR_BITS : natural := 8 -- Cantidad de bits de address (tamaño de la memoria es 2^ADDRS_BITS
 	);
 	port (
-		rst : in std_logic;
-		clk : in std_logic;
+		rst	: in std_logic;
+		clk	: in std_logic;
 		data_wr : in std_logic_vector(BYTES_WIDTH*8-1 downto 0);
 		addr_wr : in std_logic_vector(ADDR_BITS-1 downto 0);
 		ena_wr : in std_logic;
