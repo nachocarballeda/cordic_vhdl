@@ -4,29 +4,29 @@ use ieee.numeric_std.all;
 
 entity dpram is
 	generic (
-		BYTES_WIDTH : natural := 1; -- Ancho de palabra de la memoria medido en bytes
-		ADDR_BITS : natural := 8 -- Cantidad de bits de address (tamaño de la memoria es 2^ADDRS_BITS
+		DPRAM_BYTES_WIDTH : natural := 1; -- Ancho de palabra de la memoria medido en bytes
+		DPRAM_ADDR_BITS : natural := 8 -- Cantidad de bits de address (tamaño de la memoria es 2^ADDRS_BITS
 	);
 	port (
 		rst : in std_logic;
 		clk : in std_logic;
-		data_wr : in std_logic_vector(BYTES_WIDTH*8-1 downto 0);
-		addr_wr : in std_logic_vector(ADDR_BITS-1 downto 0);
+		data_wr : in std_logic_vector(DPRAM_BYTES_WIDTH*8-1 downto 0);
+		addr_wr : in std_logic_vector(DPRAM_ADDR_BITS-1 downto 0);
 		ena_wr : in std_logic;
-		addr_rd : in std_logic_vector(ADDR_BITS-1 downto 0);
-		data_rd : out std_logic_vector(BYTES_WIDTH*8-1 downto 0)
+		addr_rd : in std_logic_vector(DPRAM_ADDR_BITS-1 downto 0);
+		data_rd : out std_logic_vector(DPRAM_BYTES_WIDTH*8-1 downto 0)
 	);
 end dpram;
 
 
 architecture rtl of dpram is
 	-- Array para la memoria
-	subtype t_word is std_logic_vector(BYTES_WIDTH*8-1 downto 0);
-	type t_memory is array(2**ADDR_BITS-1 downto 0) of t_word;
+	subtype t_word is std_logic_vector(DPRAM_BYTES_WIDTH*8-1 downto 0);
+	type t_memory is array(2**DPRAM_ADDR_BITS-1 downto 0) of t_word;
 	signal ram : t_memory;
 	-- Address casting
-	signal rd_pointer : integer range 0 to 2**ADDR_BITS-1;
-	signal wr_pointer : integer range 0 to 2**ADDR_BITS-1;
+	signal rd_pointer : integer range 0 to 2**DPRAM_ADDR_BITS-1;
+	signal wr_pointer : integer range 0 to 2**DPRAM_ADDR_BITS-1;
 	begin
 	-- Address casting
 	rd_pointer <= to_integer(unsigned(addr_rd));

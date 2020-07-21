@@ -43,6 +43,7 @@ LIBRARY XilinxCoreLib;
 ENTITY RAM IS
   PORT (
     clka : IN STD_LOGIC;
+    rsta : IN STD_LOGIC;
     wea : IN STD_LOGIC_VECTOR(0 DOWNTO 0);
     addra : IN STD_LOGIC_VECTOR(13 DOWNTO 0);
     dina : IN STD_LOGIC_VECTOR(7 DOWNTO 0);
@@ -55,6 +56,7 @@ ARCHITECTURE RAM_a OF RAM IS
 COMPONENT wrapped_RAM
   PORT (
     clka : IN STD_LOGIC;
+    rsta : IN STD_LOGIC;
     wea : IN STD_LOGIC_VECTOR(0 DOWNTO 0);
     addra : IN STD_LOGIC_VECTOR(13 DOWNTO 0);
     dina : IN STD_LOGIC_VECTOR(7 DOWNTO 0);
@@ -88,7 +90,7 @@ END COMPONENT;
       c_has_mux_output_regs_b => 0,
       c_has_regcea => 0,
       c_has_regceb => 0,
-      c_has_rsta => 0,
+      c_has_rsta => 1,
       c_has_rstb => 0,
       c_has_softecc_input_regs_a => 0,
       c_has_softecc_output_regs_b => 0,
@@ -133,6 +135,7 @@ BEGIN
 U0 : wrapped_RAM
   PORT MAP (
     clka => clka,
+    rsta => rsta,
     wea => wea,
     addra => addra,
     dina => dina,

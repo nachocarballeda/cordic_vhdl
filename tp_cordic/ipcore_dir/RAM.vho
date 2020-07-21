@@ -48,6 +48,7 @@
 COMPONENT RAM
   PORT (
     clka : IN STD_LOGIC;
+    rsta : IN STD_LOGIC;
     wea : IN STD_LOGIC_VECTOR(0 DOWNTO 0);
     addra : IN STD_LOGIC_VECTOR(13 DOWNTO 0);
     dina : IN STD_LOGIC_VECTOR(7 DOWNTO 0);
@@ -63,6 +64,7 @@ END COMPONENT;
 your_instance_name : RAM
   PORT MAP (
     clka => clka,
+    rsta => rsta,
     wea => wea,
     addra => addra,
     dina => dina,
