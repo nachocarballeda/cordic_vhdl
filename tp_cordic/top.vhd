@@ -7,8 +7,6 @@ entity top_level is
 		-- VGA
 		clk_tl			:	in std_logic;
 		hs_tl, vs_tl	:	out std_logic;
-		pixel_row_tl	:	out std_logic_vector(9 downto 0);
-		pixel_col_tl	:	out std_logic_vector(9 downto 0);
 		red_out_tl	:	out std_logic_vector(2 downto 0);
 		grn_out_tl	:	out std_logic_vector(2 downto 0);
 		blu_out_tl	:	out std_logic_vector(1 downto 0);
@@ -66,17 +64,17 @@ architecture top_level_arq of top_level is
 	
 	component dpram is
 	generic (
-		DPRAM_BYTES_WIDTH : natural := 1; -- Ancho de palabra de la memoria medido en bytes
-		DPRAM_ADDR_BITS : natural := 8 -- Cantidad de bits de address (tamaño de la memoria es 2^ADDRS_BITS
+		DPRAM_BITS_WIDTH : natural := 1; -- Ancho de palabra de la memoria medido en bits
+		DPRAM_ADDR_BITS : natural := 8 -- Cantidad de bits de address (tamaño de la memoria es 2^ADDRS_BITS)
 	);
 	port (
 		rst		: in std_logic;
 		clk		: in std_logic;
-		data_wr : in std_logic_vector(DPRAM_BYTES_WIDTH*8-1 downto 0);
+		data_wr : in std_logic_vector(DPRAM_BITS_WIDTH-1 downto 0);
 		addr_wr : in std_logic_vector(DPRAM_ADDR_BITS-1 downto 0);
 		ena_wr 	: in std_logic;
 		addr_rd : in std_logic_vector(DPRAM_ADDR_BITS-1 downto 0);
-		data_rd : out std_logic_vector(DPRAM_BYTES_WIDTH*8-1 downto 0)
+		data_rd : out std_logic_vector(DPRAM_BITS_WIDTH-1 downto 0)
 	);
 	end component;
 
@@ -90,10 +88,10 @@ architecture top_level_arq of top_level is
     constant UART_BYTES_TO_RECEIVE	: natural := 3*UART_LINES_TO_RECEIVE;
 	constant UART_COORDS_WIDTH		: natural := 8;
 	-- Dual Port RAM
-	constant DPRAM_ADDR_BITS: natural 	:= 8;
-	constant DPRAM_BYTES_WIDTH: natural := 8;
+	constant DPRAM_ADDR_BITS: natural 	:= 16; -- 8 KBytes 
+	constant DPRAM_DATA_BITS_WIDTH: natural := 1;
 
--- Señales auxiliares para pasar interconexion
+	-- Señales auxiliares para pasar interconexion
 
 	signal sig_aux_pixel_x_i: std_logic_vector(9 downto 0) := "0000000000";
 	signal sig_aux_pixel_y_i: std_logic_vector(9 downto 0) := "0000000000";
@@ -130,15 +128,15 @@ architecture top_level_arq of top_level is
 
 	-- Dual Port RAM (para video)
 	signal sig_vram_rst		: std_logic;
-	signal sig_vram_data_wr : std_logic_vector(DPRAM_BYTES_WIDTH*8-1 downto 0);
+	signal sig_vram_data_wr : std_logic_vector(DPRAM_DATA_BITS_WIDTH-1 downto 0);
 	signal sig_vram_addr_wr : std_logic_vector(DPRAM_ADDR_BITS-1 downto 0);
 	signal sig_vram_ena_wr	: std_logic;
 	signal sig_vram_addr_rd	: std_logic_vector(DPRAM_ADDR_BITS-1 downto 0);
-	signal sig_vram_data_rd	: std_logic_vector(DPRAM_BYTES_WIDTH*8-1 downto 0);
+	signal sig_vram_data_rd	: std_logic_vector(DPRAM_DATA_BITS_WIDTH-1 downto 0);
 		
     -- Maquina de Estados
     type state_t is (state_init, state_waiting_for_uart, state_waiting_for_sram,
-    state_reading_from_uart, state_write_sram, state_uart_end_data_reception, state_idle, state_print);
+    state_reading_from_uart, state_write_sram, state_uart_end_data_reception, state_idle, state_save_to_dpram);
     signal state_current, state_next : state_t := state_init;
     signal sig_ram_address_current, sig_ram_address_next: natural := 0;
     signal sig_ram_rw_current, sig_ram_rw_next: std_logic_vector(0 downto 0) := "0";
@@ -146,13 +144,16 @@ architecture top_level_arq of top_level is
 	signal cycles_current, cycles_next: natural := CYCLES_TO_WAIT;
     signal sig_uart_bytes_received_current, sig_uart_bytes_received_next: natural := 0;
 
+	signal sig_vram_ena_wr_current, sig_vram_ena_wr_next : std_logic := '0';
+	signal sig_vram_addr_wr_current, sig_vram_addr_wr_next : std_logic_vector(DPRAM_ADDR_BITS-1 downto 0) := (others => '0');
+	signal sig_vram_data_wr_current, sig_vram_data_wr_next : std_logic_vector(DPRAM_DATA_BITS_WIDTH-1 downto 0) := "0";
 -- Aquitectura
 
 begin
   -- Actualización de registros
-    process(clk_tl, rst_tl) -- Agregar RESET 
-    begin
-	if(rst_tl='1') then
+    process(clk_tl, rst_tl) -- Agregar RESET     
+	begin
+	if(rst_tl='0') then --rst_tl pin got a pullup
 		state_current <= state_init;
     elsif (clk_tl'event and clk_tl='1') then
         state_current <= state_next;
@@ -162,19 +163,28 @@ begin
         cycles_current <= cycles_next;
         sig_uart_bytes_received_current <= sig_uart_bytes_received_next;
 		xyz_selector_current <= xyz_selector_next;
+		sig_vram_ena_wr_current <= sig_vram_ena_wr_next;
+		sig_vram_addr_wr_current <= sig_vram_addr_wr_next;
+		sig_vram_data_wr_current <= sig_vram_data_wr_next; 
     end if;
     end process;
 
   -- Logica del estado siguiente
-    process(sig_uart_readed_data, sig_ram_address_current, state_current, sig_ram_rw_current, xyz_selector_current,
-    sig_ram_data_in_current, sig_uart_rx_ready, sig_ram_data_out, sig_ram_address_current, cycles_current, sig_uart_bytes_received_current)
+    process(sig_uart_readed_data, sig_ram_address_current, state_current, sig_ram_rw_current, sig_vram_data_wr_current, xyz_selector_current,
+    sig_ram_data_in_current, sig_uart_rx_ready, sig_ram_data_out, sig_ram_address_current, cycles_current, sig_uart_bytes_received_current,
+	sig_vram_ena_wr_current, sig_vram_addr_wr_current, x_coord_current, y_coord_current)
     begin
 		-- Valores por defecto
+		cycles_next <= cycles_current;
         sig_ram_rw_next <= sig_ram_rw_current;
         sig_ram_data_in_next <= sig_ram_data_in_current;
         sig_ram_address_next <= sig_ram_address_current;
         sig_uart_bytes_received_next <= sig_uart_bytes_received_current;
 		xyz_selector_next <= xyz_selector_current;
+		sig_vram_ena_wr_next <= sig_vram_ena_wr_current;
+		sig_vram_addr_wr_next <= sig_vram_addr_wr_current;
+		sig_vram_data_wr_next <= sig_vram_data_wr_current;
+		y_coord_next <= y_coord_current;
 		sig_led_aux <= "0000";
         case state_current is
             when state_init =>
@@ -211,24 +221,32 @@ begin
                 sig_ram_address_next <= 0;	-- La prox address de RAM que nos interesa es 0
 			when state_idle =>
 				sig_led_aux <= "0010";
-				state_next <= state_print;
-			when state_print =>
+				state_next <= state_idle;
+			when state_save_to_dpram =>
 				sig_led_aux <= "0011";
-				case xyz_selector_current is
-					when 0 =>
-						x_coord_next <= sig_ram_data_out;
-						xyz_selector_next <= xyz_selector_current + 1;
-					when 1 =>
-						y_coord_next <= sig_ram_data_out;
-						xyz_selector_next <= xyz_selector_current + 1;
-					when 3 =>
-						z_coord_next <= sig_ram_data_out;
-						xyz_selector_next <= xyz_selector_current + 1;
-					when others =>
-						xyz_selector_next <= 0;
+				if sig_ram_address_current > UART_BYTES_TO_RECEIVE then
+					state_next <= state_idle;
+				else
+					state_next <= state_save_to_dpram;
+					case xyz_selector_current is
+						when 0 =>
+							x_coord_next <= sig_ram_data_out;
+							xyz_selector_next <= xyz_selector_current + 1;
+							sig_vram_ena_wr_next <= '0';
+						when 1 =>
+							y_coord_next <= sig_ram_data_out;
+							xyz_selector_next <= xyz_selector_current + 1;
+							sig_vram_ena_wr_next <= '1';
+							sig_vram_data_wr_next <= "1";
+							sig_vram_addr_wr_next <=  y_coord_next & x_coord_current;
+						when 3 =>
+							z_coord_next <= sig_ram_data_out;
+							xyz_selector_next <= xyz_selector_current + 1;
+						when others =>
+							xyz_selector_next <= 0;
 					end case;
+				end if;
 				sig_ram_address_next <= sig_ram_address_current + 1;
-				state_next <= state_print;
         end case;
     end process;
 	
@@ -252,7 +270,7 @@ begin
 	-- LEDS
 	led_tl <= not sig_led_aux;
 	
-	-- RAM
+	-- SINGLE PORT RAM
 	ram_internal : RAM
 	port map (
 		clka => clk_tl,
@@ -260,7 +278,7 @@ begin
 		addra => sig_ram_address_in,
 		dina => sig_ram_data_in_current,
 		douta => sig_ram_data_out,
-		rsta => rst_tl
+		rsta => not rst_tl
 	);
 	
 	sig_ram_address_in <= std_logic_vector(to_unsigned(sig_ram_address_current, RAM_ADDRESS_WIDTH));
@@ -286,9 +304,10 @@ begin
 		rst	=> '0'
 	);
 	
+	-- DUAL PORT RAM (VIDEO MEMORY)
 	dpram_vram : dpram
 	generic map(
-		DPRAM_BYTES_WIDTH => DPRAM_BYTES_WIDTH,
+		DPRAM_BITS_WIDTH => DPRAM_DATA_BITS_WIDTH,
 		DPRAM_ADDR_BITS => DPRAM_ADDR_BITS
 	)
 	port map(
@@ -300,5 +319,14 @@ begin
 		data_rd => sig_vram_data_rd,
 		addr_rd => sig_vram_addr_rd
 	);
+	
+	sig_vram_ena_wr <= sig_vram_ena_wr_current; 
+	sig_vram_addr_wr <= sig_vram_addr_wr_current;
+	sig_vram_data_wr <= sig_vram_data_wr_current;
+	
+	
+	sig_vram_addr_rd <= sig_aux_pixel_y_i(7 downto 0) & sig_aux_pixel_x_i(7 downto 0);
+	sig_red_enable <= sig_vram_data_rd(0);
+	sig_blue_enable <= sig_vram_data_rd(0);
 	
 end top_level_arq;

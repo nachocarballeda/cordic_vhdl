@@ -17,12 +17,15 @@ NET "hs_tl"       LOC = "p115";
 NET "vs_tl"       LOC = "p113";
 
 ## SERIAL INTERFACE
-NET "tx_tl"  LOC = "p76"  ;
-NET "rx_tl"  LOC = "p75"  ;
+NET "tx_tl"  LOC = "p76";
+NET "rx_tl"  LOC = "p75";
 
 ## CORE LEDS
-NET "led_tl[0]"  LOC = "P68"  ;
-NET "led_tl[1]"  LOC = "P78"  ;
-NET "led_tl[2]"  LOC = "P83"  ;
-NET "led_tl[3]"  LOC = "P89"  ;
+NET "led_tl[0]"  LOC = "P68";
+NET "led_tl[1]"  LOC = "P78";
+NET "led_tl[2]"  LOC = "P83";
+NET "led_tl[3]"  LOC = "P89";
 
+## RESET BUTTON
+NET "rst_tl"	LOC = "p129";
+NET "rst_tl"  PULLUP;

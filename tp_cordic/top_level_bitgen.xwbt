@@ -1,8 +1,8 @@
 INTSTYLE=ise
-INFILE=/home/ignatius/Documents/fiuba/SistemasDigitales/tp_cordic_carballeda/tp_cordic/top_level.ncd
-OUTFILE=/home/ignatius/Documents/fiuba/SistemasDigitales/tp_cordic_carballeda/tp_cordic/top_level.bit
+INFILE=/home/ignatius/Documents/repos/cordic_vhdl/tp_cordic/top_level.ncd
+OUTFILE=/home/ignatius/Documents/repos/cordic_vhdl/tp_cordic/top_level.bit
 FAMILY=Spartan3E
 PART=xc3s500e-4pq208
-WORKINGDIR=/home/ignatius/Documents/fiuba/SistemasDigitales/tp_cordic_carballeda/tp_cordic
+WORKINGDIR=/home/ignatius/Documents/repos/cordic_vhdl/tp_cordic
 LICENSE=WebPack
 USER_INFO=211548124_0_0_574

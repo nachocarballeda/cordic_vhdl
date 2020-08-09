@@ -4,24 +4,24 @@ use ieee.numeric_std.all;
 
 entity dpram is
 	generic (
-		DPRAM_BYTES_WIDTH : natural := 1; -- Ancho de palabra de la memoria medido en bytes
+		DPRAM_BITS_WIDTH : natural := 1; -- Ancho de palabra de la memoria medido en bits
 		DPRAM_ADDR_BITS : natural := 8 -- Cantidad de bits de address (tamaño de la memoria es 2^ADDRS_BITS
 	);
 	port (
 		rst : in std_logic;
 		clk : in std_logic;
-		data_wr : in std_logic_vector(DPRAM_BYTES_WIDTH*8-1 downto 0);
+		data_wr : in std_logic_vector(DPRAM_BITS_WIDTH-1 downto 0);
 		addr_wr : in std_logic_vector(DPRAM_ADDR_BITS-1 downto 0);
 		ena_wr : in std_logic;
 		addr_rd : in std_logic_vector(DPRAM_ADDR_BITS-1 downto 0);
-		data_rd : out std_logic_vector(DPRAM_BYTES_WIDTH*8-1 downto 0)
+		data_rd : out std_logic_vector(DPRAM_BITS_WIDTH-1 downto 0)
 	);
 end dpram;
 
 
 architecture rtl of dpram is
 	-- Array para la memoria
-	subtype t_word is std_logic_vector(DPRAM_BYTES_WIDTH*8-1 downto 0);
+	subtype t_word is std_logic_vector(DPRAM_BITS_WIDTH-1 downto 0);
 	type t_memory is array(2**DPRAM_ADDR_BITS-1 downto 0) of t_word;
 	signal ram : t_memory;
 	-- Address casting
