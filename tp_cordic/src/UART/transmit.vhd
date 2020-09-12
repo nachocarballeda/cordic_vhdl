@@ -33,7 +33,7 @@ begin
    Tx_FSM: process (RST, CLK)
 	begin
    		if RST='1' then
-      			Tx_Reg <= (others => '1');
+      		Tx_Reg <= (others => '1');
 			TxBitCnt <= 0;
 			TxFSM <= idle;
 			TxBusy <= '0';

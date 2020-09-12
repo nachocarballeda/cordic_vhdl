@@ -21,11 +21,33 @@ NET "tx_tl"  LOC = "p76";
 NET "rx_tl"  LOC = "p75";
 
 ## CORE LEDS
-NET "led_tl[0]"  LOC = "P68";
-NET "led_tl[1]"  LOC = "P78";
-NET "led_tl[2]"  LOC = "P83";
-NET "led_tl[3]"  LOC = "P89";
+NET "led_tl<0>"  LOC = "P68";
+NET "led_tl<1>"  LOC = "P78";
+NET "led_tl<2>"  LOC = "P83";
+NET "led_tl<3>"  LOC = "P89";
 
 ## RESET BUTTON
 NET "rst_tl"	LOC = "p129";
 NET "rst_tl"  PULLUP;
+
+## 7 SEGMENT LED BOARD
+
+NET "led_select_tl<0>"  LOC = "p145";
+NET "led_select_tl<1>"  LOC = "p147";
+NET "led_select_tl<2>"  LOC = "p151";
+NET "led_select_tl<3>"  LOC = "p153";
+
+NET "led_out_tl<0>"  LOC = "p160";
+NET "led_out_tl<1>"  LOC = "p152";
+NET "led_out_tl<2>"  LOC = "p150";
+NET "led_out_tl<3>"  LOC = "p146";
+NET "led_out_tl<4>"  LOC = "p144";
+NET "led_out_tl<5>"  LOC = "p139";
+NET "led_out_tl<6>"  LOC = "p137";
+NET "led_out_tl<7>"  LOC = "p134";
+
+# No entiendo este warn que me tira
+# WARNING:Route:455 - CLK Net:seven_segments/Count1<9> may have excessive skew because 
+#      0 CLK pins and 2 NON_CLK pins failed to route using a CLK template.
+# WARNING:Route:455 - CLK Net:seven_segments/Count2<9> may have excessive skew because 
+#      0 CLK pins and 2 NON_CLK pins failed to route using a CLK template.

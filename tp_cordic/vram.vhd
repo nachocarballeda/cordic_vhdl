@@ -5,7 +5,7 @@ use ieee.numeric_std.all;
 entity dpram is
 	generic (
 		DPRAM_BITS_WIDTH : natural := 1; -- Ancho de palabra de la memoria medido en bits
-		DPRAM_ADDR_BITS : natural := 8 -- Cantidad de bits de address (tamaño de la memoria es 2^ADDRS_BITS
+		DPRAM_ADDR_BITS : natural := 16 -- Cantidad de bits de address (tamaño de la memoria es 2^ADDRS_BITS
 	);
 	port (
 		rst : in std_logic;
