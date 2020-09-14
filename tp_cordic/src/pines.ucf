@@ -27,11 +27,24 @@ NET "led_tl<2>"  LOC = "P83";
 NET "led_tl<3>"  LOC = "P89";
 
 ## RESET BUTTON
-NET "rst_tl"	LOC = "p129";
+NET "rst_tl"	LOC = "p132";
 NET "rst_tl"  PULLUP;
 
-## 7 SEGMENT LED BOARD
+## JOYSTICK BUTTONS
 
+NET "up_tl"     LOC = "p129";
+NET "up_tl"  PULLUP;
+
+NET "down_tl"     LOC = "p123";
+NET "down_tl"  PULLUP;
+
+NET "left_tl"     LOC = "p126";
+NET "left_tl"  PULLUP;
+
+NET "right_tl"     LOC = "p122";
+NET "right_tl"  PULLUP;
+
+## 7 SEGMENT LED BOARD
 NET "led_select_tl<0>"  LOC = "p145";
 NET "led_select_tl<1>"  LOC = "p147";
 NET "led_select_tl<2>"  LOC = "p151";

@@ -3,7 +3,28 @@ use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.all;
 
 entity top_level is
-	port(
+    generic (
+        -- RAM Single Port
+        constant RAM_DATA_WIDTH		: integer := 8;
+        constant RAM_ADDRESS_WIDTH	: integer := 14;
+        constant CYCLES_TO_WAIT		: integer := 4000;
+        constant CYCLES_TO_WAIT_WIDTH	: natural := 12;
+        constant UART_LINES_TO_RECEIVE	: natural := 11946;
+        constant UART_BYTES_TO_RECEIVE	: natural := 35838; --3*UART_LINES_TO_RECEIVE
+        constant UART_COORDS_WIDTH		: natural := 8;
+        -- CORDIC Constants
+        constant COORDS_WIDTH: integer := 8;
+        constant ANGLE_WIDTH: integer := 8;
+        constant STAGES: integer := 8;
+        constant CYCLES_TO_WAIT_CORDIC: natural := 20;
+        constant CORDIC_OFFSET: natural := 5;
+        constant CORDIC_WIDTH: integer := 8;
+        constant ANGLE_STEP: natural := 10;  
+        -- Dual Port RAM
+        constant DPRAM_ADDR_BITS: natural 	:= 16; -- 8 KBytes 
+        constant DPRAM_DATA_BITS_WIDTH: natural := 1
+        );
+	port (
 		-- VGA signals
 		clk_tl  :   in std_logic;
 		hs_tl, vs_tl    :   out std_logic;
@@ -18,7 +39,11 @@ entity top_level is
 		led_out_tl: out std_logic_vector(7 downto 0);	-- LED Segment 
 		led_select_tl: out std_logic_vector(3 downto 0);	-- LED Digit 
 		-- BUTTONS
-		rst_tl: in std_logic --ATT! Button with a PULLUP resistor
+		rst_tl: in std_logic; --ATT! Buttons with a PULLUP resistor
+        up_tl: in std_logic;
+        down_tl: in std_logic;
+        left_tl: in std_logic;
+        right_tl: in std_logic
 		);
 end entity;
 
@@ -110,19 +135,22 @@ architecture top_level_arq of top_level is
         show_number:    in  std_logic_vector(7 downto 0)
 		);
 	end component;
-	
--- Constantes
-	-- RAM Single Port
-	constant RAM_DATA_WIDTH		: integer := 8;
-	constant RAM_ADDRESS_WIDTH	: integer := 14;
-	constant CYCLES_TO_WAIT		: integer := 4000;
-	constant CYCLES_TO_WAIT_WIDTH	: natural := 12;
-	constant UART_LINES_TO_RECEIVE	: natural := 11946;
-    constant UART_BYTES_TO_RECEIVE	: natural := 3*UART_LINES_TO_RECEIVE;
-	constant UART_COORDS_WIDTH		: natural := 8;
-	-- Dual Port RAM
-	constant DPRAM_ADDR_BITS: natural 	:= 16; -- 8 KBytes 
-	constant DPRAM_DATA_BITS_WIDTH: natural := 1;
+    
+    component rotator is
+    generic (
+        COORDS_WIDTH            : integer := 8;
+        ANGLES_INTEGER_WIDTH    : integer := 6;
+        STAGES                  : integer := 16
+    );
+    port (
+        clk                         :   in std_logic;
+        X0, Y0, Z0                  :   in signed(COORDS_WIDTH-1 downto 0);
+        angle_X, angle_Y, angle_Z   :   in signed(ANGLES_INTEGER_WIDTH-1 downto 0);
+        X, Y, Z                     :   out signed(COORDS_WIDTH-1 downto 0)
+    );
+
+    end component;
+
 
 	-- Señales auxiliares para pasar interconexion
 
@@ -138,10 +166,21 @@ architecture top_level_arq of top_level is
 	signal sig_green_enable: std_logic	:= '0';
 	
 	-- Coordenadas
-    signal x_coord_current, x_coord_next: std_logic_vector(UART_COORDS_WIDTH-1 downto 0) := (others => '0');
-    signal y_coord_current, y_coord_next: std_logic_vector(UART_COORDS_WIDTH-1 downto 0) := (others => '0');
-    signal z_coord_current, z_coord_next: std_logic_vector(UART_COORDS_WIDTH-1 downto 0) := (others => '0');
+    signal x_coord_current, x_coord_next: std_logic_vector(COORDS_WIDTH-1 downto 0) := (others => '0');
+    signal y_coord_current, y_coord_next: std_logic_vector(COORDS_WIDTH-1 downto 0) := (others => '0');
+    signal z_coord_current, z_coord_next: std_logic_vector(COORDS_WIDTH-1 downto 0) := (others => '0');
 	
+    -- Entradas del rotador
+    signal X0, Y0, Z0: signed(CORDIC_WIDTH+CORDIC_OFFSET-1 downto 0);
+    -- Coordenadas rotadas
+    signal X_coord_rotated: signed(CORDIC_WIDTH+CORDIC_OFFSET-1 downto 0);
+    signal Y_coord_rotated: signed(CORDIC_WIDTH+CORDIC_OFFSET-1 downto 0);
+    signal Z_coord_rotated: signed(CORDIC_WIDTH+CORDIC_OFFSET-1 downto 0);
+    -- ángulos (van al cordic)
+    signal angle_X: signed(ANGLE_WIDTH-1 downto 0) := (others => '0');
+    signal angle_Y: signed(ANGLE_WIDTH-1 downto 0) := (others => '0');
+    signal angle_Z: signed(ANGLE_WIDTH-1 downto 0) := (others => '0');
+
 	-- LEDS
 	signal sig_led_aux: std_logic_vector(3 downto 0) := "0000";
 	signal sig_binary_to_bcd: std_logic_vector(7 downto 0) := "00000000";
@@ -158,11 +197,11 @@ architecture top_level_arq of top_level is
 	-- Dual Port RAM (para video)
 	signal sig_vram_addr_rd	: std_logic_vector(DPRAM_ADDR_BITS-1 downto 0);
 	signal sig_vram_data_rd	: std_logic_vector(DPRAM_DATA_BITS_WIDTH-1 downto 0);
-		
+    
     -- Maquina de Estados
     type state_t is (state_init, state_waiting_for_uart, state_waiting_for_sram,
-		state_reading_from_uart, state_write_sram, state_uart_end_data_reception, state_idle, state_save_to_dpram
-        );
+		state_reading_from_uart, state_write_sram, state_uart_end_data_reception, state_idle, state_save_to_dpram,
+        state_clean_vram, state_clean_sram);
     signal state_current, state_next : state_t := state_init;
     signal sig_sram_address_current, sig_sram_address_next: natural := 0;
     signal sig_sram_rw_current, sig_sram_rw_next: std_logic_vector(0 downto 0) := "0";
@@ -172,6 +211,7 @@ architecture top_level_arq of top_level is
 	signal sig_vram_addr_wr_current, sig_vram_addr_wr_next : std_logic_vector(DPRAM_ADDR_BITS-1 downto 0) := (others => '0');
 	signal sig_vram_ena_wr_current, sig_vram_ena_wr_next: std_logic := '0';
 	signal sig_vram_data_wr_current, sig_vram_data_wr_next: std_logic_vector(DPRAM_DATA_BITS_WIDTH-1 downto 0) := "0";
+	signal sig_vram_addr_wr_pointer_current, sig_vram_addr_wr_pointer_next : integer range 0 to 2**DPRAM_ADDR_BITS-1;
 
 -- Aquitectura
 
@@ -180,7 +220,7 @@ begin
     process(clk_tl, rst_tl) -- Agregar RESET     
 	begin
 	if(rst_tl='0') then --rst_tl pin got a pullup
-		state_current <= state_init;
+		state_current <= state_clean_sram;
     elsif (clk_tl'event and clk_tl='1') then
         state_current <= state_next;
         sig_sram_address_current <= sig_sram_address_next;
@@ -195,14 +235,15 @@ begin
 		sig_vram_addr_wr_current <= sig_vram_addr_wr_next;
 		sig_vram_ena_wr_current <= sig_vram_ena_wr_next;
 		sig_vram_data_wr_current <= sig_vram_data_wr_next;
+        sig_vram_addr_wr_pointer_current <= sig_vram_addr_wr_pointer_next;
     end if;
     end process;
 
   -- Logica del estado siguiente
     process(sig_uart_readed_data, sig_sram_address_current, state_current, sig_sram_rw_current, xyz_selector_current,
     sig_sram_data_in_current, sig_uart_rx_ready, sig_sram_data_out, sig_sram_address_current, cycles_current, sig_uart_bytes_received_current,
-	x_coord_current, y_coord_current, z_coord_current, sig_vram_addr_wr_current, sig_vram_ena_wr_current, sig_vram_data_wr_current
-	)
+	x_coord_current, y_coord_current, z_coord_current, sig_vram_addr_wr_current, sig_vram_ena_wr_current, sig_vram_data_wr_current,
+	sig_vram_addr_wr_pointer_current)
     begin
 		-- Valores por defecto
 		cycles_next <= cycles_current;
@@ -217,11 +258,12 @@ begin
 		sig_vram_addr_wr_next <= sig_vram_addr_wr_current;
 		sig_vram_ena_wr_next <= sig_vram_ena_wr_current;
 		sig_vram_data_wr_next <= sig_vram_data_wr_current;
-		sig_led_aux <= "0000";
+        sig_vram_addr_wr_pointer_next <= sig_vram_addr_wr_pointer_current;
+		--sig_led_aux <= "0000";
         case state_current is
             when state_init =>
 				sig_uart_bytes_received_next <= 0;
-				sig_led_aux <= "0000";
+				--sig_led_aux <= "0000";
 				sig_sram_address_next <= 0;
                 if cycles_current = 0 then
                     state_next <= state_waiting_for_uart;
@@ -230,7 +272,7 @@ begin
                     state_next <= state_init;
                 end if;
             when state_waiting_for_uart =>
-				sig_led_aux <= "0001";
+				--sig_led_aux <= "0001";
                 if sig_uart_rx_ready = '1' then
                     state_next <= state_reading_from_uart;
                 elsif sig_uart_bytes_received_current = UART_BYTES_TO_RECEIVE then
@@ -254,24 +296,25 @@ begin
 				sig_sram_rw_next <= "0"; 	-- Vamos a necesitar leer
                 sig_sram_address_next <= 0;	-- La prox address de RAM que nos interesa es 0
 			when state_idle =>
-				sig_led_aux <= "0010";
+				--sig_led_aux <= "0010";
 				state_next <= state_idle;
 			when state_save_to_dpram =>
-				sig_led_aux <= "0011";
+				--sig_led_aux <= "0011";
 				if sig_sram_address_current > UART_BYTES_TO_RECEIVE then
 					state_next <= state_idle;
 					sig_vram_addr_wr_next <= "0000000000000000";
+                    sig_sram_address_next <= 0;
 				else
                 	sig_sram_address_next <= sig_sram_address_current + 1;
 					state_next <= state_save_to_dpram;
 					case xyz_selector_current is
 						when 0 =>
-							x_coord_next <= sig_sram_data_out xor "10000000";
+							x_coord_next <= sig_sram_data_out; -- xor "10000000";
                             xyz_selector_next <= xyz_selector_current + 1;
 							sig_vram_ena_wr_next <= '0';
                             sig_vram_data_wr_next <= "0";
 						when 1 =>
-							y_coord_next <= sig_sram_data_out xor "10000000";
+							y_coord_next <= sig_sram_data_out; -- xor "10000000";
 							xyz_selector_next <= xyz_selector_current + 1;
 							sig_vram_ena_wr_next <= '0';
                             sig_vram_data_wr_next <= "0";
@@ -283,7 +326,60 @@ begin
                             sig_vram_addr_wr_next <= y_coord_current(7 downto 0) & x_coord_current(7 downto 0);
 					end case;
 				end if;
-        end case;
+            when state_clean_sram =>
+                --sig_led_aux <= "1111";
+                if sig_sram_address_current < 16383 then --(2**RAM_ADDRESS_WIDTH-1)
+                    sig_sram_address_next <= sig_sram_address_current + 1;
+                    sig_sram_rw_next <= "1";
+                    sig_sram_data_in_next <= "00000000";
+                    sig_vram_addr_wr_pointer_next <= 0;
+                    state_next <= state_clean_sram;
+                else
+                    sig_sram_rw_next <= "0";
+                    sig_sram_address_next <= 0;
+                    state_next <= state_clean_vram;
+                    sig_sram_data_in_next <= "00000000";
+                    sig_vram_addr_wr_pointer_next <= 0;
+                    state_next <= state_clean_vram;
+                end if;
+            when state_clean_vram =>
+                --sig_led_aux <= "1111";
+                if sig_vram_addr_wr_pointer_current < 65535 then --(2**DPRAM_ADDR_BITS-1)
+                    sig_vram_addr_wr_pointer_next <= sig_vram_addr_wr_pointer_current + 1;
+                    sig_vram_ena_wr_next <= '1';
+                    sig_vram_data_wr_next <= "0";
+                    state_next <= state_clean_vram;
+                else
+                    sig_vram_addr_wr_pointer_next <= 0;
+                    sig_vram_ena_wr_next <= '0';
+                    sig_vram_data_wr_next <= "0";
+                    state_next <= state_init;
+                end if;
+                sig_vram_addr_wr_next <= std_logic_vector(to_unsigned(sig_vram_addr_wr_pointer_current, DPRAM_ADDR_BITS));
+            end case;
+    end process;
+    
+    -- hacer un component, meter un debounce sino es un quilombo y sumaria muy rapido
+    process(clk_tl, up_tl, down_tl, left_tl, right_tl)
+    begin
+    if(clk_tl'event and clk_tl='1') then 
+       if up_tl = '0' then
+            angle_z <= angle_z + 1;
+            sig_led_aux <= "0001";
+        end if;
+        if down_tl = '0' then
+            angle_z <= angle_z - 1;
+            sig_led_aux <= "0010";
+        end if;
+        if left_tl = '0' then
+            sig_led_aux <= "0100";
+            angle_x <= angle_x + 1;
+        end if;
+        if right_tl = '0' then
+            sig_led_aux <= "1000";
+            angle_x <= angle_x - 1;
+        end if;
+    end if;
     end process;
 	
 -- Instanciamos componentes a utilizar
@@ -383,6 +479,29 @@ begin
 		digit_select => led_select_tl,
         show_number => sig_binary_to_bcd
 	);
+    
+    
+    x0 <=   signed(std_logic_vector(to_unsigned(0, CORDIC_OFFSET)) & X_coord_current(COORDS_WIDTH-1 downto COORDS_WIDTH-CORDIC_WIDTH)) when X_coord_current(COORDS_WIDTH-1) = '0'else
+            signed(std_logic_vector(to_unsigned((2**CORDIC_OFFSET)-1, CORDIC_OFFSET)) & X_coord_current(COORDS_WIDTH-1 downto COORDS_WIDTH-CORDIC_WIDTH)) when X_coord_current(COORDS_WIDTH-1) = '1';
+    y0 <=   signed(std_logic_vector(to_unsigned(0, CORDIC_OFFSET)) & Y_coord_current(COORDS_WIDTH-1 downto COORDS_WIDTH-CORDIC_WIDTH)) when Y_coord_current(COORDS_WIDTH-1) = '0' else
+            signed(std_logic_vector(to_unsigned((2**CORDIC_OFFSET)-1, CORDIC_OFFSET)) & Y_coord_current(COORDS_WIDTH-1 downto COORDS_WIDTH-CORDIC_WIDTH)) when Y_coord_current(COORDS_WIDTH-1) = '1';
+    z0 <=   signed(std_logic_vector(to_unsigned(0, CORDIC_OFFSET)) & Z_coord_current(COORDS_WIDTH-1 downto COORDS_WIDTH-CORDIC_WIDTH)) when Z_coord_current(COORDS_WIDTH-1) = '0' else
+            signed(std_logic_vector(to_unsigned((2**CORDIC_OFFSET)-1, CORDIC_OFFSET)) & Z_coord_current(COORDS_WIDTH-1 downto COORDS_WIDTH-CORDIC_WIDTH)) when Z_coord_current(COORDS_WIDTH-1) = '1';
+    
+    
+    cordic_rotator: rotator
+    generic map (
+        COORDS_WIDTH=>CORDIC_WIDTH+CORDIC_OFFSET,
+        ANGLES_INTEGER_WIDTH=>ANGLE_WIDTH,
+        STAGES=>STAGES
+    )
+    port map(
+        clk=>clk_tl,
+        X0=>X0, Y0=>Y0, Z0=>Z0,
+        angle_X=>angle_X, angle_Y=>angle_Y, angle_Z=>angle_Z,
+        X=>X_coord_rotated, Y=>Y_coord_rotated, Z=>Z_coord_rotated
+    );
+
     sig_binary_to_bcd <= sig_sram_data_out; --sig_uart_readed_data;
 	sig_sram_address <= std_logic_vector(to_unsigned(sig_sram_address_current, RAM_ADDRESS_WIDTH));
 
