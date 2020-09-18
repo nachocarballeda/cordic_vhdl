@@ -16,10 +16,10 @@ entity top_level is
         constant COORDS_WIDTH: integer := 8;
         constant ANGLE_WIDTH: integer := 8;
         constant STAGES: integer := 8;
-        constant CYCLES_TO_WAIT_CORDIC: natural := 20;
         constant CORDIC_OFFSET: natural := 5;
         constant CORDIC_WIDTH: integer := 8;
         constant ANGLE_STEP: natural := 10;  
+        constant CYCLES_TO_WAIT_TO_CORDIC_TO_FINISH: natural := 20;
         -- Dual Port RAM
         constant DPRAM_ADDR_BITS: natural 	:= 16; -- 8 KBytes 
         constant DPRAM_DATA_BITS_WIDTH: natural := 1
@@ -176,12 +176,21 @@ architecture top_level_arq of top_level is
     signal X_coord_rotated: signed(CORDIC_WIDTH+CORDIC_OFFSET-1 downto 0);
     signal Y_coord_rotated: signed(CORDIC_WIDTH+CORDIC_OFFSET-1 downto 0);
     signal Z_coord_rotated: signed(CORDIC_WIDTH+CORDIC_OFFSET-1 downto 0);
+    -- Coord rotadas no signaldas
+    signal X_coord_rotated_unsigned: std_logic_vector(COORDS_WIDTH-1 downto 0) := (others => '0');
+    signal Y_coord_rotated_unsigned: std_logic_vector(COORDS_WIDTH-1 downto 0) := (others => '0');
+    signal Z_coord_rotated_unsigned: std_logic_vector(COORDS_WIDTH-1 downto 0) := (others => '0');
+
     -- ángulos (van al cordic)
     signal angle_X: signed(ANGLE_WIDTH-1 downto 0) := (others => '0');
     signal angle_Y: signed(ANGLE_WIDTH-1 downto 0) := (others => '0');
     signal angle_Z: signed(ANGLE_WIDTH-1 downto 0) := (others => '0');
+    -- ángulos (entre 0 y 360)
+    signal angle360_x_current, angle360_x_next: unsigned(ANGLE_WIDTH-1 downto 0) := (others => '0');
+    signal angle360_y_current, angle360_y_next: unsigned(ANGLE_WIDTH-1 downto 0) := (others => '0');
+    signal angle360_z_current, angle360_z_next: unsigned(ANGLE_WIDTH-1 downto 0) := (others => '0');
 
-	-- LEDS
+    -- LEDS
 	signal sig_led_aux: std_logic_vector(3 downto 0) := "0000";
 	signal sig_binary_to_bcd: std_logic_vector(7 downto 0) := "00000000";
     
@@ -200,19 +209,19 @@ architecture top_level_arq of top_level is
     
     -- Maquina de Estados
     type state_t is (state_init, state_waiting_for_uart, state_waiting_for_sram,
-		state_reading_from_uart, state_write_sram, state_uart_end_data_reception, state_idle, state_save_to_dpram,
-        state_clean_vram, state_clean_sram);
+		state_reading_from_uart, state_write_sram, state_uart_end_data_reception, state_idle, state_read_from_sram,
+        state_clean_vram, state_clean_sram, state_process_coords, state_print_coords);
     signal state_current, state_next : state_t := state_init;
     signal sig_sram_address_current, sig_sram_address_next: natural := 0;
     signal sig_sram_rw_current, sig_sram_rw_next: std_logic_vector(0 downto 0) := "0";
     signal sig_sram_data_in_current, sig_sram_data_in_next: std_logic_vector(RAM_DATA_WIDTH-1 downto 0) := (others => '0');
-	signal cycles_current, cycles_next: natural := CYCLES_TO_WAIT;
     signal sig_uart_bytes_received_current, sig_uart_bytes_received_next: natural := 0;
 	signal sig_vram_addr_wr_current, sig_vram_addr_wr_next : std_logic_vector(DPRAM_ADDR_BITS-1 downto 0) := (others => '0');
 	signal sig_vram_ena_wr_current, sig_vram_ena_wr_next: std_logic := '0';
 	signal sig_vram_data_wr_current, sig_vram_data_wr_next: std_logic_vector(DPRAM_DATA_BITS_WIDTH-1 downto 0) := "0";
 	signal sig_vram_addr_wr_pointer_current, sig_vram_addr_wr_pointer_next : integer range 0 to 2**DPRAM_ADDR_BITS-1;
-
+    signal cycles_current, cycles_next: natural := CYCLES_TO_WAIT;
+    
 -- Aquitectura
 
 begin
@@ -243,7 +252,7 @@ begin
     process(sig_uart_readed_data, sig_sram_address_current, state_current, sig_sram_rw_current, xyz_selector_current,
     sig_sram_data_in_current, sig_uart_rx_ready, sig_sram_data_out, sig_sram_address_current, cycles_current, sig_uart_bytes_received_current,
 	x_coord_current, y_coord_current, z_coord_current, sig_vram_addr_wr_current, sig_vram_ena_wr_current, sig_vram_data_wr_current,
-	sig_vram_addr_wr_pointer_current)
+	sig_vram_addr_wr_pointer_current, cycles_current)
     begin
 		-- Valores por defecto
 		cycles_next <= cycles_current;
@@ -255,6 +264,7 @@ begin
         x_coord_next <= x_coord_current;
         y_coord_next <= y_coord_current;
         z_coord_next <= z_coord_current;
+        cycles_next <= cycles_current;
 		sig_vram_addr_wr_next <= sig_vram_addr_wr_current;
 		sig_vram_ena_wr_next <= sig_vram_ena_wr_current;
 		sig_vram_data_wr_next <= sig_vram_data_wr_current;
@@ -292,40 +302,50 @@ begin
 				sig_sram_rw_next <= "1";  -- Necesitamos escribir
 				state_next <= state_waiting_for_uart;
             when state_uart_end_data_reception =>
-                state_next <= state_save_to_dpram;
+                state_next <= state_read_from_sram;
 				sig_sram_rw_next <= "0"; 	-- Vamos a necesitar leer
                 sig_sram_address_next <= 0;	-- La prox address de RAM que nos interesa es 0
+                sig_vram_ena_wr_next <= '0';
+                sig_vram_data_wr_next <= "0";
+                sig_vram_addr_wr_next <= (others=> '0');
 			when state_idle =>
 				--sig_led_aux <= "0010";
 				state_next <= state_idle;
-			when state_save_to_dpram =>
+			when state_read_from_sram =>
 				--sig_led_aux <= "0011";
 				if sig_sram_address_current > UART_BYTES_TO_RECEIVE then
-					state_next <= state_idle;
-					sig_vram_addr_wr_next <= "0000000000000000";
+					state_next <= state_clean_sram;
                     sig_sram_address_next <= 0;
 				else
                 	sig_sram_address_next <= sig_sram_address_current + 1;
-					state_next <= state_save_to_dpram;
 					case xyz_selector_current is
 						when 0 =>
 							x_coord_next <= sig_sram_data_out; -- xor "10000000";
                             xyz_selector_next <= xyz_selector_current + 1;
-							sig_vram_ena_wr_next <= '0';
-                            sig_vram_data_wr_next <= "0";
+                            state_next <= state_read_from_sram;
 						when 1 =>
 							y_coord_next <= sig_sram_data_out; -- xor "10000000";
 							xyz_selector_next <= xyz_selector_current + 1;
-							sig_vram_ena_wr_next <= '0';
-                            sig_vram_data_wr_next <= "0";
+                            state_next <= state_read_from_sram;
 						when others =>
 							z_coord_next <= sig_sram_data_out;
 							xyz_selector_next <= 0;
-							sig_vram_ena_wr_next <= '1';
-							sig_vram_data_wr_next <= "1";
-                            sig_vram_addr_wr_next <= y_coord_current(7 downto 0) & x_coord_current(7 downto 0);
+                            state_next <= state_process_coords;
+                            cycles_next <= CYCLES_TO_WAIT_TO_CORDIC_TO_FINISH;
 					end case;
 				end if;
+            when state_process_coords =>
+                if cycles_current < CYCLES_TO_WAIT_TO_CORDIC_TO_FINISH then
+                    cycles_next <= cycles_current + 1;
+                    state_next <= state_process_coords;
+                else
+                    state_next <= state_print_coords;
+                end if;
+            when state_print_coords =>
+                sig_vram_ena_wr_next <= '1';
+                sig_vram_data_wr_next <= "1";
+                sig_vram_addr_wr_next <= Y_coord_rotated_unsigned(7 downto 0) & X_coord_rotated_unsigned(7 downto 0);
+                state_next <= state_read_from_sram;
             when state_clean_sram =>
                 --sig_led_aux <= "1111";
                 if sig_sram_address_current < 16383 then --(2**RAM_ADDRESS_WIDTH-1)
@@ -337,10 +357,9 @@ begin
                 else
                     sig_sram_rw_next <= "0";
                     sig_sram_address_next <= 0;
-                    state_next <= state_clean_vram;
                     sig_sram_data_in_next <= "00000000";
                     sig_vram_addr_wr_pointer_next <= 0;
-                    state_next <= state_clean_vram;
+                    state_next <= state_init;
                 end if;
             when state_clean_vram =>
                 --sig_led_aux <= "1111";
@@ -353,7 +372,7 @@ begin
                     sig_vram_addr_wr_pointer_next <= 0;
                     sig_vram_ena_wr_next <= '0';
                     sig_vram_data_wr_next <= "0";
-                    state_next <= state_init;
+                    state_next <= state_read_from_sram;
                 end if;
                 sig_vram_addr_wr_next <= std_logic_vector(to_unsigned(sig_vram_addr_wr_pointer_current, DPRAM_ADDR_BITS));
             end case;
@@ -481,14 +500,17 @@ begin
 	);
     
     
-    x0 <=   signed(std_logic_vector(to_unsigned(0, CORDIC_OFFSET)) & X_coord_current(COORDS_WIDTH-1 downto COORDS_WIDTH-CORDIC_WIDTH)) when X_coord_current(COORDS_WIDTH-1) = '0'else
+    x0 <=   signed(std_logic_vector(to_unsigned(0, CORDIC_OFFSET)) & X_coord_current(COORDS_WIDTH-1 downto COORDS_WIDTH-CORDIC_WIDTH)) when X_coord_current(COORDS_WIDTH-1) = '0' else
             signed(std_logic_vector(to_unsigned((2**CORDIC_OFFSET)-1, CORDIC_OFFSET)) & X_coord_current(COORDS_WIDTH-1 downto COORDS_WIDTH-CORDIC_WIDTH)) when X_coord_current(COORDS_WIDTH-1) = '1';
     y0 <=   signed(std_logic_vector(to_unsigned(0, CORDIC_OFFSET)) & Y_coord_current(COORDS_WIDTH-1 downto COORDS_WIDTH-CORDIC_WIDTH)) when Y_coord_current(COORDS_WIDTH-1) = '0' else
             signed(std_logic_vector(to_unsigned((2**CORDIC_OFFSET)-1, CORDIC_OFFSET)) & Y_coord_current(COORDS_WIDTH-1 downto COORDS_WIDTH-CORDIC_WIDTH)) when Y_coord_current(COORDS_WIDTH-1) = '1';
     z0 <=   signed(std_logic_vector(to_unsigned(0, CORDIC_OFFSET)) & Z_coord_current(COORDS_WIDTH-1 downto COORDS_WIDTH-CORDIC_WIDTH)) when Z_coord_current(COORDS_WIDTH-1) = '0' else
             signed(std_logic_vector(to_unsigned((2**CORDIC_OFFSET)-1, CORDIC_OFFSET)) & Z_coord_current(COORDS_WIDTH-1 downto COORDS_WIDTH-CORDIC_WIDTH)) when Z_coord_current(COORDS_WIDTH-1) = '1';
     
-    
+    X_coord_rotated_unsigned <= std_logic_vector(X_coord_rotated(CORDIC_WIDTH-1 downto 0));
+    Y_coord_rotated_unsigned <= std_logic_vector(Y_coord_rotated(CORDIC_WIDTH-1 downto 0));
+    Z_coord_rotated_unsigned <= std_logic_vector(Z_coord_rotated(CORDIC_WIDTH-1 downto 0));
+
     cordic_rotator: rotator
     generic map (
         COORDS_WIDTH=>CORDIC_WIDTH+CORDIC_OFFSET,
