@@ -16,9 +16,8 @@ entity top_level is
         constant COORDS_WIDTH: integer := 8;
         constant ANGLE_WIDTH: integer := 8;
         constant STAGES: integer := 8;
-        constant CORDIC_OFFSET: natural := 5;
         constant CORDIC_WIDTH: integer := 8;
-        constant ANGLE_STEP: natural := 10;  
+        constant ANGLE_STEP: natural := 1;  
         constant CYCLES_TO_WAIT_TO_CORDIC_TO_FINISH: natural := 20;
         -- Dual Port RAM
         constant DPRAM_ADDR_BITS: natural 	:= 16; -- 8 KBytes 
@@ -148,10 +147,16 @@ architecture top_level_arq of top_level is
         angle_X, angle_Y, angle_Z   :   in signed(ANGLES_INTEGER_WIDTH-1 downto 0);
         X, Y, Z                     :   out signed(COORDS_WIDTH-1 downto 0)
     );
-
     end component;
 
-
+    component debounce is
+    port (
+      clk, reset: in std_logic;
+      sw: in std_logic;
+      db_level, db_tick: out std_logic
+    );
+    end component;
+    
 	-- Señales auxiliares para pasar interconexion
 
 	signal sig_aux_pixel_x_i: std_logic_vector(9 downto 0) := "0000000000";
@@ -171,11 +176,11 @@ architecture top_level_arq of top_level is
     signal z_coord_current, z_coord_next: std_logic_vector(COORDS_WIDTH-1 downto 0) := (others => '0');
 	
     -- Entradas del rotador
-    signal X0, Y0, Z0: signed(CORDIC_WIDTH+CORDIC_OFFSET-1 downto 0);
+    signal X0, Y0, Z0: signed(CORDIC_WIDTH-1 downto 0);
     -- Coordenadas rotadas
-    signal X_coord_rotated: signed(CORDIC_WIDTH+CORDIC_OFFSET-1 downto 0);
-    signal Y_coord_rotated: signed(CORDIC_WIDTH+CORDIC_OFFSET-1 downto 0);
-    signal Z_coord_rotated: signed(CORDIC_WIDTH+CORDIC_OFFSET-1 downto 0);
+    signal X_coord_rotated: signed(CORDIC_WIDTH-1 downto 0);
+    signal Y_coord_rotated: signed(CORDIC_WIDTH-1 downto 0);
+    signal Z_coord_rotated: signed(CORDIC_WIDTH-1 downto 0);
     -- Coord rotadas no signaldas
     signal X_coord_rotated_unsigned: std_logic_vector(COORDS_WIDTH-1 downto 0) := (others => '0');
     signal Y_coord_rotated_unsigned: std_logic_vector(COORDS_WIDTH-1 downto 0) := (others => '0');
@@ -193,6 +198,12 @@ architecture top_level_arq of top_level is
     -- LEDS
 	signal sig_led_aux: std_logic_vector(3 downto 0) := "0000";
 	signal sig_binary_to_bcd: std_logic_vector(7 downto 0) := "00000000";
+    
+    -- Buttons Debounce
+    signal up_debounced: std_logic := '0';
+    signal down_debounced: std_logic := '0';
+    signal left_debounced: std_logic := '0';
+    signal right_debounced: std_logic := '0';
     
 	-- UART
 	constant Divisor 			: std_logic_vector := "000000011011"; -- Divisor=27 para 115200 baudios
@@ -269,11 +280,11 @@ begin
 		sig_vram_ena_wr_next <= sig_vram_ena_wr_current;
 		sig_vram_data_wr_next <= sig_vram_data_wr_current;
         sig_vram_addr_wr_pointer_next <= sig_vram_addr_wr_pointer_current;
-		--sig_led_aux <= "0000";
+		sig_led_aux <= "0000";
         case state_current is
             when state_init =>
 				sig_uart_bytes_received_next <= 0;
-				--sig_led_aux <= "0000";
+				sig_led_aux <= "0000";
 				sig_sram_address_next <= 0;
                 if cycles_current = 0 then
                     state_next <= state_waiting_for_uart;
@@ -282,7 +293,7 @@ begin
                     state_next <= state_init;
                 end if;
             when state_waiting_for_uart =>
-				--sig_led_aux <= "0001";
+				sig_led_aux <= "0001";
                 if sig_uart_rx_ready = '1' then
                     state_next <= state_reading_from_uart;
                 elsif sig_uart_bytes_received_current = UART_BYTES_TO_RECEIVE then
@@ -309,29 +320,30 @@ begin
                 sig_vram_data_wr_next <= "0";
                 sig_vram_addr_wr_next <= (others=> '0');
 			when state_idle =>
-				--sig_led_aux <= "0010";
+				sig_led_aux <= "0010";
 				state_next <= state_idle;
 			when state_read_from_sram =>
-				--sig_led_aux <= "0011";
+				sig_led_aux <= "0011";
 				if sig_sram_address_current > UART_BYTES_TO_RECEIVE then
-					state_next <= state_clean_sram;
+					state_next <= state_clean_vram;
                     sig_sram_address_next <= 0;
 				else
                 	sig_sram_address_next <= sig_sram_address_current + 1;
+                    sig_vram_ena_wr_next <= '0';
 					case xyz_selector_current is
 						when 0 =>
-							x_coord_next <= sig_sram_data_out; -- xor "10000000";
+							x_coord_next <= sig_sram_data_out;
                             xyz_selector_next <= xyz_selector_current + 1;
                             state_next <= state_read_from_sram;
 						when 1 =>
-							y_coord_next <= sig_sram_data_out; -- xor "10000000";
+							y_coord_next <= sig_sram_data_out;
 							xyz_selector_next <= xyz_selector_current + 1;
                             state_next <= state_read_from_sram;
 						when others =>
 							z_coord_next <= sig_sram_data_out;
 							xyz_selector_next <= 0;
                             state_next <= state_process_coords;
-                            cycles_next <= CYCLES_TO_WAIT_TO_CORDIC_TO_FINISH;
+                            cycles_next <= 0;
 					end case;
 				end if;
             when state_process_coords =>
@@ -344,11 +356,11 @@ begin
             when state_print_coords =>
                 sig_vram_ena_wr_next <= '1';
                 sig_vram_data_wr_next <= "1";
-                sig_vram_addr_wr_next <= Y_coord_rotated_unsigned(7 downto 0) & X_coord_rotated_unsigned(7 downto 0);
+                sig_vram_addr_wr_next <= Z_coord_rotated_unsigned(7 downto 0) & X_coord_rotated_unsigned(7 downto 0);
                 state_next <= state_read_from_sram;
             when state_clean_sram =>
-                --sig_led_aux <= "1111";
-                if sig_sram_address_current < 16383 then --(2**RAM_ADDRESS_WIDTH-1)
+                sig_led_aux <= "1111";
+                if sig_sram_address_current < (2**RAM_ADDRESS_WIDTH-1) then
                     sig_sram_address_next <= sig_sram_address_current + 1;
                     sig_sram_rw_next <= "1";
                     sig_sram_data_in_next <= "00000000";
@@ -362,8 +374,8 @@ begin
                     state_next <= state_init;
                 end if;
             when state_clean_vram =>
-                --sig_led_aux <= "1111";
-                if sig_vram_addr_wr_pointer_current < 65535 then --(2**DPRAM_ADDR_BITS-1)
+                sig_led_aux <= "1111";
+                if sig_vram_addr_wr_pointer_current < 2**DPRAM_ADDR_BITS-1 then
                     sig_vram_addr_wr_pointer_next <= sig_vram_addr_wr_pointer_current + 1;
                     sig_vram_ena_wr_next <= '1';
                     sig_vram_data_wr_next <= "0";
@@ -379,24 +391,24 @@ begin
     end process;
     
     -- hacer un component, meter un debounce sino es un quilombo y sumaria muy rapido
-    process(clk_tl, up_tl, down_tl, left_tl, right_tl)
+    process(clk_tl, up_debounced, down_debounced, left_debounced, right_debounced)
     begin
     if(clk_tl'event and clk_tl='1') then 
-       if up_tl = '0' then
+       if up_debounced = '1' then
             angle_z <= angle_z + 1;
-            sig_led_aux <= "0001";
+            --sig_led_aux <= "0001";
         end if;
-        if down_tl = '0' then
+        if down_debounced = '1' then
             angle_z <= angle_z - 1;
-            sig_led_aux <= "0010";
+            --sig_led_aux <= "0010";
         end if;
-        if left_tl = '0' then
-            sig_led_aux <= "0100";
-            angle_x <= angle_x + 1;
+        if left_debounced = '1' then
+            --sig_led_aux <= "0100";
+            --angle_x <= 0;--angle_x + 1;
         end if;
-        if right_tl = '0' then
-            sig_led_aux <= "1000";
-            angle_x <= angle_x - 1;
+        if right_debounced = '1' then
+            --sig_led_aux <= "1000";
+            --angle_x <= 0;--angle_x - 1;
         end if;
     end if;
     end process;
@@ -499,21 +511,43 @@ begin
         show_number => sig_binary_to_bcd
 	);
     
+    -- instantiate 4 debouncers
+    debounce_unit0: debounce
+    port map(
+        clk=>clk_tl, reset=>not rst_tl, sw=>not up_tl,
+        db_level=>open, db_tick=>up_debounced
+    );
     
-    x0 <=   signed(std_logic_vector(to_unsigned(0, CORDIC_OFFSET)) & X_coord_current(COORDS_WIDTH-1 downto COORDS_WIDTH-CORDIC_WIDTH)) when X_coord_current(COORDS_WIDTH-1) = '0' else
-            signed(std_logic_vector(to_unsigned((2**CORDIC_OFFSET)-1, CORDIC_OFFSET)) & X_coord_current(COORDS_WIDTH-1 downto COORDS_WIDTH-CORDIC_WIDTH)) when X_coord_current(COORDS_WIDTH-1) = '1';
-    y0 <=   signed(std_logic_vector(to_unsigned(0, CORDIC_OFFSET)) & Y_coord_current(COORDS_WIDTH-1 downto COORDS_WIDTH-CORDIC_WIDTH)) when Y_coord_current(COORDS_WIDTH-1) = '0' else
-            signed(std_logic_vector(to_unsigned((2**CORDIC_OFFSET)-1, CORDIC_OFFSET)) & Y_coord_current(COORDS_WIDTH-1 downto COORDS_WIDTH-CORDIC_WIDTH)) when Y_coord_current(COORDS_WIDTH-1) = '1';
-    z0 <=   signed(std_logic_vector(to_unsigned(0, CORDIC_OFFSET)) & Z_coord_current(COORDS_WIDTH-1 downto COORDS_WIDTH-CORDIC_WIDTH)) when Z_coord_current(COORDS_WIDTH-1) = '0' else
-            signed(std_logic_vector(to_unsigned((2**CORDIC_OFFSET)-1, CORDIC_OFFSET)) & Z_coord_current(COORDS_WIDTH-1 downto COORDS_WIDTH-CORDIC_WIDTH)) when Z_coord_current(COORDS_WIDTH-1) = '1';
+    debounce_unit1: debounce
+    port map(
+        clk=>clk_tl, reset=>not rst_tl, sw=>not down_tl,
+        db_level=>open, db_tick=>down_debounced
+    );
     
-    X_coord_rotated_unsigned <= std_logic_vector(X_coord_rotated(CORDIC_WIDTH-1 downto 0));
-    Y_coord_rotated_unsigned <= std_logic_vector(Y_coord_rotated(CORDIC_WIDTH-1 downto 0));
-    Z_coord_rotated_unsigned <= std_logic_vector(Z_coord_rotated(CORDIC_WIDTH-1 downto 0));
+    debounce_unit2: debounce
+    port map(
+        clk=>clk_tl, reset=>not rst_tl, sw=>not left_tl,
+        db_level=>open, db_tick=>left_debounced
+     );
+     
+    debounce_unit3: debounce
+    port map(
+        clk=>clk_tl, reset=>not rst_tl, sw=>not right_tl,
+        db_level=>open, db_tick=>right_debounced
+    );
+
+    
+    x0 <=   signed(std_logic_vector(X_coord_current(COORDS_WIDTH-1 downto 0)));
+    y0 <=   signed(std_logic_vector(Y_coord_current(COORDS_WIDTH-1 downto 0)));
+    z0 <=   signed(std_logic_vector(Z_coord_current(COORDS_WIDTH-1 downto 0)));
+    
+    X_coord_rotated_unsigned <= std_logic_vector(X_coord_rotated(CORDIC_WIDTH-1 downto 0)) xor "10000000";
+    Y_coord_rotated_unsigned <= std_logic_vector(Y_coord_rotated(CORDIC_WIDTH-1 downto 0)) xor "10000000";
+    Z_coord_rotated_unsigned <= std_logic_vector(Z_coord_rotated(CORDIC_WIDTH-1 downto 0)) xor "10000000";
 
     cordic_rotator: rotator
     generic map (
-        COORDS_WIDTH=>CORDIC_WIDTH+CORDIC_OFFSET,
+        COORDS_WIDTH=>CORDIC_WIDTH,
         ANGLES_INTEGER_WIDTH=>ANGLE_WIDTH,
         STAGES=>STAGES
     )
