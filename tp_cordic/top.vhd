@@ -263,7 +263,7 @@ begin
     process(sig_uart_readed_data, sig_sram_address_current, state_current, sig_sram_rw_current, xyz_selector_current,
     sig_sram_data_in_current, sig_uart_rx_ready, sig_sram_data_out, sig_sram_address_current, cycles_current, sig_uart_bytes_received_current,
 	x_coord_current, y_coord_current, z_coord_current, sig_vram_addr_wr_current, sig_vram_ena_wr_current, sig_vram_data_wr_current,
-	sig_vram_addr_wr_pointer_current, cycles_current)
+	sig_vram_addr_wr_pointer_current, cycles_current, Y_coord_rotated_unsigned, Z_coord_rotated_unsigned)
     begin
 		-- Valores por defecto
 		cycles_next <= cycles_current;
