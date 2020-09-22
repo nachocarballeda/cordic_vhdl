@@ -45,7 +45,7 @@ ENTITY RAM IS
     clka : IN STD_LOGIC;
     rsta : IN STD_LOGIC;
     wea : IN STD_LOGIC_VECTOR(0 DOWNTO 0);
-    addra : IN STD_LOGIC_VECTOR(13 DOWNTO 0);
+    addra : IN STD_LOGIC_VECTOR(14 DOWNTO 0);
     dina : IN STD_LOGIC_VECTOR(7 DOWNTO 0);
     douta : OUT STD_LOGIC_VECTOR(7 DOWNTO 0)
   );
@@ -58,7 +58,7 @@ COMPONENT wrapped_RAM
     clka : IN STD_LOGIC;
     rsta : IN STD_LOGIC;
     wea : IN STD_LOGIC_VECTOR(0 DOWNTO 0);
-    addra : IN STD_LOGIC_VECTOR(13 DOWNTO 0);
+    addra : IN STD_LOGIC_VECTOR(14 DOWNTO 0);
     dina : IN STD_LOGIC_VECTOR(7 DOWNTO 0);
     douta : OUT STD_LOGIC_VECTOR(7 DOWNTO 0)
   );
@@ -67,8 +67,8 @@ END COMPONENT;
 -- Configuration specification
   FOR ALL : wrapped_RAM USE ENTITY XilinxCoreLib.blk_mem_gen_v7_3(behavioral)
     GENERIC MAP (
-      c_addra_width => 14,
-      c_addrb_width => 14,
+      c_addra_width => 15,
+      c_addrb_width => 15,
       c_algorithm => 1,
       c_axi_id_width => 4,
       c_axi_slave_type => 0,
@@ -103,8 +103,8 @@ END COMPONENT;
       c_mem_type => 0,
       c_mux_pipeline_stages => 0,
       c_prim_type => 1,
-      c_read_depth_a => 11946,
-      c_read_depth_b => 11946,
+      c_read_depth_a => 32767,
+      c_read_depth_b => 32767,
       c_read_width_a => 8,
       c_read_width_b => 8,
       c_rst_priority_a => "CE",
@@ -121,8 +121,8 @@ END COMPONENT;
       c_use_softecc => 0,
       c_wea_width => 1,
       c_web_width => 1,
-      c_write_depth_a => 11946,
-      c_write_depth_b => 11946,
+      c_write_depth_a => 32767,
+      c_write_depth_b => 32767,
       c_write_mode_a => "WRITE_FIRST",
       c_write_mode_b => "WRITE_FIRST",
       c_write_width_a => 8,
