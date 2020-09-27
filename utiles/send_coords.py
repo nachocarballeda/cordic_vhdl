@@ -3,12 +3,10 @@
 import serial
 
 COORDS_WIDTH = 7
-LINES_TOTAL = 10923 #11946 Saque unas lineas para necesitar un bit menos de RAM addr
+LINES_TOTAL = 2961 #11946 Saque unas lineas para necesitar un bit menos de RAM addr
 
 with open('coords.txt') as fp, serial.Serial('/dev/ttyUSB0', 115200, timeout=1) as serial:
-    
     for line_number, line in enumerate(fp):
-        
         if line_number < LINES_TOTAL:
 
             x = int(float(line.split('\t')[0])*2**COORDS_WIDTH)
@@ -22,6 +20,5 @@ with open('coords.txt') as fp, serial.Serial('/dev/ttyUSB0', 115200, timeout=1) 
             serial.write((y).to_bytes(1, 'big', signed=y_signed))
             serial.write((z).to_bytes(1, 'big', signed=z_signed))
 
-
-            # imprimo coordenadas por pantalla a medida que las voy enviando, junto con su address 
+            # imprimo coordenadas por pantalla a medida que las voy enviando, junto con su address
             print(f"Line {line_number}, RAM Address: {line_number*3}: X={hex(x)} Y={hex(y)} Z={hex(z)}")
