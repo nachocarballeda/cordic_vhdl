@@ -3,7 +3,7 @@
 import serial
 
 COORDS_WIDTH = 8
-LINES_TOTAL = 2961 #11946 Saque unas lineas para necesitar un bit menos de RAM addr
+LINES_TOTAL = 10923
 
 with open('coordenadas.txt') as fp, serial.Serial('/dev/ttyUSB0', 115200, timeout=1) as serial:
     for line_number, line in enumerate(fp):

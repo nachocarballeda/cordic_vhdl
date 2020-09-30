@@ -1,0 +1,114 @@
+V3 64
+FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/bcd_converter.vhd 2020/09/12.17:23:22 P.20131013
+EN work/binary_bcd 1601429880 \
+      FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/bcd_converter.vhd \
+      PB ieee/std_logic_1164 1381692176 PB ieee/STD_LOGIC_UNSIGNED 1381692179
+AR work/binary_bcd/behaviour 1601429881 \
+      FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/bcd_converter.vhd \
+      EN work/binary_bcd 1601429880
+FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/Cordic/cordic.vhdl 2020/09/29.21:40:35 P.20131013
+EN work/cordic 1601429878 \
+      FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/Cordic/cordic.vhdl \
+      PB ieee/std_logic_1164 1381692176 PB ieee/NUMERIC_STD 1381692181
+AR work/cordic/behavioral 1601429879 \
+      FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/Cordic/cordic.vhdl \
+      EN work/cordic 1601429878 CP cordic_stage
+FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/Cordic/cordic_stage.vhdl 2020/09/29.21:39:56 P.20131013
+EN work/cordic_stage 1601429876 \
+      FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/Cordic/cordic_stage.vhdl \
+      PB ieee/std_logic_1164 1381692176 PB ieee/NUMERIC_STD 1381692181
+AR work/cordic_stage/behavioral 1601429877 \
+      FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/Cordic/cordic_stage.vhdl \
+      EN work/cordic_stage 1601429876
+FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/Cordic/rotator.vhdl 2020/09/29.21:39:36 P.20131013
+EN work/rotator 1601429903 \
+      FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/Cordic/rotator.vhdl \
+      PB ieee/std_logic_1164 1381692176 PB ieee/NUMERIC_STD 1381692181
+AR work/rotator/behavioral 1601429904 \
+      FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/Cordic/rotator.vhdl \
+      EN work/rotator 1601429903 CP cordic
+FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/debounce.vhd 2020/09/29.21:44:26 P.20131013
+EN work/debounce 1601429901 \
+      FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/debounce.vhd \
+      PB ieee/std_logic_1164 1381692176 PB ieee/NUMERIC_STD 1381692181
+AR work/debounce/exp_fsmd_arch 1601429902 \
+      FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/debounce.vhd \
+      EN work/debounce 1601429901
+FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/seven_seg_display.vhd 2020/09/12.17:36:52 P.20131013
+EN work/LED8 1601429899 \
+      FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/seven_seg_display.vhd \
+      PB ieee/std_logic_1164 1381692176 PB ieee/STD_LOGIC_UNSIGNED 1381692179 \
+      PB ieee/std_logic_arith 1381692177
+AR work/LED8/Behavioral 1601429900 \
+      FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/seven_seg_display.vhd \
+      EN work/LED8 1601429899 CP binary_bcd
+FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/top.vhd 2020/09/29.22:36:52 P.20131013
+EN work/top_level 1601429905 \
+      FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/top.vhd \
+      PB ieee/std_logic_1164 1381692176 PB ieee/NUMERIC_STD 1381692181
+AR work/top_level/top_level_arq 1601429906 \
+      FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/top.vhd \
+      EN work/top_level 1601429905 CP vga_ctrl CP sram CP uart CP dpram \
+      CP video_driver CP LED8 CP debounce CP rotator
+FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/UART/receive.vhd 2020/09/27.23:07:03 P.20131013
+EN work/receive 1601429883 \
+      FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/UART/receive.vhd \
+      PB ieee/std_logic_1164 1381692176 PB ieee/NUMERIC_STD 1381692181
+AR work/receive/arch 1601429884 \
+      FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/UART/receive.vhd \
+      EN work/receive 1601429883
+FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/UART/timing.vhd 2020/08/09.16:55:14 P.20131013
+EN work/timing 1601429887 \
+      FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/UART/timing.vhd \
+      PB ieee/std_logic_1164 1381692176 PB ieee/NUMERIC_STD 1381692181 \
+      PB ieee/STD_LOGIC_UNSIGNED 1381692179
+AR work/timing/timing 1601429888 \
+      FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/UART/timing.vhd \
+      EN work/timing 1601429887
+FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/UART/transmit.vhd 2020/09/27.23:07:03 P.20131013
+EN work/transmit 1601429885 \
+      FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/UART/transmit.vhd \
+      PB ieee/std_logic_1164 1381692176 PB ieee/NUMERIC_STD 1381692181
+AR work/transmit/arch 1601429886 \
+      FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/UART/transmit.vhd \
+      EN work/transmit 1601429885
+FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/UART/uart.vhd 2020/09/29.22:10:53 P.20131013
+EN work/uart 1601429893 \
+      FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/UART/uart.vhd \
+      PB ieee/std_logic_1164 1381692176 PB ieee/NUMERIC_STD 1381692181 \
+      PH work/uart_comps 1601429882
+AR work/uart/arch 1601429894 \
+      FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/UART/uart.vhd \
+      EN work/uart 1601429893 CP receive CP transmit CP timing
+FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/UART/uart_comps.vhd 2020/08/09.16:55:14 P.20131013
+PH work/uart_comps 1601429882 \
+      FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/UART/uart_comps.vhd \
+      PB ieee/std_logic_1164 1381692176 CD timing CD transmit CD receive
+FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/VGA/VGActrl.vhd 2020/09/27.10:14:57 P.20131013
+EN work/vga_ctrl 1601429889 \
+      FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/VGA/VGActrl.vhd \
+      PB ieee/std_logic_1164 1381692176 PB ieee/NUMERIC_STD 1381692181
+AR work/vga_ctrl/vga_ctrl_arq 1601429890 \
+      FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/VGA/VGActrl.vhd \
+      EN work/vga_ctrl 1601429889
+FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/video_driver.vhd 2020/09/29.22:20:28 P.20131013
+EN work/video_driver 1601429897 \
+      FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/video_driver.vhd \
+      PB ieee/std_logic_1164 1381692176 PB ieee/NUMERIC_STD 1381692181
+AR work/video_driver/Behavioral 1601429898 \
+      FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/video_driver.vhd \
+      EN work/video_driver 1601429897
+FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/vram.vhd 2020/09/27.12:24:17 P.20131013
+EN work/dpram 1601429895 \
+      FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/vram.vhd \
+      PB ieee/std_logic_1164 1381692176 PB ieee/NUMERIC_STD 1381692181
+AR work/dpram/rtl 1601429896 \
+      FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/vram.vhd \
+      EN work/dpram 1601429895
+FL /home/ignatius/Documents/repos/cordic_vhdl/clean/trabajo_final/ipcore_dir/sram.vhd 2020/09/29.22:37:25 P.20131013
+EN work/sram 1601429891 \
+      FL /home/ignatius/Documents/repos/cordic_vhdl/clean/trabajo_final/ipcore_dir/sram.vhd \
+      PB ieee/std_logic_1164 1381692176
+AR work/sram/sram_a 1601429892 \
+      FL /home/ignatius/Documents/repos/cordic_vhdl/clean/trabajo_final/ipcore_dir/sram.vhd \
+      EN work/sram 1601429891
