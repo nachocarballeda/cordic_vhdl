@@ -33,11 +33,12 @@ begin
     Yshifted <= shift_right(Y0, to_integer(step));
     sigma <= Z0(ANGLE_WIDTH-1);
 
-    X <=    X0 - Yshifted   when sigma = '0' else   -- si el Ã¡ngulo es mayor a cero
-            X0 + Yshifted;                          -- si el Ã¡ngulo es menor a cero
-    Y <=    Y0 + Xshifted   when sigma = '0' else   -- si el Ã¡ngulo es mayor a cero
-            Y0 - Xshifted;                          -- si el Ã¡ngulo es menor a cero
-    Z <=    Z0 - atan       when sigma = '0' else   -- si el Ã¡ngulo es mayor a cero
-            Z0 + atan;                              -- si el Ã¡ngulo es menor a cero
+    X <=    X0 - Yshifted   when sigma = '0' else   -- si el ángulo es mayor a cero
+            X0 + Yshifted;                          -- si el ángulo es menor a cero
+    Y <=    Y0 + Xshifted   when sigma = '0' else   -- si el ángulo es mayor a cero
+            Y0 - Xshifted;                          -- si el ángulo es menor a cero
+    Z <=    Z0 - atan       when sigma = '0' else   -- si el ángulo es mayor a cero
+            Z0 + atan;                              -- si el ángulo es menor a cero
 
 end architecture behavioral;
+
