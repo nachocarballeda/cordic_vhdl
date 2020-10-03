@@ -1,0 +1,3 @@
+vhdl work "../../../fiuba/SistemasDigitales/proyectos_de_otra_gente/sdigitales-tfinal/rotator/src/cordic_stage.vhdl"
+vhdl work "../../../fiuba/SistemasDigitales/proyectos_de_otra_gente/sdigitales-tfinal/rotator/src/cordic.vhdl"
+vhdl work "../../../fiuba/SistemasDigitales/proyectos_de_otra_gente/sdigitales-tfinal/rotator/src/rotator.vhdl"

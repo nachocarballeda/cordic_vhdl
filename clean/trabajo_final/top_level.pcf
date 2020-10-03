@@ -1,8 +1,12 @@
 //! **************************************************************************
-// Written by: Map P.20131013 on Tue Sep 29 22:38:22 2020
+// Written by: Map P.20131013 on Sat Oct 03 16:09:40 2020
 //! **************************************************************************
 
 SCHEMATIC START;
+COMP "matrix_btn_col_tl<0>" LOCATE = SITE "P132" LEVEL 1;
+COMP "matrix_btn_col_tl<1>" LOCATE = SITE "P129" LEVEL 1;
+COMP "matrix_btn_col_tl<2>" LOCATE = SITE "P128" LEVEL 1;
+COMP "matrix_btn_col_tl<3>" LOCATE = SITE "P127" LEVEL 1;
 COMP "red_out_tl<0>" LOCATE = SITE "P96" LEVEL 1;
 COMP "red_out_tl<1>" LOCATE = SITE "P98" LEVEL 1;
 COMP "red_out_tl<2>" LOCATE = SITE "P100" LEVEL 1;
@@ -14,9 +18,6 @@ COMP "led_tl<1>" LOCATE = SITE "P78" LEVEL 1;
 COMP "led_tl<2>" LOCATE = SITE "P83" LEVEL 1;
 COMP "led_tl<3>" LOCATE = SITE "P89" LEVEL 1;
 COMP "hs_tl" LOCATE = SITE "P115" LEVEL 1;
-COMP "left_tl" LOCATE = SITE "P126" LEVEL 1;
-COMP "down_tl" LOCATE = SITE "P123" LEVEL 1;
-COMP "up_tl" LOCATE = SITE "P129" LEVEL 1;
 COMP "rx_tl" LOCATE = SITE "P75" LEVEL 1;
 COMP "vs_tl" LOCATE = SITE "P113" LEVEL 1;
 COMP "tx_tl" LOCATE = SITE "P76" LEVEL 1;
@@ -24,6 +25,10 @@ COMP "led_select_tl<0>" LOCATE = SITE "P145" LEVEL 1;
 COMP "led_select_tl<1>" LOCATE = SITE "P147" LEVEL 1;
 COMP "led_select_tl<2>" LOCATE = SITE "P151" LEVEL 1;
 COMP "led_select_tl<3>" LOCATE = SITE "P153" LEVEL 1;
+COMP "matrix_btn_row_tl<0>" LOCATE = SITE "P126" LEVEL 1;
+COMP "matrix_btn_row_tl<1>" LOCATE = SITE "P123" LEVEL 1;
+COMP "matrix_btn_row_tl<2>" LOCATE = SITE "P122" LEVEL 1;
+COMP "matrix_btn_row_tl<3>" LOCATE = SITE "P120" LEVEL 1;
 COMP "clk_tl" LOCATE = SITE "P184" LEVEL 1;
 COMP "led_out_tl<0>" LOCATE = SITE "P160" LEVEL 1;
 COMP "led_out_tl<1>" LOCATE = SITE "P152" LEVEL 1;
@@ -33,10 +38,8 @@ COMP "led_out_tl<4>" LOCATE = SITE "P144" LEVEL 1;
 COMP "led_out_tl<5>" LOCATE = SITE "P139" LEVEL 1;
 COMP "led_out_tl<6>" LOCATE = SITE "P137" LEVEL 1;
 COMP "led_out_tl<7>" LOCATE = SITE "P134" LEVEL 1;
-COMP "rst_tl" LOCATE = SITE "P132" LEVEL 1;
 COMP "blu_out_tl<0>" LOCATE = SITE "P94" LEVEL 1;
 COMP "blu_out_tl<1>" LOCATE = SITE "P97" LEVEL 1;
-COMP "right_tl" LOCATE = SITE "P122" LEVEL 1;
 NET "clk_tl_BUFGP/IBUFG" BEL "clk_tl_BUFGP/BUFG.GCLKMUX" USELOCALCONNECT;
 SCHEMATIC END;
 

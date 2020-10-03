@@ -40,37 +40,40 @@ Data Sheet report:
 All values displayed in nanoseconds (ns)
 
 Setup/Hold to clock clk_tl
-------------+------------+------------+------------------+--------+
-            |Max Setup to|Max Hold to |                  | Clock  |
-Source      | clk (edge) | clk (edge) |Internal Clock(s) | Phase  |
-------------+------------+------------+------------------+--------+
-down_tl     |   12.995(R)|    0.058(R)|clk_tl_BUFGP      |   0.000|
-left_tl     |   11.125(R)|    1.010(R)|clk_tl_BUFGP      |   0.000|
-right_tl    |   12.243(R)|    0.609(R)|clk_tl_BUFGP      |   0.000|
-rst_tl      |    4.354(R)|    0.358(R)|clk_tl_BUFGP      |   0.000|
-rx_tl       |    4.096(R)|    0.114(R)|clk_tl_BUFGP      |   0.000|
-up_tl       |   11.612(R)|   -0.248(R)|clk_tl_BUFGP      |   0.000|
-------------+------------+------------+------------------+--------+
+--------------------+------------+------------+------------------+--------+
+                    |Max Setup to|Max Hold to |                  | Clock  |
+Source              | clk (edge) | clk (edge) |Internal Clock(s) | Phase  |
+--------------------+------------+------------+------------------+--------+
+matrix_btn_col_tl<0>|    3.872(R)|    0.740(R)|clk_tl_BUFGP      |   0.000|
+matrix_btn_col_tl<1>|    4.071(R)|    0.715(R)|clk_tl_BUFGP      |   0.000|
+matrix_btn_col_tl<2>|    4.465(R)|    0.369(R)|clk_tl_BUFGP      |   0.000|
+matrix_btn_col_tl<3>|    3.761(R)|    0.957(R)|clk_tl_BUFGP      |   0.000|
+matrix_btn_row_tl<0>|    3.883(R)|    0.830(R)|clk_tl_BUFGP      |   0.000|
+matrix_btn_row_tl<1>|    4.354(R)|    0.229(R)|clk_tl_BUFGP      |   0.000|
+matrix_btn_row_tl<2>|    4.156(R)|    0.211(R)|clk_tl_BUFGP      |   0.000|
+matrix_btn_row_tl<3>|    5.001(R)|    0.195(R)|clk_tl_BUFGP      |   0.000|
+rx_tl               |    4.644(R)|   -0.075(R)|clk_tl_BUFGP      |   0.000|
+--------------------+------------+------------+------------------+--------+
 
 Clock clk_tl to Pad
 -------------+------------+------------------+--------+
              | clk (edge) |                  | Clock  |
 Destination  |   to PAD   |Internal Clock(s) | Phase  |
 -------------+------------+------------------+--------+
-blu_out_tl<0>|   15.632(R)|clk_tl_BUFGP      |   0.000|
-blu_out_tl<1>|   15.355(R)|clk_tl_BUFGP      |   0.000|
-grn_out_tl<0>|   15.942(R)|clk_tl_BUFGP      |   0.000|
-grn_out_tl<1>|   16.189(R)|clk_tl_BUFGP      |   0.000|
-grn_out_tl<2>|   15.364(R)|clk_tl_BUFGP      |   0.000|
-hs_tl        |   12.043(R)|clk_tl_BUFGP      |   0.000|
-led_tl<0>    |   10.852(R)|clk_tl_BUFGP      |   0.000|
-led_tl<1>    |    9.670(R)|clk_tl_BUFGP      |   0.000|
-led_tl<2>    |   10.732(R)|clk_tl_BUFGP      |   0.000|
-led_tl<3>    |    9.819(R)|clk_tl_BUFGP      |   0.000|
-red_out_tl<0>|   14.784(R)|clk_tl_BUFGP      |   0.000|
-red_out_tl<1>|   15.083(R)|clk_tl_BUFGP      |   0.000|
-red_out_tl<2>|   15.370(R)|clk_tl_BUFGP      |   0.000|
-vs_tl        |   12.351(R)|clk_tl_BUFGP      |   0.000|
+blu_out_tl<0>|   16.243(R)|clk_tl_BUFGP      |   0.000|
+blu_out_tl<1>|   16.590(R)|clk_tl_BUFGP      |   0.000|
+grn_out_tl<0>|   17.526(R)|clk_tl_BUFGP      |   0.000|
+grn_out_tl<1>|   18.044(R)|clk_tl_BUFGP      |   0.000|
+grn_out_tl<2>|   17.770(R)|clk_tl_BUFGP      |   0.000|
+hs_tl        |   12.370(R)|clk_tl_BUFGP      |   0.000|
+led_tl<0>    |    9.915(R)|clk_tl_BUFGP      |   0.000|
+led_tl<1>    |    9.537(R)|clk_tl_BUFGP      |   0.000|
+led_tl<2>    |   10.397(R)|clk_tl_BUFGP      |   0.000|
+led_tl<3>    |   10.213(R)|clk_tl_BUFGP      |   0.000|
+red_out_tl<0>|   16.964(R)|clk_tl_BUFGP      |   0.000|
+red_out_tl<1>|   16.962(R)|clk_tl_BUFGP      |   0.000|
+red_out_tl<2>|   16.682(R)|clk_tl_BUFGP      |   0.000|
+vs_tl        |   12.053(R)|clk_tl_BUFGP      |   0.000|
 -------------+------------+------------------+--------+
 
 Clock to Setup on destination clock clk_tl
@@ -78,18 +81,18 @@ Clock to Setup on destination clock clk_tl
                | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
 Source Clock   |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
 ---------------+---------+---------+---------+---------+
-clk_tl         |   47.575|         |    9.200|    8.145|
+clk_tl         |   48.909|         |    3.128|    7.148|
 ---------------+---------+---------+---------+---------+
 
 
-Analysis completed Tue Sep 29 22:40:09 2020 
+Analysis completed Sat Oct  3 16:12:12 2020 
 --------------------------------------------------------------------------------
 
 Trace Settings:
 -------------------------
 Trace Settings 
 
-Peak Memory Usage: 383 MB
+Peak Memory Usage: 391 MB
 
 
 

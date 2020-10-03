@@ -13,8 +13,8 @@ entity video_driver is
 		red_en_o: out std_logic;
 		green_en_o: out std_logic;
 		blue_en_o: out std_logic;
-		pixel_row_i: in std_logic_vector(9 downto 0);
-		pixel_col_i: in std_logic_vector(9 downto 0);
+		pixel_x: in unsigned(9 downto 0);
+		pixel_y: in unsigned(9 downto 0);
 		addr_rd : out std_logic_vector(DPRAM_ADDR_BITS-1 downto 0);
 		data_rd : in std_logic_vector(DPRAM_BITS_WIDTH-1 downto 0)
 	);
@@ -39,12 +39,12 @@ architecture Behavioral of video_driver is
     end if;
     end process;
 
-	process(pixel_row_i, pixel_col_i, sig_pixel_current, sig_vram_addr_rd_current, data_rd)
+	process(pixel_x, pixel_y, sig_pixel_current, sig_vram_addr_rd_current, data_rd)
 	begin
 	sig_vram_addr_rd_next <= sig_vram_addr_rd_current;
 	sig_pixel_next <= sig_pixel_current;
-		if (to_integer(unsigned(pixel_row_i)) <= 255 and to_integer(unsigned(pixel_col_i)) <= 255) then
-			sig_vram_addr_rd_next <= pixel_row_i(7 downto 0) & pixel_col_i(7 downto 0);
+		if ((to_integer(pixel_y) >= 112) and (to_integer(pixel_y) <= 368) and (to_integer(pixel_x)>= 192) and (to_integer(pixel_x)<= 448)) then
+			sig_vram_addr_rd_next <= std_logic_vector(to_unsigned(to_integer(pixel_x)-192,8) & to_unsigned(to_integer(pixel_y)-112,8));
 			sig_pixel_next <= data_rd(0);
 		else
 			sig_vram_addr_rd_next <= "0000000000000000";

@@ -27,22 +27,40 @@ NET "led_tl<2>"  LOC = "P83";
 NET "led_tl<3>"  LOC = "P89";
 
 ## RESET BUTTON
-NET "rst_tl"	LOC = "p132";
-NET "rst_tl"  PULLUP;
+#NET "rst_tl"	LOC = "p132";
+#NET "rst_tl"  PULLUP;
 
-## JOYSTICK BUTTONS
+## MATRIX BUTTONS 4x4
 
-NET "up_tl"     LOC = "p129";
-NET "up_tl"  PULLUP;
+NET "MATRIX_BTN_COL_TL<0>"  LOC = "p132";
+NET "MATRIX_BTN_COL_TL<1>"  LOC = "p129";
+NET "MATRIX_BTN_COL_TL<2>"  LOC = "p128";
+NET "MATRIX_BTN_COL_TL<3>"  LOC = "p127";
+NET "MATRIX_BTN_ROW_TL<0>"  LOC = "p126";
+NET "MATRIX_BTN_ROW_TL<1>"  LOC = "p123";
+NET "MATRIX_BTN_ROW_TL<2>"  LOC = "p122";
+NET "MATRIX_BTN_ROW_TL<3>"  LOC = "p120";
 
-NET "down_tl"     LOC = "p123";
-NET "down_tl"  PULLUP;
+NET "MATRIX_BTN_COL_TL<0>"   PULLUP;
+NET "MATRIX_BTN_COL_TL<1>"   PULLUP;
+NET "MATRIX_BTN_COL_TL<2>"   PULLUP;
+NET "MATRIX_BTN_COL_TL<3>"   PULLUP;
+NET "MATRIX_BTN_ROW_TL<0>"   PULLUP;
+NET "MATRIX_BTN_ROW_TL<1>"   PULLUP;
+NET "MATRIX_BTN_ROW_TL<2>"   PULLUP;
+NET "MATRIX_BTN_ROW_TL<3>"   PULLUP;
 
-NET "left_tl"     LOC = "p126";
-NET "left_tl"  PULLUP;
+#NET "up_tl"     LOC = "p129";
+#NET "up_tl"  PULLUP;
 
-NET "right_tl"     LOC = "p122";
-NET "right_tl"  PULLUP;
+#NET "down_tl"     LOC = "p123";
+#NET "down_tl"  PULLUP;
+
+#NET "left_tl"     LOC = "p126";
+#NET "left_tl"  PULLUP;
+
+#NET "right_tl"     LOC = "p122";
+#NET "right_tl"  PULLUP;
 
 ## 7 SEGMENT LED BOARD
 NET "led_select_tl<0>"  LOC = "p145";

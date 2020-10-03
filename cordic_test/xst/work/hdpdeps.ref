@@ -1,0 +1,22 @@
+V3 11
+FL /home/ignatius/Documents/fiuba/SistemasDigitales/proyectos_de_otra_gente/sdigitales-tfinal/rotator/src/cordic.vhdl 2020/07/13.19:03:03 P.20131013
+EN work/cordic 1600626386 \
+      FL /home/ignatius/Documents/fiuba/SistemasDigitales/proyectos_de_otra_gente/sdigitales-tfinal/rotator/src/cordic.vhdl \
+      PB ieee/std_logic_1164 1381692176 PB ieee/NUMERIC_STD 1381692181
+AR work/cordic/behavioral 1600626387 \
+      FL /home/ignatius/Documents/fiuba/SistemasDigitales/proyectos_de_otra_gente/sdigitales-tfinal/rotator/src/cordic.vhdl \
+      EN work/cordic 1600626386 CP cordic_stage
+FL /home/ignatius/Documents/fiuba/SistemasDigitales/proyectos_de_otra_gente/sdigitales-tfinal/rotator/src/cordic_stage.vhdl 2020/07/13.19:03:03 P.20131013
+EN work/cordic_stage 1600626384 \
+      FL /home/ignatius/Documents/fiuba/SistemasDigitales/proyectos_de_otra_gente/sdigitales-tfinal/rotator/src/cordic_stage.vhdl \
+      PB ieee/std_logic_1164 1381692176 PB ieee/NUMERIC_STD 1381692181
+AR work/cordic_stage/behavioral 1600626385 \
+      FL /home/ignatius/Documents/fiuba/SistemasDigitales/proyectos_de_otra_gente/sdigitales-tfinal/rotator/src/cordic_stage.vhdl \
+      EN work/cordic_stage 1600626384
+FL /home/ignatius/Documents/fiuba/SistemasDigitales/proyectos_de_otra_gente/sdigitales-tfinal/rotator/src/rotator.vhdl 2020/07/13.19:03:03 P.20131013
+EN work/rotator 1600626388 \
+      FL /home/ignatius/Documents/fiuba/SistemasDigitales/proyectos_de_otra_gente/sdigitales-tfinal/rotator/src/rotator.vhdl \
+      PB ieee/std_logic_1164 1381692176 PB ieee/NUMERIC_STD 1381692181
+AR work/rotator/behavioral 1600626389 \
+      FL /home/ignatius/Documents/fiuba/SistemasDigitales/proyectos_de_otra_gente/sdigitales-tfinal/rotator/src/rotator.vhdl \
+      EN work/rotator 1600626388 CP cordic
