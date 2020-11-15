@@ -46,14 +46,9 @@ component debounce is
     );
 end component;
 
--- Aux signals for Angles
-signal angle_step_sig: natural := ANGLE_STEP_INITIAL;
-signal angle_x_sig: signed(ANGLE_WIDTH-1 downto 0) := (others => '0');
-signal angle_y_sig: signed(ANGLE_WIDTH-1 downto 0) := (others => '0');
-signal angle_z_sig: signed(ANGLE_WIDTH-1 downto 0) := (others => '0');
-
 -- Buttons
 signal rst: std_logic :=  '1';
+
 signal up_x_sig: std_logic := '0';
 signal down_x_sig: std_logic := '0';
 signal up_y_sig: std_logic := '0';
@@ -62,6 +57,7 @@ signal up_z_sig: std_logic := '0';
 signal down_z_sig: std_logic := '0';
 signal angle_step_up_sig: std_logic := '0';
 signal angle_step_down_sig: std_logic := '0';
+
 
 -- Debounced Buttons
 signal up_x_debounced: std_logic := '0';
@@ -73,48 +69,68 @@ signal down_z_debounced: std_logic := '0';
 signal angle_step_up_debounced: std_logic := '0';
 signal angle_step_down_debounced: std_logic := '0';
 
+-- Aux signals for angles
+signal angle_x_current: signed(ANGLE_WIDTH-1 downto 0) := (others => '0');
+signal angle_y_current: signed(ANGLE_WIDTH-1 downto 0) := (others => '0');
+signal angle_z_current: signed(ANGLE_WIDTH-1 downto 0) := (others => '0');
+signal angle_step_current: natural := ANGLE_STEP_INITIAL;
+
+signal angle_x_next: signed(ANGLE_WIDTH-1 downto 0) := (others => '0');
+signal angle_y_next: signed(ANGLE_WIDTH-1 downto 0) := (others => '0');
+signal angle_z_next: signed(ANGLE_WIDTH-1 downto 0) := (others => '0');
+signal angle_step_next: natural := ANGLE_STEP_INITIAL;
+
 
 begin
 
-process(rst, clk,
-        up_x_debounced, down_x_debounced,
+    process(clk)
+    begin
+    if (clk'event and clk='1') then
+        angle_x_current <= angle_x_next;
+        angle_y_current <= angle_y_next;
+        angle_z_current <= angle_z_next;
+        angle_step_current <= angle_step_next;
+    end if;
+    end process;
+
+
+    process(up_x_debounced, down_x_debounced,
         up_y_debounced, down_y_debounced,
         up_z_debounced, down_z_debounced,
-        angle_step_up_debounced, angle_step_down_debounced)
+        angle_step_up_debounced, angle_step_down_debounced,
+        angle_x_current, angle_y_current, angle_z_current, angle_step_current)
     begin
-        if(rst = '0') then
-            angle_x_sig <= (others=>'0');
-            angle_y_sig <= (others=>'0');
-            angle_z_sig <= (others=>'0');
-            angle_step_sig <= ANGLE_STEP_INITIAL;
-        elsif(clk'event and clk='1') then 
-            if up_x_debounced = '1' then
-                angle_x_sig <= angle_x_sig + angle_step_sig;
+        angle_x_next <= angle_x_current;
+        angle_y_next <= angle_y_current;
+        angle_z_next <= angle_z_current;
+        angle_step_next <= angle_step_current;
+
+        if up_x_debounced = '1' then
+            angle_x_next <= angle_x_current + angle_step_current;
+        end if;
+        if down_x_debounced = '1' then
+            angle_x_next <= angle_x_current - angle_step_current;
+        end if;
+        if up_y_debounced = '1' then
+            angle_y_next <= angle_y_current + angle_step_current;
+        end if;
+        if down_y_debounced = '1' then
+            angle_y_next <= angle_y_current - angle_step_current;
+        end if;
+        if up_z_debounced = '1' then
+            angle_z_next <= angle_z_current + angle_step_current;
+        end if;
+        if down_z_debounced = '1' then
+            angle_z_next <= angle_z_current - angle_step_current;
+        end if;
+        if angle_step_up_debounced = '1' then
+            angle_step_next <= angle_step_current + 1;
+        end if;
+        if angle_step_down_debounced = '1' then
+            if angle_step_current > 0 then
+                angle_step_next <= angle_step_current - 1;
             end if;
-            if down_x_debounced = '1' then
-                angle_x_sig <= angle_x_sig - angle_step_sig;
-            end if;
-            if up_y_debounced = '1' then
-                angle_y_sig <= angle_y_sig + angle_step_sig;
-            end if;
-            if down_y_debounced = '1' then
-                angle_y_sig <= angle_y_sig - angle_step_sig;
-            end if;
-            if up_z_debounced = '1' then
-                angle_z_sig <= angle_z_sig + angle_step_sig;
-            end if;
-            if down_z_debounced = '1' then
-                angle_z_sig <= angle_z_sig - angle_step_sig;
-            end if;
-            if angle_step_up_debounced = '1' then
-                angle_step_sig <= angle_step_sig + 1;
-            end if;
-            if angle_step_down_debounced = '1' then
-                if angle_step_sig > 0 then
-                    angle_step_sig <= angle_step_sig - 1;
-                end if;
-            end if;
-    end if;
+        end if;
 end process;
 
 -- instantiante button_matrix
@@ -177,10 +193,10 @@ port map(
 );
 
 reset_button <= rst;
-angle_x <= angle_x_sig;
-angle_y <= angle_y_sig;
-angle_z <= angle_z_sig;
-angle_step <= angle_step_sig;
+angle_x <= angle_x_current;
+angle_y <= angle_y_current;
+angle_z <= angle_z_current;
+angle_step <= angle_step_current;
 
 end Behavioral;
 

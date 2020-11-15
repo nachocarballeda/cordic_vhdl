@@ -34,8 +34,8 @@ entity top_level is
         tx_tl	:	out std_logic;
         -- LEDS (16I/OS1 : 7-SEG-x4 board & Core Leds)
         led_tl: out std_logic_vector(3 downto 0);
-        led_out_tl: out std_logic_vector(7 downto 0);	-- LED Segment 
-        led_select_tl: out std_logic_vector(3 downto 0);	-- LED Digit 
+        led_out_tl: out std_logic_vector(7 downto 0); -- LED Segment 
+        led_select_tl: out std_logic_vector(3 downto 0); -- LED Digit 
         -- BUTTONS (8I/OS2 : 4x4 button Matrix)
         matrix_btn_col_tl: in std_logic_vector(3 downto 0); --ATT! Buttons with a PULLUP resistor
         matrix_btn_row_tl: in std_logic_vector(3 downto 0)
@@ -148,30 +148,24 @@ component rotator is
     );
 end component;
 
-component debounce is
-    port (
-        clk, reset: in std_logic;
-        sw: in std_logic;
-        db_level, db_tick: out std_logic
+component input_processor is
+    generic (
+        ANGLE_WIDTH           : integer := 8;
+        ANGLE_STEP_INITIAL    : integer := 1
     );
+    port ( 
+           clk: in std_logic;
+           matrix_buttons_col : in  std_logic_vector (3 downto 0);
+           matrix_buttons_row : in  std_logic_vector (3 downto 0);
+           angle_x : out  signed (ANGLE_WIDTH-1 downto 0);
+           angle_y : out  signed (ANGLE_WIDTH-1 downto 0);
+           angle_z : out  signed (ANGLE_WIDTH-1 downto 0);
+           angle_step: out natural;
+           reset_button: out std_logic
+           );
 end component;
 
-component button_matrix is
-    port (
-        clk : in std_logic;
-        matrix_col : in  std_logic_vector (3 downto 0);
-        matrix_row : in  std_logic_vector (3 downto 0);
-        reset_button: out std_logic;
-        up_x : out  std_logic;
-        down_x : out std_logic;
-        up_y : out  std_logic;
-        down_y : out std_logic;
-        up_z : out  std_logic;
-        down_z : out std_logic;
-        angle_step_up : out  std_logic;
-        angle_step_down : out std_logic
-    );
-end component;
+signal rst_tl: std_logic := '1';
 
 -- Señales auxiliares para pasar interconexion
 signal sig_aux_pixel_x_i: std_logic_vector(9 downto 0) := "0000000000";
@@ -203,40 +197,20 @@ signal Y_coord_rotated_unsigned: std_logic_vector(COORDS_WIDTH-1 downto 0) := (o
 signal Z_coord_rotated_unsigned: std_logic_vector(COORDS_WIDTH-1 downto 0) := (others => '0');
 
 -- ángulos (van al cordic)
-signal angle_X: signed(ANGLE_WIDTH-1 downto 0) := (others => '0');
-signal angle_Y: signed(ANGLE_WIDTH-1 downto 0) := (others => '0');
-signal angle_Z: signed(ANGLE_WIDTH-1 downto 0) := (others => '0');
+signal angle_x_tl: signed(ANGLE_WIDTH-1 downto 0) := (others => '0');
+signal angle_y_tl: signed(ANGLE_WIDTH-1 downto 0) := (others => '0');
+signal angle_z_tl: signed(ANGLE_WIDTH-1 downto 0) := (others => '0');
+-- step
+signal angle_step_tl: natural := ANGLE_STEP_INITIAL;
+
 -- ángulos (entre 0 y 360)
 signal angle360_x_current, angle360_x_next: unsigned(ANGLE_WIDTH-1 downto 0) := (others => '0');
 signal angle360_y_current, angle360_y_next: unsigned(ANGLE_WIDTH-1 downto 0) := (others => '0');
 signal angle360_z_current, angle360_z_next: unsigned(ANGLE_WIDTH-1 downto 0) := (others => '0');
--- step
-signal angle_step: natural := ANGLE_STEP_INITIAL;
 
 -- LEDS
 signal sig_led_aux: std_logic_vector(3 downto 0) := "0000";
 signal sig_binary_to_bcd: std_logic_vector(7 downto 0) := "00000000";
-
--- Buttons
-signal rst_tl: std_logic :=  '0';
-signal up_x_tl: std_logic := '0';
-signal down_x_tl: std_logic := '0';
-signal up_y_tl: std_logic := '0';
-signal down_y_tl: std_logic := '0';
-signal up_z_tl: std_logic := '0';
-signal down_z_tl: std_logic := '0';
-signal angle_step_up_tl: std_logic := '0';
-signal angle_step_down_tl: std_logic := '0';
-
--- Debounced Buttons
-signal up_x_debounced: std_logic := '0';
-signal down_x_debounced: std_logic := '0';
-signal up_y_debounced: std_logic := '0';
-signal down_y_debounced: std_logic := '0';
-signal up_z_debounced: std_logic := '0';
-signal down_z_debounced: std_logic := '0';
-signal angle_step_up_debounced: std_logic := '0';
-signal angle_step_down_debounced: std_logic := '0';
 
 -- UART
 constant Divisor 			: std_logic_vector := "000000011011"; -- Divisor=27 para 115200 baudios
@@ -395,7 +369,7 @@ begin
         when state_print_coords =>
             sig_vram_ena_wr_next <= '1';
             sig_vram_data_wr_next <= "1";
-            sig_vram_addr_wr_next <= y_coord_rotated_unsigned(7 downto 0) & X_coord_rotated_unsigned(7 downto 0);
+            sig_vram_addr_wr_next <= z_coord_rotated_unsigned(7 downto 0) & y_coord_rotated_unsigned(7 downto 0);
             state_next <= state_read_from_sram_prev;
         when state_reset_device =>
             sig_sram_address_next <= 0;
@@ -447,48 +421,6 @@ begin
         when others =>
             state_next <= state_idle;
     end case;
-end process;
-
--- meter todo esto en un component..
-process(rst_tl, clk_tl,
-        up_x_debounced, down_x_debounced,
-        up_y_debounced, down_y_debounced,
-        up_z_debounced, down_z_debounced,
-        angle_step_up_debounced, angle_step_down_debounced)
-    begin
-        if(rst_tl = '0') then
-            angle_x <= (others=>'0');
-            angle_y <= (others=>'0');
-            angle_z <= (others=>'0');
-            angle_step <= ANGLE_STEP_INITIAL;
-        elsif(clk_tl'event and clk_tl='1') then 
-            if up_x_debounced = '1' then
-                angle_x <= angle_x + angle_step;
-            end if;
-            if down_x_debounced = '1' then
-                angle_x <= angle_x - angle_step;
-            end if;
-            if up_y_debounced = '1' then
-                angle_y <= angle_y + angle_step;
-            end if;
-            if down_y_debounced = '1' then
-                angle_y <= angle_y - angle_step;
-            end if;
-            if up_z_debounced = '1' then
-                angle_z <= angle_z + angle_step;
-            end if;
-            if down_z_debounced = '1' then
-                angle_z <= angle_z - angle_step;
-            end if;
-            if angle_step_up_debounced = '1' then
-                angle_step <= angle_step + 1;
-            end if;
-            if angle_step_down_debounced = '1' then
-                if angle_step > 0 then
-                    angle_step <= angle_step - 1;
-                end if;
-            end if;
-    end if;
 end process;
 
 -- Instanciamos componentes a utilizar
@@ -589,62 +521,20 @@ port map
     show_number => sig_binary_to_bcd
 );
 
--- instantiate debouncers
-debounce_unit_x_up: debounce
-port map(
-    clk=>clk_tl, reset=>not rst_tl, sw=>not up_x_tl,
-    db_level=>open, db_tick=>up_x_debounced
-);
-debounce_unit_x_down: debounce
-port map(
-    clk=>clk_tl, reset=>not rst_tl, sw=>not down_x_tl,
-    db_level=>open, db_tick=>down_x_debounced
-);
-debounce_unit_y_up: debounce
-port map(
-    clk=>clk_tl, reset=>not rst_tl, sw=>not up_y_tl,
-    db_level=>open, db_tick=>up_y_debounced
-);
-debounce_unit_y_down: debounce
-port map(
-    clk=>clk_tl, reset=>not rst_tl, sw=>not down_y_tl,
-    db_level=>open, db_tick=>down_y_debounced
-);
-debounce_unit_z_up: debounce
-port map(
-    clk=>clk_tl, reset=>not rst_tl, sw=>not up_z_tl,
-    db_level=>open, db_tick=>up_z_debounced
-);
-debounce_unit_z_down: debounce
-port map(
-    clk=>clk_tl, reset=>not rst_tl, sw=>not down_z_tl,
-    db_level=>open, db_tick=>down_z_debounced
-);
-debounce_unit_step_angle_up: debounce
-port map(
-    clk=>clk_tl, reset=>not rst_tl, sw=>not angle_step_up_tl,
-    db_level=>open, db_tick=>angle_step_up_debounced
-);
-debounce_unit_step_angle_down: debounce
-port map(
-    clk=>clk_tl, reset=>not rst_tl, sw=>not angle_step_down_tl,
-    db_level=>open, db_tick=>angle_step_down_debounced
-);
-
-keyboard: button_matrix
-port map(
+input_processor_tl : input_processor
+generic map (
+    ANGLE_WIDTH           => ANGLE_WIDTH,
+    ANGLE_STEP_INITIAL    => ANGLE_STEP_INITIAL
+)
+port map ( 
     clk => clk_tl,
-    matrix_col => matrix_btn_col_tl,
-    matrix_row => matrix_btn_row_tl,
-    reset_button => rst_tl,
-    up_x => up_x_tl,
-    down_x => down_x_tl,
-    up_y => up_y_tl,
-    down_y => down_y_tl,
-    up_z => up_z_tl,
-    down_z => down_z_tl,
-    angle_step_up => angle_step_up_tl,
-    angle_step_down => angle_step_down_tl
+    matrix_buttons_col => matrix_btn_col_tl,
+    matrix_buttons_row => matrix_btn_row_tl,
+    angle_x => angle_x_tl,
+    angle_y => angle_y_tl,
+    angle_z => angle_z_tl,
+    angle_step => angle_step_tl,
+    reset_button => rst_tl
 );
 
 pixel_x <= unsigned(sig_aux_pixel_x_i);
@@ -671,11 +561,11 @@ generic map (
 port map(
     clk=>clk_tl,
     X0=>X0, Y0=>Y0, Z0=>Z0,
-    angle_X=>angle_X, angle_Y=>angle_Y, angle_Z=>angle_Z,
+    angle_X=>angle_x_tl, angle_Y=>angle_y_tl, angle_Z=>angle_z_tl,
     X=>X_coord_rotated, Y=>Y_coord_rotated, Z=>Z_coord_rotated
 );
 
-sig_binary_to_bcd <= std_logic_vector(to_unsigned(angle_step, 8));
+sig_binary_to_bcd <= std_logic_vector(to_unsigned(angle_step_tl, 8));
 sig_sram_address <= std_logic_vector(to_unsigned(sig_sram_address_current, RAM_ADDRESS_WIDTH));
 
 end top_level_arq;
