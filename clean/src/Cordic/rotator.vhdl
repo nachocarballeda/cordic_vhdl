@@ -6,7 +6,7 @@ entity rotator is
 
     generic (
         COORDS_WIDTH            : integer := 10;
-        ANGLES_INTEGER_WIDTH    : integer := 6;
+        ANGLES_INTEGER_WIDTH    : integer := 10;
         STAGES                  : integer := 16
     );
     port (

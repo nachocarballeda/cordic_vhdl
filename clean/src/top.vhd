@@ -12,7 +12,7 @@ entity top_level is
         constant UART_COORDS_WIDTH		: natural := 8;
         -- CORDIC Constants
         constant COORDS_WIDTH: integer := 8;
-        constant ANGLE_WIDTH: integer := 8;
+        constant ANGLE_WIDTH: integer := 10;
         constant CORDIC_STAGES: integer := 8;
         constant CORDIC_WIDTH: integer := 12;
         constant CORDIC_OFFSET: integer := 4;
@@ -150,7 +150,7 @@ end component;
 
 component input_processor is
     generic (
-        ANGLE_WIDTH           : integer := 8;
+        ANGLE_WIDTH           : integer := 10;
         ANGLE_STEP_INITIAL    : integer := 1
     );
     port ( 
@@ -168,8 +168,8 @@ end component;
 signal rst_tl: std_logic := '1';
 
 -- Señales auxiliares para pasar interconexion
-signal sig_aux_pixel_x_i: std_logic_vector(9 downto 0) := "0000000000";
-signal sig_aux_pixel_y_i: std_logic_vector(9 downto 0) := "0000000000";
+signal sig_aux_pixel_x_i: std_logic_vector(9 downto 0) := (others => '0');
+signal sig_aux_pixel_y_i: std_logic_vector(9 downto 0) := (others => '0');
 signal pixel_x, pixel_y: unsigned(9 downto 0);
 
 -- Utilizada para entender si estamos leyendo un valor de X, Y o Z (de RAM)
@@ -200,6 +200,10 @@ signal Z_coord_rotated_unsigned: std_logic_vector(COORDS_WIDTH-1 downto 0) := (o
 signal angle_x_tl: signed(ANGLE_WIDTH-1 downto 0) := (others => '0');
 signal angle_y_tl: signed(ANGLE_WIDTH-1 downto 0) := (others => '0');
 signal angle_z_tl: signed(ANGLE_WIDTH-1 downto 0) := (others => '0');
+-- Angulos vienen del input processor
+signal angle_x_from_input_proc: signed(ANGLE_WIDTH-1 downto 0) := (others => '0');
+signal angle_y_from_input_proc: signed(ANGLE_WIDTH-1 downto 0) := (others => '0');
+signal angle_z_from_input_proc: signed(ANGLE_WIDTH-1 downto 0) := (others => '0');
 -- step
 signal angle_step_tl: natural := ANGLE_STEP_INITIAL;
 
@@ -209,8 +213,8 @@ signal angle360_y_current, angle360_y_next: unsigned(ANGLE_WIDTH-1 downto 0) := 
 signal angle360_z_current, angle360_z_next: unsigned(ANGLE_WIDTH-1 downto 0) := (others => '0');
 
 -- LEDS
-signal sig_led_aux: std_logic_vector(3 downto 0) := "0000";
-signal sig_binary_to_bcd: std_logic_vector(7 downto 0) := "00000000";
+signal sig_led_aux: std_logic_vector(3 downto 0) := (others => '0');
+signal sig_binary_to_bcd: std_logic_vector(7 downto 0) := (others => '0');
 
 -- UART
 constant Divisor 			: std_logic_vector := "000000011011"; -- Divisor=27 para 115200 baudios
@@ -327,7 +331,7 @@ begin
         when state_idle =>
             sig_led_aux <= "0010";
             state_next <= state_process_coords;
-        when state_read_from_sram_prev => --Arregla el bug terraplanista
+        when state_read_from_sram_prev => --Le da el ciclo de clock que la RAM necesita
             state_next <= state_read_from_sram;
         when state_read_from_sram =>
             sig_led_aux <= "0011";
@@ -530,9 +534,9 @@ port map (
     clk => clk_tl,
     matrix_buttons_col => matrix_btn_col_tl,
     matrix_buttons_row => matrix_btn_row_tl,
-    angle_x => angle_x_tl,
-    angle_y => angle_y_tl,
-    angle_z => angle_z_tl,
+    angle_x => angle_x_from_input_proc,
+    angle_y => angle_y_from_input_proc,
+    angle_z => angle_z_from_input_proc,
     angle_step => angle_step_tl,
     reset_button => rst_tl
 );
@@ -551,6 +555,16 @@ X_coord_rotated_unsigned <= std_logic_vector(X_coord_rotated(COORDS_WIDTH-1 down
 Y_coord_rotated_unsigned <= std_logic_vector(Y_coord_rotated(COORDS_WIDTH-1 downto 0) + to_signed(-(2**(COORDS_WIDTH-1)), COORDS_WIDTH));
 Z_coord_rotated_unsigned <= std_logic_vector(Z_coord_rotated(COORDS_WIDTH-1 downto 0) + to_signed(-(2**(COORDS_WIDTH-1)), COORDS_WIDTH));
 
+angle_x_tl <= -1*(signed(to_signed(360, angle_x_from_input_proc'length) - angle_x_from_input_proc)) when angle_x_from_input_proc > 180 else
+            signed(angle_x_from_input_proc);
+angle_y_tl <= -1*(signed(to_signed(360, angle_y_from_input_proc'length) - angle_y_from_input_proc)) when angle_y_from_input_proc > 180 else
+            signed(angle_y_from_input_proc);
+angle_z_tl <= -1*(signed(to_signed(360, angle_z_from_input_proc'length) - angle_z_from_input_proc)) when angle_z_from_input_proc > 180 else
+            signed(angle_z_from_input_proc);
+
+--angle_x_tl <= angle_x_from_input_proc;
+--angle_y_tl <= angle_y_from_input_proc;
+--angle_z_tl <= angle_z_from_input_proc;
 
 cordic_rotator: rotator
 generic map (
@@ -565,7 +579,7 @@ port map(
     X=>X_coord_rotated, Y=>Y_coord_rotated, Z=>Z_coord_rotated
 );
 
-sig_binary_to_bcd <= std_logic_vector(to_unsigned(angle_step_tl, 8));
+sig_binary_to_bcd <= std_logic_vector(angle_x_tl(7 downto 0));
 sig_sram_address <= std_logic_vector(to_unsigned(sig_sram_address_current, RAM_ADDRESS_WIDTH));
 
 end top_level_arq;

@@ -4,7 +4,7 @@ use IEEE.NUMERIC_STD.ALL;
 
 entity input_processor is
     generic (
-        ANGLE_WIDTH           : integer := 8;
+        ANGLE_WIDTH           : integer := 10;
         ANGLE_STEP_INITIAL    : integer := 1
     );
     port ( 
@@ -83,9 +83,14 @@ signal angle_step_next: natural := ANGLE_STEP_INITIAL;
 
 begin
 
-    process(clk)
+    process(clk, rst)
     begin
-    if (clk'event and clk='1') then
+    if(rst='0') then --rst_tl pin got a pullup
+        angle_x_current <= (others=> '0');
+        angle_y_current <= (others=> '0');
+        angle_z_current <= (others=> '0');
+        angle_step_current <= 0;
+    elsif (clk'event and clk='1') then
         angle_x_current <= angle_x_next;
         angle_y_current <= angle_y_next;
         angle_z_current <= angle_z_next;
@@ -106,25 +111,51 @@ begin
         angle_step_next <= angle_step_current;
 
         if up_x_debounced = '1' then
-            angle_x_next <= angle_x_current + angle_step_current;
+            if(angle_x_current >= (to_signed(360, angle_x_current'length) - angle_step_current)) then
+                angle_x_next <= (angle_x_current + angle_step_current - to_signed(360, angle_x_current'length));
+            else
+                angle_x_next <= angle_x_current + angle_step_current;
+            end if;
         end if;
         if down_x_debounced = '1' then
-            angle_x_next <= angle_x_current - angle_step_current;
+            if(angle_x_current < to_signed(angle_step_current, angle_x_current'length)) then
+                angle_x_next <= to_signed(360, angle_x_current'length) + angle_x_current - angle_step_current;
+            else
+                angle_x_next <= angle_x_current - angle_step_current;
+            end if;        
         end if;
         if up_y_debounced = '1' then
-            angle_y_next <= angle_y_current + angle_step_current;
+            if(angle_y_current >= (to_signed(360, angle_y_current'length) - angle_step_current)) then
+                angle_y_next <= (angle_y_current + angle_step_current - to_signed(360, angle_y_current'length));
+            else
+                angle_y_next <= angle_y_current + angle_step_current;
+            end if;
         end if;
         if down_y_debounced = '1' then
-            angle_y_next <= angle_y_current - angle_step_current;
+            if(angle_y_current < to_signed(angle_step_current, angle_y_current'length)) then
+                angle_y_next <= to_signed(360, angle_y_current'length) + angle_y_current - angle_step_current;
+            else
+                angle_y_next <= angle_y_current - angle_step_current;
+            end if;        
         end if;
         if up_z_debounced = '1' then
-            angle_z_next <= angle_z_current + angle_step_current;
+            if(angle_z_current >= (to_signed(360, angle_z_current'length) - angle_step_current)) then
+                angle_z_next <= (angle_z_current + angle_step_current - to_signed(360, angle_z_current'length));
+            else
+                angle_z_next <= angle_z_current + angle_step_current;
+            end if;
         end if;
         if down_z_debounced = '1' then
-            angle_z_next <= angle_z_current - angle_step_current;
+            if(angle_z_current < to_signed(angle_step_current, angle_z_current'length)) then
+                angle_z_next <= to_signed(360, angle_z_current'length) + angle_z_current - angle_step_current;
+            else
+                angle_z_next <= angle_z_current - angle_step_current;
+            end if;        
         end if;
         if angle_step_up_debounced = '1' then
-            angle_step_next <= angle_step_current + 1;
+            if angle_step_current < 30 then
+                angle_step_next <= angle_step_current + 1;
+            end if;
         end if;
         if angle_step_down_debounced = '1' then
             if angle_step_current > 0 then
