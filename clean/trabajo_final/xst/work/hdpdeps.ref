@@ -1,121 +1,128 @@
-V3 68
+V3 72
 FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/bcd_converter.vhd 2020/09/12.17:23:22 P.20131013
-EN work/binary_bcd 1601752154 \
+EN work/binary_bcd 1613001638 \
       FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/bcd_converter.vhd \
       PB ieee/std_logic_1164 1381692176 PB ieee/STD_LOGIC_UNSIGNED 1381692179
-AR work/binary_bcd/behaviour 1601752155 \
+AR work/binary_bcd/behaviour 1613001639 \
       FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/bcd_converter.vhd \
-      EN work/binary_bcd 1601752154
+      EN work/binary_bcd 1613001638
 FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/button_matrix.vhd 2020/10/03.14:52:07 P.20131013
-EN work/button_matrix 1601752177 \
+EN work/button_matrix 1613001634 \
       FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/button_matrix.vhd \
       PB ieee/std_logic_1164 1381692176 PB ieee/NUMERIC_STD 1381692181
-AR work/button_matrix/Behavioral 1601752178 \
+AR work/button_matrix/Behavioral 1613001635 \
       FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/button_matrix.vhd \
-      EN work/button_matrix 1601752177
+      EN work/button_matrix 1613001634
 FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/Cordic/cordic.vhdl 2020/09/29.21:40:35 P.20131013
-EN work/cordic 1601752152 \
+EN work/cordic 1613001632 \
       FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/Cordic/cordic.vhdl \
       PB ieee/std_logic_1164 1381692176 PB ieee/NUMERIC_STD 1381692181
-AR work/cordic/behavioral 1601752153 \
+AR work/cordic/behavioral 1613001633 \
       FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/Cordic/cordic.vhdl \
-      EN work/cordic 1601752152 CP cordic_stage
+      EN work/cordic 1613001632 CP cordic_stage
 FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/Cordic/cordic_stage.vhdl 2020/09/29.21:39:56 P.20131013
-EN work/cordic_stage 1601752150 \
+EN work/cordic_stage 1613001630 \
       FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/Cordic/cordic_stage.vhdl \
       PB ieee/std_logic_1164 1381692176 PB ieee/NUMERIC_STD 1381692181
-AR work/cordic_stage/behavioral 1601752151 \
+AR work/cordic_stage/behavioral 1613001631 \
       FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/Cordic/cordic_stage.vhdl \
-      EN work/cordic_stage 1601752150
-FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/Cordic/rotator.vhdl 2020/09/29.21:39:36 P.20131013
-EN work/rotator 1601752179 \
+      EN work/cordic_stage 1613001630
+FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/Cordic/rotator.vhdl 2020/11/15.21:50:21 P.20131013
+EN work/rotator 1613001661 \
       FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/Cordic/rotator.vhdl \
       PB ieee/std_logic_1164 1381692176 PB ieee/NUMERIC_STD 1381692181
-AR work/rotator/behavioral 1601752180 \
+AR work/rotator/behavioral 1613001662 \
       FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/Cordic/rotator.vhdl \
-      EN work/rotator 1601752179 CP cordic
+      EN work/rotator 1613001661 CP cordic
 FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/debounce.vhd 2020/09/29.21:44:26 P.20131013
-EN work/debounce 1601752175 \
+EN work/debounce 1613001636 \
       FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/debounce.vhd \
       PB ieee/std_logic_1164 1381692176 PB ieee/NUMERIC_STD 1381692181
-AR work/debounce/exp_fsmd_arch 1601752176 \
+AR work/debounce/exp_fsmd_arch 1613001637 \
       FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/debounce.vhd \
-      EN work/debounce 1601752175
+      EN work/debounce 1613001636
+FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/input_processor.vhd 2020/11/15.22:48:38 P.20131013
+EN work/input_processor 1613001659 \
+      FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/input_processor.vhd \
+      PB ieee/std_logic_1164 1381692176 PB ieee/NUMERIC_STD 1381692181
+AR work/input_processor/Behavioral 1613001660 \
+      FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/input_processor.vhd \
+      EN work/input_processor 1613001659 CP button_matrix CP debounce
 FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/seven_seg_display.vhd 2020/09/12.17:36:52 P.20131013
-EN work/LED8 1601752173 \
+EN work/LED8 1613001657 \
       FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/seven_seg_display.vhd \
       PB ieee/std_logic_1164 1381692176 PB ieee/STD_LOGIC_UNSIGNED 1381692179 \
       PB ieee/std_logic_arith 1381692177
-AR work/LED8/Behavioral 1601752174 \
+AR work/LED8/Behavioral 1613001658 \
       FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/seven_seg_display.vhd \
-      EN work/LED8 1601752173 CP binary_bcd
-FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/top.vhd 2020/10/03.16:08:46 P.20131013
-EN work/top_level 1601752181 \
+      EN work/LED8 1613001657 CP binary_bcd
+FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/top.vhd 2020/12/25.21:56:03 P.20131013
+EN work/top_level 1613001663 \
       FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/top.vhd \
       PB ieee/std_logic_1164 1381692176 PB ieee/NUMERIC_STD 1381692181
-AR work/top_level/top_level_arq 1601752182 \
+AR work/top_level/top_level_arq 1613001664 \
       FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/top.vhd \
-      EN work/top_level 1601752181 CP vga_ctrl CP sram CP uart CP dpram \
-      CP video_driver CP LED8 CP debounce CP button_matrix CP rotator
+      EN work/top_level 1613001663 CP vga_ctrl CP sram CP uart CP dpram \
+      CP video_driver CP LED8 CP input_processor CP rotator
 FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/UART/receive.vhd 2020/09/27.23:07:03 P.20131013
-EN work/receive 1601752157 \
+EN work/receive 1613001641 \
       FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/UART/receive.vhd \
       PB ieee/std_logic_1164 1381692176 PB ieee/NUMERIC_STD 1381692181
-AR work/receive/arch 1601752158 \
+AR work/receive/arch 1613001642 \
       FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/UART/receive.vhd \
-      EN work/receive 1601752157
+      EN work/receive 1613001641
 FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/UART/timing.vhd 2020/08/09.16:55:14 P.20131013
-EN work/timing 1601752161 \
+EN work/timing 1613001645 \
       FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/UART/timing.vhd \
       PB ieee/std_logic_1164 1381692176 PB ieee/NUMERIC_STD 1381692181 \
       PB ieee/STD_LOGIC_UNSIGNED 1381692179
-AR work/timing/timing 1601752162 \
+AR work/timing/timing 1613001646 \
       FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/UART/timing.vhd \
-      EN work/timing 1601752161
+      EN work/timing 1613001645
 FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/UART/transmit.vhd 2020/09/27.23:07:03 P.20131013
-EN work/transmit 1601752159 \
+EN work/transmit 1613001643 \
       FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/UART/transmit.vhd \
       PB ieee/std_logic_1164 1381692176 PB ieee/NUMERIC_STD 1381692181
-AR work/transmit/arch 1601752160 \
+AR work/transmit/arch 1613001644 \
       FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/UART/transmit.vhd \
-      EN work/transmit 1601752159
+      EN work/transmit 1613001643
 FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/UART/uart.vhd 2020/09/29.22:10:53 P.20131013
-EN work/uart 1601752167 \
+EN work/uart 1613001651 \
       FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/UART/uart.vhd \
       PB ieee/std_logic_1164 1381692176 PB ieee/NUMERIC_STD 1381692181 \
-      PH work/uart_comps 1601752156
-AR work/uart/arch 1601752168 \
+      PH work/uart_comps 1613001640
+AR work/uart/arch 1613001652 \
       FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/UART/uart.vhd \
-      EN work/uart 1601752167 CP receive CP transmit CP timing
+      EN work/uart 1613001651 CP receive CP transmit CP timing
 FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/UART/uart_comps.vhd 2020/08/09.16:55:14 P.20131013
-PH work/uart_comps 1601752156 \
+PH work/uart_comps 1613001640 \
       FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/UART/uart_comps.vhd \
       PB ieee/std_logic_1164 1381692176 CD timing CD transmit CD receive
 FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/VGA/VGActrl.vhd 2020/09/27.10:14:57 P.20131013
-EN work/vga_ctrl 1601752163 \
+EN work/vga_ctrl 1613001647 \
       FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/VGA/VGActrl.vhd \
       PB ieee/std_logic_1164 1381692176 PB ieee/NUMERIC_STD 1381692181
-AR work/vga_ctrl/vga_ctrl_arq 1601752164 \
+AR work/vga_ctrl/vga_ctrl_arq 1613001648 \
       FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/VGA/VGActrl.vhd \
-      EN work/vga_ctrl 1601752163
+      EN work/vga_ctrl 1613001647
 FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/video_driver.vhd 2020/10/02.21:31:54 P.20131013
-EN work/video_driver 1601752171 \
+EN work/video_driver 1613001655 \
       FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/video_driver.vhd \
       PB ieee/std_logic_1164 1381692176 PB ieee/NUMERIC_STD 1381692181
-AR work/video_driver/Behavioral 1601752172 \
+AR work/video_driver/Behavioral 1613001656 \
       FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/video_driver.vhd \
-      EN work/video_driver 1601752171
+      EN work/video_driver 1613001655
 FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/vram.vhd 2020/09/27.12:24:17 P.20131013
-EN work/dpram 1601752169 \
+EN work/dpram 1613001653 \
       FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/vram.vhd \
       PB ieee/std_logic_1164 1381692176 PB ieee/NUMERIC_STD 1381692181
-AR work/dpram/rtl 1601752170 \
+AR work/dpram/rtl 1613001654 \
       FL /home/ignatius/Documents/repos/cordic_vhdl/clean/src/vram.vhd \
-      EN work/dpram 1601752169
+      EN work/dpram 1613001653
 FL /home/ignatius/Documents/repos/cordic_vhdl/clean/trabajo_final/ipcore_dir/sram.vhd 2020/09/29.22:37:25 P.20131013
-EN work/sram 1601752165 \
+EN work/sram 1613001649 \
       FL /home/ignatius/Documents/repos/cordic_vhdl/clean/trabajo_final/ipcore_dir/sram.vhd \
       PB ieee/std_logic_1164 1381692176
-AR work/sram/sram_a 1601752166 \
+AR work/sram/sram_a 1613001650 \
       FL /home/ignatius/Documents/repos/cordic_vhdl/clean/trabajo_final/ipcore_dir/sram.vhd \
-      EN work/sram 1601752165
+      EN work/sram 1613001649

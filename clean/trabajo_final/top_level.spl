@@ -1,0 +1,16 @@
+[Inputs]
+clk_tl
+rx_tl
+=matrix_btn_col_tl[3:0]=
+=matrix_btn_row_tl[3:0]=
+[Outputs]
+hs_tl
+vs_tl
+tx_tl
+=red_out_tl[2:0]=
+=grn_out_tl[2:0]=
+=blu_out_tl[1:0]=
+=led_tl[3:0]=
+=led_out_tl[7:0]=
+=led_select_tl[3:0]=
+[BiDir]

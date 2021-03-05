@@ -555,12 +555,9 @@ X_coord_rotated_unsigned <= std_logic_vector(X_coord_rotated(COORDS_WIDTH-1 down
 Y_coord_rotated_unsigned <= std_logic_vector(Y_coord_rotated(COORDS_WIDTH-1 downto 0) + to_signed(-(2**(COORDS_WIDTH-1)), COORDS_WIDTH));
 Z_coord_rotated_unsigned <= std_logic_vector(Z_coord_rotated(COORDS_WIDTH-1 downto 0) + to_signed(-(2**(COORDS_WIDTH-1)), COORDS_WIDTH));
 
-angle_x_tl <= -1*(signed(to_signed(360, angle_x_from_input_proc'length) - angle_x_from_input_proc)) when angle_x_from_input_proc > 180 else
-            signed(angle_x_from_input_proc);
-angle_y_tl <= -1*(signed(to_signed(360, angle_y_from_input_proc'length) - angle_y_from_input_proc)) when angle_y_from_input_proc > 180 else
-            signed(angle_y_from_input_proc);
-angle_z_tl <= -1*(signed(to_signed(360, angle_z_from_input_proc'length) - angle_z_from_input_proc)) when angle_z_from_input_proc > 180 else
-            signed(angle_z_from_input_proc);
+angle_x_tl <= -1*(signed(to_signed(360, angle_x_from_input_proc'length) - angle_x_from_input_proc)) when angle_x_from_input_proc > 180 else signed(angle_x_from_input_proc);
+angle_y_tl <= -1*(signed(to_signed(360, angle_y_from_input_proc'length) - angle_y_from_input_proc)) when angle_y_from_input_proc > 180 else signed(angle_y_from_input_proc);
+angle_z_tl <= -1*(signed(to_signed(360, angle_z_from_input_proc'length) - angle_z_from_input_proc)) when angle_z_from_input_proc > 180 else signed(angle_z_from_input_proc);
 
 --angle_x_tl <= angle_x_from_input_proc;
 --angle_y_tl <= angle_y_from_input_proc;

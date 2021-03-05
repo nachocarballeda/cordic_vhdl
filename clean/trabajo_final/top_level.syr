@@ -5,14 +5,14 @@ Parameter TMPDIR set to xst/projnav.tmp
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.04 secs
+Total CPU time to Xst completion: 0.05 secs
  
 --> 
 Parameter xsthdpdir set to xst
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.04 secs
+Total CPU time to Xst completion: 0.05 secs
  
 --> 
 Reading design: top_level.prj
@@ -114,6 +114,10 @@ Compiling vhdl file "/home/ignatius/Documents/repos/cordic_vhdl/clean/src/Cordic
 Architecture behavioral of Entity cordic_stage is up to date.
 Compiling vhdl file "/home/ignatius/Documents/repos/cordic_vhdl/clean/src/Cordic/cordic.vhdl" in Library work.
 Architecture behavioral of Entity cordic is up to date.
+Compiling vhdl file "/home/ignatius/Documents/repos/cordic_vhdl/clean/src/button_matrix.vhd" in Library work.
+Architecture behavioral of Entity button_matrix is up to date.
+Compiling vhdl file "/home/ignatius/Documents/repos/cordic_vhdl/clean/src/debounce.vhd" in Library work.
+Architecture exp_fsmd_arch of Entity debounce is up to date.
 Compiling vhdl file "/home/ignatius/Documents/repos/cordic_vhdl/clean/src/bcd_converter.vhd" in Library work.
 Architecture behaviour of Entity binary_bcd is up to date.
 Compiling vhdl file "/home/ignatius/Documents/repos/cordic_vhdl/clean/src/UART/uart_comps.vhd" in Library work.
@@ -135,10 +139,8 @@ Compiling vhdl file "/home/ignatius/Documents/repos/cordic_vhdl/clean/src/video_
 Architecture behavioral of Entity video_driver is up to date.
 Compiling vhdl file "/home/ignatius/Documents/repos/cordic_vhdl/clean/src/seven_seg_display.vhd" in Library work.
 Architecture behavioral of Entity led8 is up to date.
-Compiling vhdl file "/home/ignatius/Documents/repos/cordic_vhdl/clean/src/debounce.vhd" in Library work.
-Architecture exp_fsmd_arch of Entity debounce is up to date.
-Compiling vhdl file "/home/ignatius/Documents/repos/cordic_vhdl/clean/src/button_matrix.vhd" in Library work.
-Architecture behavioral of Entity button_matrix is up to date.
+Compiling vhdl file "/home/ignatius/Documents/repos/cordic_vhdl/clean/src/input_processor.vhd" in Library work.
+Architecture behavioral of Entity input_processor is up to date.
 Compiling vhdl file "/home/ignatius/Documents/repos/cordic_vhdl/clean/src/Cordic/rotator.vhdl" in Library work.
 Architecture behavioral of Entity rotator is up to date.
 Compiling vhdl file "/home/ignatius/Documents/repos/cordic_vhdl/clean/src/top.vhd" in Library work.
@@ -150,7 +152,7 @@ Entity <top_level> (Architecture <top_level_arq>) compiled.
 =========================================================================
 Analyzing hierarchy for entity <top_level> in library <work> (architecture <top_level_arq>) with generics.
 	ANGLE_STEP_INITIAL = 1
-	ANGLE_WIDTH = 8
+	ANGLE_WIDTH = 10
 	COORDS_WIDTH = 8
 	CORDIC_OFFSET = 4
 	CORDIC_STAGES = 8
@@ -181,12 +183,12 @@ Analyzing hierarchy for entity <video_driver> in library <work> (architecture <b
 
 Analyzing hierarchy for entity <LED8> in library <work> (architecture <behavioral>).
 
-Analyzing hierarchy for entity <debounce> in library <work> (architecture <exp_fsmd_arch>).
-
-Analyzing hierarchy for entity <button_matrix> in library <work> (architecture <behavioral>).
+Analyzing hierarchy for entity <input_processor> in library <work> (architecture <behavioral>) with generics.
+	ANGLE_STEP_INITIAL = 1
+	ANGLE_WIDTH = 10
 
 Analyzing hierarchy for entity <rotator> in library <work> (architecture <behavioral>) with generics.
-	ANGLES_INTEGER_WIDTH = 8
+	ANGLES_INTEGER_WIDTH = 10
 	COORDS_WIDTH = 12
 	STAGES = 8
 
@@ -203,13 +205,17 @@ Analyzing hierarchy for entity <timing> in library <work> (architecture <timing>
 Analyzing hierarchy for entity <binary_bcd> in library <work> (architecture <behaviour>) with generics.
 	N = 8
 
+Analyzing hierarchy for entity <button_matrix> in library <work> (architecture <behavioral>).
+
+Analyzing hierarchy for entity <debounce> in library <work> (architecture <exp_fsmd_arch>).
+
 Analyzing hierarchy for entity <cordic> in library <work> (architecture <behavioral>) with generics.
-	ANGLES_INTEGER_WIDTH = 8
+	ANGLES_INTEGER_WIDTH = 10
 	COORDS_WIDTH = 12
 	STAGES = 8
 
 Analyzing hierarchy for entity <cordic_stage> in library <work> (architecture <behavioral>) with generics.
-	ANGLE_WIDTH = 24
+	ANGLE_WIDTH = 26
 	COORDS_WIDTH = 12
 	STEP_WIDTH = 4
 
@@ -219,7 +225,7 @@ Analyzing hierarchy for entity <cordic_stage> in library <work> (architecture <b
 =========================================================================
 Analyzing generic Entity <top_level> in library <work> (Architecture <top_level_arq>).
 	ANGLE_STEP_INITIAL = 1
-	ANGLE_WIDTH = 8
+	ANGLE_WIDTH = 10
 	COORDS_WIDTH = 8
 	CORDIC_OFFSET = 4
 	CORDIC_STAGES = 8
@@ -232,17 +238,12 @@ Analyzing generic Entity <top_level> in library <work> (Architecture <top_level_
 	RAM_DATA_WIDTH = 8
 	UART_BYTES_TO_RECEIVE = 32768
 	UART_COORDS_WIDTH = 8
-WARNING:Xst:2211 - "/home/ignatius/Documents/repos/cordic_vhdl/clean/src/top.vhd" line 515: Instantiating black box module <SRAM>.
-WARNING:Xst:753 - "/home/ignatius/Documents/repos/cordic_vhdl/clean/src/top.vhd" line 526: Unconnected output port 'TxBusy' of component 'uart'.
-WARNING:Xst:753 - "/home/ignatius/Documents/repos/cordic_vhdl/clean/src/top.vhd" line 526: Unconnected output port 'RxErr' of component 'uart'.
-WARNING:Xst:753 - "/home/ignatius/Documents/repos/cordic_vhdl/clean/src/top.vhd" line 593: Unconnected output port 'db_level' of component 'debounce'.
-WARNING:Xst:753 - "/home/ignatius/Documents/repos/cordic_vhdl/clean/src/top.vhd" line 598: Unconnected output port 'db_level' of component 'debounce'.
-WARNING:Xst:753 - "/home/ignatius/Documents/repos/cordic_vhdl/clean/src/top.vhd" line 603: Unconnected output port 'db_level' of component 'debounce'.
-WARNING:Xst:753 - "/home/ignatius/Documents/repos/cordic_vhdl/clean/src/top.vhd" line 608: Unconnected output port 'db_level' of component 'debounce'.
-WARNING:Xst:753 - "/home/ignatius/Documents/repos/cordic_vhdl/clean/src/top.vhd" line 613: Unconnected output port 'db_level' of component 'debounce'.
-WARNING:Xst:753 - "/home/ignatius/Documents/repos/cordic_vhdl/clean/src/top.vhd" line 618: Unconnected output port 'db_level' of component 'debounce'.
-WARNING:Xst:753 - "/home/ignatius/Documents/repos/cordic_vhdl/clean/src/top.vhd" line 623: Unconnected output port 'db_level' of component 'debounce'.
-WARNING:Xst:753 - "/home/ignatius/Documents/repos/cordic_vhdl/clean/src/top.vhd" line 628: Unconnected output port 'db_level' of component 'debounce'.
+WARNING:Xst:2211 - "/home/ignatius/Documents/repos/cordic_vhdl/clean/src/top.vhd" line 451: Instantiating black box module <SRAM>.
+WARNING:Xst:753 - "/home/ignatius/Documents/repos/cordic_vhdl/clean/src/top.vhd" line 462: Unconnected output port 'TxBusy' of component 'uart'.
+WARNING:Xst:753 - "/home/ignatius/Documents/repos/cordic_vhdl/clean/src/top.vhd" line 462: Unconnected output port 'RxErr' of component 'uart'.
+WARNING:Xst:1610 - "/home/ignatius/Documents/repos/cordic_vhdl/clean/src/top.vhd" line 558: Width mismatch. <angle_x_tl> has a width of 10 bits but assigned expression is 20-bit wide.
+WARNING:Xst:1610 - "/home/ignatius/Documents/repos/cordic_vhdl/clean/src/top.vhd" line 559: Width mismatch. <angle_y_tl> has a width of 10 bits but assigned expression is 20-bit wide.
+WARNING:Xst:1610 - "/home/ignatius/Documents/repos/cordic_vhdl/clean/src/top.vhd" line 560: Width mismatch. <angle_z_tl> has a width of 10 bits but assigned expression is 20-bit wide.
 Entity <top_level> analyzed. Unit <top_level> generated.
 
 Analyzing Entity <vga_ctrl> in library <work> (Architecture <vga_ctrl_arq>).
@@ -289,26 +290,39 @@ Analyzing generic Entity <binary_bcd> in library <work> (Architecture <behaviour
 	N = 8
 Entity <binary_bcd> analyzed. Unit <binary_bcd> generated.
 
-Analyzing Entity <debounce> in library <work> (Architecture <exp_fsmd_arch>).
-Entity <debounce> analyzed. Unit <debounce> generated.
+Analyzing generic Entity <input_processor> in library <work> (Architecture <behavioral>).
+	ANGLE_STEP_INITIAL = 1
+	ANGLE_WIDTH = 10
+WARNING:Xst:753 - "/home/ignatius/Documents/repos/cordic_vhdl/clean/src/input_processor.vhd" line 185: Unconnected output port 'db_level' of component 'debounce'.
+WARNING:Xst:753 - "/home/ignatius/Documents/repos/cordic_vhdl/clean/src/input_processor.vhd" line 190: Unconnected output port 'db_level' of component 'debounce'.
+WARNING:Xst:753 - "/home/ignatius/Documents/repos/cordic_vhdl/clean/src/input_processor.vhd" line 195: Unconnected output port 'db_level' of component 'debounce'.
+WARNING:Xst:753 - "/home/ignatius/Documents/repos/cordic_vhdl/clean/src/input_processor.vhd" line 200: Unconnected output port 'db_level' of component 'debounce'.
+WARNING:Xst:753 - "/home/ignatius/Documents/repos/cordic_vhdl/clean/src/input_processor.vhd" line 205: Unconnected output port 'db_level' of component 'debounce'.
+WARNING:Xst:753 - "/home/ignatius/Documents/repos/cordic_vhdl/clean/src/input_processor.vhd" line 210: Unconnected output port 'db_level' of component 'debounce'.
+WARNING:Xst:753 - "/home/ignatius/Documents/repos/cordic_vhdl/clean/src/input_processor.vhd" line 215: Unconnected output port 'db_level' of component 'debounce'.
+WARNING:Xst:753 - "/home/ignatius/Documents/repos/cordic_vhdl/clean/src/input_processor.vhd" line 220: Unconnected output port 'db_level' of component 'debounce'.
+Entity <input_processor> analyzed. Unit <input_processor> generated.
 
 Analyzing Entity <button_matrix> in library <work> (Architecture <behavioral>).
 Entity <button_matrix> analyzed. Unit <button_matrix> generated.
 
+Analyzing Entity <debounce> in library <work> (Architecture <exp_fsmd_arch>).
+Entity <debounce> analyzed. Unit <debounce> generated.
+
 Analyzing generic Entity <rotator> in library <work> (Architecture <behavioral>).
-	ANGLES_INTEGER_WIDTH = 8
+	ANGLES_INTEGER_WIDTH = 10
 	COORDS_WIDTH = 12
 	STAGES = 8
 Entity <rotator> analyzed. Unit <rotator> generated.
 
 Analyzing generic Entity <cordic> in library <work> (Architecture <behavioral>).
-	ANGLES_INTEGER_WIDTH = 8
+	ANGLES_INTEGER_WIDTH = 10
 	COORDS_WIDTH = 12
 	STAGES = 8
 Entity <cordic> analyzed. Unit <cordic> generated.
 
 Analyzing generic Entity <cordic_stage> in library <work> (Architecture <behavioral>).
-	ANGLE_WIDTH = 24
+	ANGLE_WIDTH = 26
 	COORDS_WIDTH = 12
 	STEP_WIDTH = 4
 Entity <cordic_stage> analyzed. Unit <cordic_stage> generated.
@@ -370,50 +384,9 @@ Synthesizing Unit <video_driver>.
 Unit <video_driver> synthesized.
 
 
-Synthesizing Unit <debounce>.
-    Related source file is "/home/ignatius/Documents/repos/cordic_vhdl/clean/src/debounce.vhd".
-    Found finite state machine <FSM_0> for signal <state_reg>.
-    -----------------------------------------------------------------------
-    | States             | 4                                              |
-    | Transitions        | 10                                             |
-    | Inputs             | 2                                              |
-    | Outputs            | 5                                              |
-    | Clock              | clk                       (rising_edge)        |
-    | Reset              | reset                     (positive)           |
-    | Reset type         | asynchronous                                   |
-    | Reset State        | zero                                           |
-    | Power Up State     | zero                                           |
-    | Encoding           | automatic                                      |
-    | Implementation     | LUT                                            |
-    -----------------------------------------------------------------------
-    Found 21-bit subtractor for signal <q_next$addsub0000> created at line 33.
-    Found 21-bit register for signal <q_reg>.
-    Summary:
-	inferred   1 Finite State Machine(s).
-	inferred  21 D-type flip-flop(s).
-	inferred   1 Adder/Subtractor(s).
-Unit <debounce> synthesized.
-
-
-Synthesizing Unit <button_matrix>.
-    Related source file is "/home/ignatius/Documents/repos/cordic_vhdl/clean/src/button_matrix.vhd".
-    Found 1-bit register for signal <angle_step_up>.
-    Found 1-bit register for signal <down_x>.
-    Found 1-bit register for signal <down_y>.
-    Found 1-bit register for signal <down_z>.
-    Found 1-bit register for signal <up_x>.
-    Found 1-bit register for signal <up_y>.
-    Found 1-bit register for signal <up_z>.
-    Found 1-bit register for signal <angle_step_down>.
-    Found 1-bit register for signal <reset_button>.
-    Summary:
-	inferred   9 D-type flip-flop(s).
-Unit <button_matrix> synthesized.
-
-
 Synthesizing Unit <receive>.
     Related source file is "/home/ignatius/Documents/repos/cordic_vhdl/clean/src/UART/receive.vhd".
-    Found finite state machine <FSM_1> for signal <RxFsm>.
+    Found finite state machine <FSM_0> for signal <RxFsm>.
     -----------------------------------------------------------------------
     | States             | 6                                              |
     | Transitions        | 15                                             |
@@ -446,7 +419,7 @@ Synthesizing Unit <transmit>.
 INFO:Xst:1799 - State shift_tx is never reached in FSM <TxFsm>.
 INFO:Xst:1799 - State load_tx is never reached in FSM <TxFsm>.
 INFO:Xst:1799 - State stop_tx is never reached in FSM <TxFsm>.
-    Found finite state machine <FSM_2> for signal <TxFsm>.
+    Found finite state machine <FSM_1> for signal <TxFsm>.
     -----------------------------------------------------------------------
     | States             | 1                                              |
     | Transitions        | 1                                              |
@@ -493,7 +466,7 @@ Unit <timing> synthesized.
 Synthesizing Unit <binary_bcd>.
     Related source file is "/home/ignatius/Documents/repos/cordic_vhdl/clean/src/bcd_converter.vhd".
 WARNING:Xst:646 - Signal <bcds_reg<19>> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
-    Found finite state machine <FSM_3> for signal <state>.
+    Found finite state machine <FSM_2> for signal <state>.
     -----------------------------------------------------------------------
     | States             | 3                                              |
     | Transitions        | 4                                              |
@@ -530,11 +503,52 @@ WARNING:Xst:646 - Signal <bcds_reg<19>> is assigned but never used. This unconne
 Unit <binary_bcd> synthesized.
 
 
+Synthesizing Unit <button_matrix>.
+    Related source file is "/home/ignatius/Documents/repos/cordic_vhdl/clean/src/button_matrix.vhd".
+    Found 1-bit register for signal <angle_step_up>.
+    Found 1-bit register for signal <down_x>.
+    Found 1-bit register for signal <down_y>.
+    Found 1-bit register for signal <down_z>.
+    Found 1-bit register for signal <up_x>.
+    Found 1-bit register for signal <up_y>.
+    Found 1-bit register for signal <up_z>.
+    Found 1-bit register for signal <angle_step_down>.
+    Found 1-bit register for signal <reset_button>.
+    Summary:
+	inferred   9 D-type flip-flop(s).
+Unit <button_matrix> synthesized.
+
+
+Synthesizing Unit <debounce>.
+    Related source file is "/home/ignatius/Documents/repos/cordic_vhdl/clean/src/debounce.vhd".
+    Found finite state machine <FSM_3> for signal <state_reg>.
+    -----------------------------------------------------------------------
+    | States             | 4                                              |
+    | Transitions        | 10                                             |
+    | Inputs             | 2                                              |
+    | Outputs            | 5                                              |
+    | Clock              | clk                       (rising_edge)        |
+    | Reset              | reset                     (positive)           |
+    | Reset type         | asynchronous                                   |
+    | Reset State        | zero                                           |
+    | Power Up State     | zero                                           |
+    | Encoding           | automatic                                      |
+    | Implementation     | LUT                                            |
+    -----------------------------------------------------------------------
+    Found 21-bit subtractor for signal <q_next$addsub0000> created at line 33.
+    Found 21-bit register for signal <q_reg>.
+    Summary:
+	inferred   1 Finite State Machine(s).
+	inferred  21 D-type flip-flop(s).
+	inferred   1 Adder/Subtractor(s).
+Unit <debounce> synthesized.
+
+
 Synthesizing Unit <cordic_stage>.
     Related source file is "/home/ignatius/Documents/repos/cordic_vhdl/clean/src/Cordic/cordic_stage.vhdl".
     Found 12-bit addsub for signal <X>.
     Found 12-bit addsub for signal <Y>.
-    Found 24-bit addsub for signal <Z>.
+    Found 26-bit addsub for signal <Z>.
     Found 12-bit shifter arithmetic right for signal <Xshifted>.
     Found 12-bit shifter arithmetic right for signal <Yshifted>.
     Summary:
@@ -575,6 +589,37 @@ Synthesizing Unit <LED8>.
 Unit <LED8> synthesized.
 
 
+Synthesizing Unit <input_processor>.
+    Related source file is "/home/ignatius/Documents/repos/cordic_vhdl/clean/src/input_processor.vhd".
+    Found 31-bit register for signal <angle_step_current>.
+    Found 31-bit adder for signal <angle_step_next$addsub0000> created at line 157.
+    Found 31-bit subtractor for signal <angle_step_next$addsub0001> created at line 162.
+    Found 31-bit comparator greater for signal <angle_step_next$cmp_gt0000> created at line 161.
+    Found 31-bit comparator less for signal <angle_step_next$cmp_lt0000> created at line 156.
+    Found 10-bit register for signal <angle_x_current>.
+    Found 10-bit adder for signal <angle_x_current$addsub0000> created at line 122.
+    Found 10-bit comparator greatequal for signal <angle_x_current$cmp_ge0000> created at line 114.
+    Found 10-bit comparator less for signal <angle_x_current$cmp_lt0000> created at line 121.
+    Found 10-bit addsub for signal <angle_x_current$mux0000>.
+    Found 10-bit register for signal <angle_y_current>.
+    Found 10-bit adder for signal <angle_y_current$addsub0000> created at line 136.
+    Found 10-bit comparator greatequal for signal <angle_y_current$cmp_ge0000> created at line 128.
+    Found 10-bit comparator less for signal <angle_y_current$cmp_lt0000> created at line 135.
+    Found 10-bit addsub for signal <angle_y_current$mux0000>.
+    Found 10-bit register for signal <angle_z_current>.
+    Found 10-bit adder for signal <angle_z_current$addsub0000> created at line 150.
+    Found 10-bit comparator greatequal for signal <angle_z_current$cmp_ge0000> created at line 142.
+    Found 10-bit comparator less for signal <angle_z_current$cmp_lt0000> created at line 149.
+    Found 10-bit addsub for signal <angle_z_current$mux0000>.
+    Found 10-bit adder for signal <angle_z_current$sub0000> created at line 142.
+    Found 10-bit subtractor for signal <angle_z_current$sub0001>.
+    Summary:
+	inferred  61 D-type flip-flop(s).
+	inferred  10 Adder/Subtractor(s).
+	inferred   8 Comparator(s).
+Unit <input_processor> synthesized.
+
+
 Synthesizing Unit <cordic>.
     Related source file is "/home/ignatius/Documents/repos/cordic_vhdl/clean/src/Cordic/cordic.vhdl".
 WARNING:Xst:646 - Signal <sZ_array<8>> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
@@ -583,11 +628,11 @@ WARNING:Xst:646 - Signal <sY_multiplication_buffer<10:0>> is assigned but never 
 WARNING:Xst:646 - Signal <sX_multiplication_buffer<23>> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
 WARNING:Xst:646 - Signal <sX_multiplication_buffer<10:0>> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
 WARNING:Xst:653 - Signal <sCordic_scale_factor> is used but never assigned. This sourceless signal will be automatically connected to value 010011011100.
-    Found 8-bit addsub for signal <anglet$share0000> created at line 125.
+    Found 10-bit addsub for signal <anglet$share0000> created at line 125.
     Found 12x12-bit multiplier for signal <sX_multiplication_buffer>.
     Found 12x12-bit multiplier for signal <sY_multiplication_buffer>.
-    Found 8-bit comparator greater for signal <X$cmp_gt0000> created at line 128.
-    Found 8-bit comparator less for signal <X$cmp_lt0000> created at line 125.
+    Found 10-bit comparator greater for signal <X$cmp_gt0000> created at line 128.
+    Found 10-bit comparator less for signal <X$cmp_lt0000> created at line 125.
     Found 12-bit adder for signal <X$share0000> created at line 125.
     Summary:
 	inferred   2 Adder/Subtractor(s).
@@ -601,31 +646,32 @@ Synthesizing Unit <rotator>.
     Found 12-bit register for signal <X>.
     Found 12-bit register for signal <Y>.
     Found 12-bit register for signal <Z>.
-    Found 8-bit register for signal <X_angle>.
+    Found 10-bit register for signal <X_angle>.
     Found 12-bit register for signal <X_rotator_X0>.
     Found 12-bit register for signal <X_rotator_Y0>.
-    Found 8-bit register for signal <Y_angle>.
+    Found 10-bit register for signal <Y_angle>.
     Found 12-bit register for signal <y_rotator_X0>.
     Found 12-bit register for signal <Y_rotator_Y0>.
-    Found 8-bit register for signal <Z_angle>.
+    Found 10-bit register for signal <Z_angle>.
     Found 12-bit register for signal <Z_rotator_X0>.
     Found 12-bit register for signal <Z_rotator_Y0>.
     Summary:
-	inferred 132 D-type flip-flop(s).
+	inferred 138 D-type flip-flop(s).
 Unit <rotator> synthesized.
 
 
 Synthesizing Unit <top_level>.
     Related source file is "/home/ignatius/Documents/repos/cordic_vhdl/clean/src/top.vhd".
+WARNING:Xst:646 - Signal <angle_step_tl> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
 WARNING:Xst:1780 - Signal <angle360_z_next> is never used or assigned. This unconnected signal will be trimmed during the optimization process.
 WARNING:Xst:1780 - Signal <angle360_z_current> is never used or assigned. This unconnected signal will be trimmed during the optimization process.
 WARNING:Xst:1780 - Signal <angle360_y_next> is never used or assigned. This unconnected signal will be trimmed during the optimization process.
 WARNING:Xst:1780 - Signal <angle360_y_current> is never used or assigned. This unconnected signal will be trimmed during the optimization process.
 WARNING:Xst:1780 - Signal <angle360_x_next> is never used or assigned. This unconnected signal will be trimmed during the optimization process.
 WARNING:Xst:1780 - Signal <angle360_x_current> is never used or assigned. This unconnected signal will be trimmed during the optimization process.
-WARNING:Xst:646 - Signal <Z_coord_rotated_unsigned> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
 WARNING:Xst:646 - Signal <Z_coord_rotated<11:8>> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
 WARNING:Xst:646 - Signal <Y_coord_rotated<11:8>> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
+WARNING:Xst:646 - Signal <X_coord_rotated_unsigned> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
 WARNING:Xst:646 - Signal <X_coord_rotated<11:8>> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
     Found finite state machine <FSM_4> for signal <state_current>.
     -----------------------------------------------------------------------
@@ -653,42 +699,42 @@ WARNING:Xst:646 - Signal <X_coord_rotated<11:8>> is assigned but never used. Thi
     | Encoding           | automatic                                      |
     | Implementation     | LUT                                            |
     -----------------------------------------------------------------------
-    Found 31-bit up counter for signal <angle_step>.
-    Found 31-bit comparator greater for signal <angle_step$cmp_gt0000> created at line 487.
-    Found 31-bit comparator lessequal for signal <angle_step$cmp_le0000> created at line 487.
-    Found 31-bit addsub for signal <angle_step$mux0000> created at line 487.
-    Found 8-bit updown accumulator for signal <angle_X>.
-    Found 8-bit updown accumulator for signal <angle_Y>.
-    Found 8-bit updown accumulator for signal <angle_Z>.
+    Found 10-bit adder for signal <angle_x_tl$addsub0000> created at line 558.
+    Found 10-bit comparator greater for signal <angle_x_tl$cmp_gt0000> created at line 558.
+    Found 10-bit adder for signal <angle_x_tl$sub0000> created at line 558.
+    Found 10-bit adder for signal <angle_y_tl$addsub0000> created at line 559.
+    Found 10-bit comparator greater for signal <angle_y_tl$cmp_gt0000> created at line 559.
+    Found 10-bit adder for signal <angle_y_tl$sub0000> created at line 559.
+    Found 10-bit adder for signal <angle_z_tl$addsub0000> created at line 560.
+    Found 10-bit comparator greater for signal <angle_z_tl$cmp_gt0000> created at line 560.
+    Found 10-bit adder for signal <angle_z_tl$sub0000> created at line 560.
     Found 31-bit register for signal <cycles_current>.
-    Found 31-bit addsub for signal <cycles_current$share0000> created at line 318.
+    Found 31-bit addsub for signal <cycles_current$share0000> created at line 296.
     Found 31-bit register for signal <sig_sram_address_current>.
-    Found 31-bit adder for signal <sig_sram_address_next$share0000> created at line 318.
+    Found 31-bit adder for signal <sig_sram_address_next$share0000> created at line 296.
     Found 8-bit register for signal <sig_sram_data_in_current>.
     Found 1-bit register for signal <sig_sram_rw_current<0>>.
     Found 31-bit register for signal <sig_uart_bytes_received_current>.
-    Found 31-bit adder for signal <sig_uart_bytes_received_next$addsub0000> created at line 341.
+    Found 31-bit adder for signal <sig_uart_bytes_received_next$addsub0000> created at line 319.
     Found 16-bit register for signal <sig_vram_addr_wr_current>.
     Found 16-bit register for signal <sig_vram_addr_wr_pointer_current>.
     Found 16-bit adder for signal <sig_vram_addr_wr_pointer_next$addsub0000>.
     Found 1-bit register for signal <sig_vram_data_wr_current<0>>.
     Found 1-bit register for signal <sig_vram_ena_wr_current>.
-    Found 31-bit comparator greater for signal <state_current$cmp_gt0000> created at line 360.
-    Found 31-bit comparator less for signal <state_current$cmp_lt0000> created at line 388.
-    Found 31-bit comparator less for signal <state_current$cmp_lt0001> created at line 405.
-    Found 16-bit comparator less for signal <state_current$cmp_lt0002> created at line 421.
+    Found 31-bit comparator greater for signal <state_current$cmp_gt0000> created at line 338.
+    Found 31-bit comparator less for signal <state_current$cmp_lt0000> created at line 366.
+    Found 31-bit comparator less for signal <state_current$cmp_lt0001> created at line 383.
+    Found 16-bit comparator less for signal <state_current$cmp_lt0002> created at line 399.
     Found 8-bit register for signal <x_coord_current>.
-    Found 8-bit adder for signal <X_coord_rotated_unsigned>.
     Found 8-bit register for signal <y_coord_current>.
     Found 8-bit adder for signal <Y_coord_rotated_unsigned>.
     Found 8-bit register for signal <z_coord_current>.
+    Found 8-bit adder for signal <Z_coord_rotated_unsigned>.
     Summary:
 	inferred   2 Finite State Machine(s).
-	inferred   1 Counter(s).
-	inferred   3 Accumulator(s).
 	inferred 160 D-type flip-flop(s).
-	inferred   7 Adder/Subtractor(s).
-	inferred   6 Comparator(s).
+	inferred  12 Adder/Subtractor(s).
+	inferred   7 Comparator(s).
 Unit <top_level> synthesized.
 
 INFO:Xst:1767 - HDL ADVISOR - Resource sharing has identified that some arithmetic operations in this design can share the same physical resources for reduced device utilization. For improved clock frequency you may try to disable resource sharing.
@@ -703,57 +749,52 @@ Macro Statistics
  16x8-bit ROM                                          : 1
 # Multipliers                                          : 6
  12x12-bit multiplier                                  : 6
-# Adders/Subtractors                                   : 108
- 10-bit adder                                          : 1
- 10-bit subtractor                                     : 2
+# Adders/Subtractors                                   : 123
+ 10-bit adder                                          : 11
+ 10-bit addsub                                         : 6
+ 10-bit subtractor                                     : 3
  12-bit adder                                          : 3
  12-bit addsub                                         : 48
  16-bit adder                                          : 1
  21-bit subtractor                                     : 8
- 24-bit addsub                                         : 24
- 31-bit adder                                          : 2
- 31-bit addsub                                         : 2
+ 26-bit addsub                                         : 24
+ 31-bit adder                                          : 3
+ 31-bit addsub                                         : 1
+ 31-bit subtractor                                     : 1
  32-bit adder                                          : 2
  4-bit adder                                           : 6
  4-bit subtractor                                      : 1
  6-bit adder                                           : 1
  8-bit adder                                           : 2
- 8-bit addsub                                          : 3
  8-bit subtractor                                      : 2
-# Counters                                             : 6
+# Counters                                             : 5
  10-bit up counter                                     : 2
  12-bit up counter                                     : 1
  2-bit up counter                                      : 1
- 31-bit up counter                                     : 1
  32-bit up counter                                     : 1
-# Accumulators                                         : 3
- 8-bit updown accumulator                              : 3
-# Registers                                            : 70
+# Registers                                            : 74
  1-bit register                                        : 25
- 10-bit register                                       : 1
+ 10-bit register                                       : 7
  12-bit register                                       : 9
  16-bit register                                       : 3
  20-bit register                                       : 2
  21-bit register                                       : 8
- 31-bit register                                       : 3
+ 31-bit register                                       : 4
  32-bit register                                       : 2
  4-bit register                                        : 4
  6-bit register                                        : 1
- 8-bit register                                        : 11
+ 8-bit register                                        : 8
  9-bit register                                        : 1
-# Comparators                                          : 29
- 10-bit comparator greatequal                          : 2
- 10-bit comparator greater                             : 3
- 10-bit comparator less                                : 4
+# Comparators                                          : 38
+ 10-bit comparator greatequal                          : 5
+ 10-bit comparator greater                             : 9
+ 10-bit comparator less                                : 10
  10-bit comparator lessequal                           : 2
  16-bit comparator less                                : 1
  31-bit comparator greater                             : 2
- 31-bit comparator less                                : 2
- 31-bit comparator lessequal                           : 1
+ 31-bit comparator less                                : 3
  5-bit comparator greater                              : 5
  6-bit comparator greater                              : 1
- 8-bit comparator greater                              : 3
- 8-bit comparator less                                 : 3
 # Multiplexers                                         : 2
  32-bit 4-to-1 multiplexer                             : 1
  4-bit 4-to-1 multiplexer                              : 1
@@ -798,6 +839,23 @@ Optimizing FSM <state_current/FSM> on signal <state_current[1:14]> with one-hot 
  state_read_from_sram_prev      | 00001000000000
 --------------------------------------------------
 Analyzing FSM <FSM_3> for best encoding.
+Optimizing FSM <input_processor_tl/debounce_unit_x_up/state_reg/FSM> on signal <state_reg[1:2]> with gray encoding.
+Optimizing FSM <input_processor_tl/debounce_unit_x_down/state_reg/FSM> on signal <state_reg[1:2]> with gray encoding.
+Optimizing FSM <input_processor_tl/debounce_unit_y_up/state_reg/FSM> on signal <state_reg[1:2]> with gray encoding.
+Optimizing FSM <input_processor_tl/debounce_unit_y_down/state_reg/FSM> on signal <state_reg[1:2]> with gray encoding.
+Optimizing FSM <input_processor_tl/debounce_unit_z_up/state_reg/FSM> on signal <state_reg[1:2]> with gray encoding.
+Optimizing FSM <input_processor_tl/debounce_unit_z_down/state_reg/FSM> on signal <state_reg[1:2]> with gray encoding.
+Optimizing FSM <input_processor_tl/debounce_unit_step_angle_up/state_reg/FSM> on signal <state_reg[1:2]> with gray encoding.
+Optimizing FSM <input_processor_tl/debounce_unit_step_angle_down/state_reg/FSM> on signal <state_reg[1:2]> with gray encoding.
+-------------------
+ State | Encoding
+-------------------
+ zero  | 00
+ wait0 | 10
+ one   | 11
+ wait1 | 01
+-------------------
+Analyzing FSM <FSM_2> for best encoding.
 Optimizing FSM <seven_segments/b_to_bcd/state/FSM> on signal <state[1:2]> with gray encoding.
 -------------------
  State | Encoding
@@ -806,7 +864,7 @@ Optimizing FSM <seven_segments/b_to_bcd/state/FSM> on signal <state[1:2]> with g
  shift | 01
  done  | 11
 -------------------
-Analyzing FSM <FSM_2> for best encoding.
+Analyzing FSM <FSM_1> for best encoding.
 Optimizing FSM <uart_load_data/transmission_unit/TxFsm/FSM> on signal <TxFsm[1:2]> with user encoding.
 ----------------------
  State    | Encoding
@@ -816,7 +874,7 @@ Optimizing FSM <uart_load_data/transmission_unit/TxFsm/FSM> on signal <TxFsm[1:2
  shift_tx | unreached
  stop_tx  | unreached
 ----------------------
-Analyzing FSM <FSM_1> for best encoding.
+Analyzing FSM <FSM_0> for best encoding.
 Optimizing FSM <uart_load_data/reception_unit/RxFsm/FSM> on signal <RxFsm[1:3]> with sequential encoding.
 ----------------------
  State    | Encoding
@@ -828,23 +886,6 @@ Optimizing FSM <uart_load_data/reception_unit/RxFsm/FSM> on signal <RxFsm[1:3]> 
  stop_rx  | 100
  rx_ovf   | 010
 ----------------------
-Analyzing FSM <FSM_0> for best encoding.
-Optimizing FSM <debounce_unit_x_up/state_reg/FSM> on signal <state_reg[1:2]> with gray encoding.
-Optimizing FSM <debounce_unit_x_down/state_reg/FSM> on signal <state_reg[1:2]> with gray encoding.
-Optimizing FSM <debounce_unit_y_up/state_reg/FSM> on signal <state_reg[1:2]> with gray encoding.
-Optimizing FSM <debounce_unit_y_down/state_reg/FSM> on signal <state_reg[1:2]> with gray encoding.
-Optimizing FSM <debounce_unit_z_up/state_reg/FSM> on signal <state_reg[1:2]> with gray encoding.
-Optimizing FSM <debounce_unit_z_down/state_reg/FSM> on signal <state_reg[1:2]> with gray encoding.
-Optimizing FSM <debounce_unit_step_angle_up/state_reg/FSM> on signal <state_reg[1:2]> with gray encoding.
-Optimizing FSM <debounce_unit_step_angle_down/state_reg/FSM> on signal <state_reg[1:2]> with gray encoding.
--------------------
- State | Encoding
--------------------
- zero  | 00
- wait0 | 10
- one   | 11
- wait1 | 01
--------------------
 Reading core <ipcore_dir/sram.ngc>.
 Loading core <SRAM> for timing and area information for instance <ram_internal>.
 INFO:Xst:2261 - The FF/Latch <Period1mS> in Unit <seven_segments> is equivalent to the following FF/Latch, which will be removed : <Count1_9> 
@@ -861,14 +902,14 @@ WARNING:Xst:2677 - Node <bcds_out_reg_16> of sequential type is unconnected in b
 WARNING:Xst:2677 - Node <bcds_out_reg_17> of sequential type is unconnected in block <b_to_bcd>.
 WARNING:Xst:2677 - Node <bcds_out_reg_18> of sequential type is unconnected in block <b_to_bcd>.
 WARNING:Xst:2677 - Node <bcds_out_reg_19> of sequential type is unconnected in block <b_to_bcd>.
-WARNING:Xst:2677 - Node <X_8> of sequential type is unconnected in block <cordic_rotator>.
-WARNING:Xst:2677 - Node <X_9> of sequential type is unconnected in block <cordic_rotator>.
-WARNING:Xst:2677 - Node <X_10> of sequential type is unconnected in block <cordic_rotator>.
-WARNING:Xst:2677 - Node <X_11> of sequential type is unconnected in block <cordic_rotator>.
 WARNING:Xst:2677 - Node <Y_8> of sequential type is unconnected in block <cordic_rotator>.
 WARNING:Xst:2677 - Node <Y_9> of sequential type is unconnected in block <cordic_rotator>.
 WARNING:Xst:2677 - Node <Y_10> of sequential type is unconnected in block <cordic_rotator>.
 WARNING:Xst:2677 - Node <Y_11> of sequential type is unconnected in block <cordic_rotator>.
+WARNING:Xst:2677 - Node <Z_8> of sequential type is unconnected in block <cordic_rotator>.
+WARNING:Xst:2677 - Node <Z_9> of sequential type is unconnected in block <cordic_rotator>.
+WARNING:Xst:2677 - Node <Z_10> of sequential type is unconnected in block <cordic_rotator>.
+WARNING:Xst:2677 - Node <Z_11> of sequential type is unconnected in block <cordic_rotator>.
 
 Synthesizing (advanced) Unit <LED8>.
 INFO:Xst:3034 - In order to maximize performance and save block RAM resources, the small ROM <Mrom_led_out> will be implemented on LUT. If you want to force its implementation on block, use option/constraint rom_style.
@@ -918,46 +959,41 @@ Macro Statistics
  16x8-bit ROM                                          : 1
 # Multipliers                                          : 6
  12x12-bit multiplier                                  : 6
-# Adders/Subtractors                                   : 107
- 10-bit adder                                          : 1
- 10-bit subtractor                                     : 2
+# Adders/Subtractors                                   : 122
+ 10-bit adder                                          : 11
+ 10-bit addsub                                         : 6
+ 10-bit subtractor                                     : 3
  12-bit adder                                          : 3
  12-bit addsub                                         : 48
  16-bit adder                                          : 1
  21-bit subtractor                                     : 8
- 24-bit addsub                                         : 24
+ 26-bit addsub                                         : 24
  3-bit adder                                           : 1
- 31-bit adder                                          : 2
- 31-bit addsub                                         : 2
+ 31-bit adder                                          : 3
+ 31-bit addsub                                         : 1
+ 31-bit subtractor                                     : 1
  32-bit adder                                          : 2
  4-bit adder                                           : 5
  6-bit adder                                           : 1
  8-bit adder                                           : 2
- 8-bit addsub                                          : 3
  8-bit subtractor                                      : 2
-# Counters                                             : 6
+# Counters                                             : 5
  10-bit up counter                                     : 2
  12-bit up counter                                     : 1
  2-bit up counter                                      : 1
- 31-bit up counter                                     : 1
  32-bit up counter                                     : 1
-# Accumulators                                         : 3
- 8-bit updown accumulator                              : 3
-# Registers                                            : 695
- Flip-Flops                                            : 695
-# Comparators                                          : 29
- 10-bit comparator greatequal                          : 2
- 10-bit comparator greater                             : 3
- 10-bit comparator less                                : 4
+# Registers                                            : 762
+ Flip-Flops                                            : 762
+# Comparators                                          : 38
+ 10-bit comparator greatequal                          : 5
+ 10-bit comparator greater                             : 9
+ 10-bit comparator less                                : 10
  10-bit comparator lessequal                           : 2
  16-bit comparator less                                : 1
  31-bit comparator greater                             : 2
- 31-bit comparator less                                : 2
- 31-bit comparator lessequal                           : 1
+ 31-bit comparator less                                : 3
  5-bit comparator greater                              : 5
  6-bit comparator greater                              : 1
- 8-bit comparator greater                              : 3
- 8-bit comparator less                                 : 3
 # Multiplexers                                         : 2
  32-bit 4-to-1 multiplexer                             : 1
  4-bit 4-to-1 multiplexer                              : 1
@@ -989,17 +1025,19 @@ Optimizing unit <vga_ctrl> ...
 
 Optimizing unit <video_driver> ...
 
-Optimizing unit <debounce> ...
-
-Optimizing unit <button_matrix> ...
-
 Optimizing unit <receive> ...
 
 Optimizing unit <timing> ...
 
 Optimizing unit <binary_bcd> ...
 
+Optimizing unit <button_matrix> ...
+
+Optimizing unit <debounce> ...
+
 Optimizing unit <LED8> ...
+
+Optimizing unit <input_processor> ...
 
 Optimizing unit <cordic> ...
 
@@ -1054,26 +1092,28 @@ WARNING:Xst:2677 - Node <cordic_rotator/X_11> of sequential type is unconnected 
 WARNING:Xst:2677 - Node <cordic_rotator/X_10> of sequential type is unconnected in block <top_level>.
 WARNING:Xst:2677 - Node <cordic_rotator/X_9> of sequential type is unconnected in block <top_level>.
 WARNING:Xst:2677 - Node <cordic_rotator/X_8> of sequential type is unconnected in block <top_level>.
+WARNING:Xst:2677 - Node <cordic_rotator/X_7> of sequential type is unconnected in block <top_level>.
+WARNING:Xst:2677 - Node <cordic_rotator/X_6> of sequential type is unconnected in block <top_level>.
+WARNING:Xst:2677 - Node <cordic_rotator/X_5> of sequential type is unconnected in block <top_level>.
+WARNING:Xst:2677 - Node <cordic_rotator/X_4> of sequential type is unconnected in block <top_level>.
+WARNING:Xst:2677 - Node <cordic_rotator/X_3> of sequential type is unconnected in block <top_level>.
+WARNING:Xst:2677 - Node <cordic_rotator/X_2> of sequential type is unconnected in block <top_level>.
+WARNING:Xst:2677 - Node <cordic_rotator/X_1> of sequential type is unconnected in block <top_level>.
+WARNING:Xst:2677 - Node <cordic_rotator/X_0> of sequential type is unconnected in block <top_level>.
 WARNING:Xst:2677 - Node <cordic_rotator/Z_11> of sequential type is unconnected in block <top_level>.
 WARNING:Xst:2677 - Node <cordic_rotator/Z_10> of sequential type is unconnected in block <top_level>.
 WARNING:Xst:2677 - Node <cordic_rotator/Z_9> of sequential type is unconnected in block <top_level>.
 WARNING:Xst:2677 - Node <cordic_rotator/Z_8> of sequential type is unconnected in block <top_level>.
-WARNING:Xst:2677 - Node <cordic_rotator/Z_7> of sequential type is unconnected in block <top_level>.
-WARNING:Xst:2677 - Node <cordic_rotator/Z_6> of sequential type is unconnected in block <top_level>.
-WARNING:Xst:2677 - Node <cordic_rotator/Z_5> of sequential type is unconnected in block <top_level>.
-WARNING:Xst:2677 - Node <cordic_rotator/Z_4> of sequential type is unconnected in block <top_level>.
-WARNING:Xst:2677 - Node <cordic_rotator/Z_3> of sequential type is unconnected in block <top_level>.
-WARNING:Xst:2677 - Node <cordic_rotator/Z_2> of sequential type is unconnected in block <top_level>.
-WARNING:Xst:2677 - Node <cordic_rotator/Z_1> of sequential type is unconnected in block <top_level>.
-WARNING:Xst:2677 - Node <cordic_rotator/Z_0> of sequential type is unconnected in block <top_level>.
 
 Mapping all equations...
 Building and optimizing final netlist ...
-Found area constraint ratio of 100 (+ 5) on block top_level, actual ratio is 29.
-FlipFlop cordic_rotator/X_angle_5 has been replicated 1 time(s)
-FlipFlop cordic_rotator/X_angle_6 has been replicated 1 time(s)
-FlipFlop cordic_rotator/X_angle_7 has been replicated 1 time(s)
-FlipFlop cordic_rotator/Z_angle_5 has been replicated 1 time(s)
+PACKER Warning: Lut cordic_rotator/x_rotator/stages_instantiation[0].current_cordic_stage/X_mux00003 is driving XOR and other loads hence can not be packed with the XOR/Carry. This would result in an extra LUT for a feedthrough.
+PACKER Warning: Lut cordic_rotator/y_rotator/stages_instantiation[0].current_cordic_stage/X_mux00003 is driving XOR and other loads hence can not be packed with the XOR/Carry. This would result in an extra LUT for a feedthrough.
+PACKER Warning: Lut cordic_rotator/z_rotator/stages_instantiation[0].current_cordic_stage/X_mux00003 is driving XOR and other loads hence can not be packed with the XOR/Carry. This would result in an extra LUT for a feedthrough.
+Found area constraint ratio of 100 (+ 5) on block top_level, actual ratio is 33.
+PACKER Warning: Lut cordic_rotator/x_rotator/stages_instantiation[0].current_cordic_stage/X_mux00003 is driving XOR and other loads hence can not be packed with the XOR/Carry. This would result in an extra LUT for a feedthrough.
+PACKER Warning: Lut cordic_rotator/y_rotator/stages_instantiation[0].current_cordic_stage/X_mux00003 is driving XOR and other loads hence can not be packed with the XOR/Carry. This would result in an extra LUT for a feedthrough.
+PACKER Warning: Lut cordic_rotator/z_rotator/stages_instantiation[0].current_cordic_stage/X_mux00003 is driving XOR and other loads hence can not be packed with the XOR/Carry. This would result in an extra LUT for a feedthrough.
 
 Final Macro Processing ...
 
@@ -1081,8 +1121,8 @@ Final Macro Processing ...
 Final Register Report
 
 Macro Statistics
-# Registers                                            : 740
- Flip-Flops                                            : 740
+# Registers                                            : 748
+ Flip-Flops                                            : 748
 
 =========================================================================
 
@@ -1111,32 +1151,28 @@ Design Statistics
 # IOs                              : 37
 
 Cell Usage :
-# BELS                             : 5714
+# BELS                             : 6236
 #      GND                         : 2
-#      INV                         : 230
-#      LUT1                        : 223
-#      LUT2                        : 446
-#      LUT2_D                      : 8
-#      LUT2_L                      : 3
-#      LUT3                        : 878
-#      LUT3_D                      : 6
-#      LUT3_L                      : 4
-#      LUT4                        : 844
-#      LUT4_D                      : 33
-#      LUT4_L                      : 20
-#      MUXCY                       : 1520
-#      MUXF5                       : 63
+#      INV                         : 305
+#      LUT1                        : 247
+#      LUT2                        : 587
+#      LUT2_D                      : 2
+#      LUT3                        : 874
+#      LUT3_L                      : 3
+#      LUT4                        : 785
+#      LUT4_D                      : 6
+#      MUXCY                       : 1753
+#      MUXF5                       : 66
 #      VCC                         : 2
-#      XORCY                       : 1432
-# FlipFlops/Latches                : 741
-#      FD                          : 106
-#      FDC                         : 271
+#      XORCY                       : 1604
+# FlipFlops/Latches                : 749
+#      FD                          : 108
+#      FDC                         : 302
 #      FDC_1                       : 30
-#      FDCE                        : 103
+#      FDCE                        : 79
 #      FDCE_1                      : 16
 #      FDE                         : 173
 #      FDP                         : 1
-#      FDPE                        : 1
 #      FDR                         : 19
 #      FDRE                        : 20
 #      FDS                         : 1
@@ -1150,15 +1186,18 @@ Cell Usage :
 # MULTs                            : 6
 #      MULT18X18SIO                : 6
 =========================================================================
+PACKER Warning: Lut cordic_rotator/x_rotator/stages_instantiation[0].current_cordic_stage/X_mux00003 is driving XOR and other loads hence can not be packed with the XOR/Carry. This would result in an extra LUT for a feedthrough.
+PACKER Warning: Lut cordic_rotator/y_rotator/stages_instantiation[0].current_cordic_stage/X_mux00003 is driving XOR and other loads hence can not be packed with the XOR/Carry. This would result in an extra LUT for a feedthrough.
+PACKER Warning: Lut cordic_rotator/z_rotator/stages_instantiation[0].current_cordic_stage/X_mux00003 is driving XOR and other loads hence can not be packed with the XOR/Carry. This would result in an extra LUT for a feedthrough.
 
 Device utilization summary:
 ---------------------------
 
 Selected Device : 3s500epq208-4 
 
- Number of Slices:                     1421  out of   4656    30%  
- Number of Slice Flip Flops:            741  out of   9312     7%  
- Number of 4 input LUTs:               2695  out of   9312    28%  
+ Number of Slices:                     1493  out of   4656    32%  
+ Number of Slice Flip Flops:            749  out of   9312     8%  
+ Number of 4 input LUTs:               2809  out of   9312    30%  
  Number of IOs:                          37
  Number of bonded IOBs:                  37  out of    158    23%  
  Number of BRAMs:                        20  out of     20   100%  
@@ -1186,7 +1225,7 @@ Clock Information:
 -----------------------------------+-------------------------------------------------------------------------------------------------------------------------------------+-------+
 Clock Signal                       | Clock buffer(FF name)                                                                                                               | Load  |
 -----------------------------------+-------------------------------------------------------------------------------------------------------------------------------------+-------+
-clk_tl                             | BUFGP                                                                                                                               | 741   |
+clk_tl                             | BUFGP                                                                                                                               | 749   |
 ram_internal/N1                    | NONE(ram_internal/U0/xst_blk_mem_generator/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[15].ram.r/s3_noinit.ram/dpram.dp1x1.ram)| 16    |
 seven_segments/Count1_9            | NONE(seven_segments/selector_1)                                                                                                     | 10    |
 seven_segments/Period1uS           | NONE(seven_segments/Count1_9)                                                                                                       | 10    |
@@ -1195,19 +1234,19 @@ INFO:Xst:2169 - HDL ADVISOR - Some clock signals were not automatically buffered
 
 Asynchronous Control Signals Information:
 ----------------------------------------
------------------------------------+------------------------+-------+
-Control Signal                     | Buffer(FF name)        | Load  |
------------------------------------+------------------------+-------+
-rst_tl_inv(rst_tl_inv1_INV_0:O)    | NONE(angle_X_0)        | 422   |
------------------------------------+------------------------+-------+
+---------------------------------------------------------------+----------------------------------------------+-------+
+Control Signal                                                 | Buffer(FF name)                              | Load  |
+---------------------------------------------------------------+----------------------------------------------+-------+
+input_processor_tl/rst_inv(input_processor_tl/rst_inv1_INV_0:O)| NONE(input_processor_tl/angle_step_current_0)| 428   |
+---------------------------------------------------------------+----------------------------------------------+-------+
 
 Timing Summary:
 ---------------
 Speed Grade: -4
 
-   Minimum period: 51.930ns (Maximum Frequency: 19.257MHz)
+   Minimum period: 53.747ns (Maximum Frequency: 18.606MHz)
    Minimum input arrival time before clock: 5.407ns
-   Maximum output required time after clock: 11.665ns
+   Maximum output required time after clock: 11.621ns
    Maximum combinational path delay: No path found
 
 Timing Detail:
@@ -1216,203 +1255,234 @@ All values displayed in nanoseconds (ns)
 
 =========================================================================
 Timing constraint: Default period analysis for Clock 'clk_tl'
-  Clock period: 51.930ns (frequency: 19.257MHz)
-  Total number of paths / destination ports: 202002314719281600 / 1442
+  Clock period: 53.747ns (frequency: 18.606MHz)
+  Total number of paths / destination ports: 1229977970299198976 / 1425
 -------------------------------------------------------------------------
-Delay:               51.930ns (Levels of Logic = 179)
-  Source:            cordic_rotator/Z_angle_7 (FF)
-  Destination:       cordic_rotator/X_7 (FF)
+Delay:               53.747ns (Levels of Logic = 210)
+  Source:            cordic_rotator/X_angle_7 (FF)
+  Destination:       cordic_rotator/Z_rotator_Y0_11 (FF)
   Source Clock:      clk_tl rising
   Destination Clock: clk_tl rising
 
-  Data Path: cordic_rotator/Z_angle_7 to cordic_rotator/X_7
+  Data Path: cordic_rotator/X_angle_7 to cordic_rotator/Z_rotator_Y0_11
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     FD:C->Q              17   0.591   1.226  cordic_rotator/Z_angle_7 (cordic_rotator/Z_angle_7)
-     LUT2_D:I0->O          3   0.704   0.566  cordic_rotator/z_rotator/X_cmp_lt00001_SW1 (N221)
-     LUT4:I2->O            4   0.704   0.591  cordic_rotator/z_rotator/Maddsub_anglet_share0000_lut<2>1 (cordic_rotator/z_rotator/Maddsub_anglet_share0000_lut<2>)
-     LUT4:I3->O            2   0.704   0.451  cordic_rotator/z_rotator/Maddsub_anglet_share0000_cy<4>144 (cordic_rotator/z_rotator/Maddsub_anglet_share0000_cy<4>144)
-     LUT4:I3->O            1   0.704   0.424  cordic_rotator/z_rotator/Maddsub_anglet_share0000_cy<4>189 (cordic_rotator/z_rotator/Maddsub_anglet_share0000_cy<4>189)
-     LUT4_D:I3->O          4   0.704   0.591  cordic_rotator/z_rotator/anglet<7>21 (cordic_rotator/z_rotator/N5)
-     LUT4_D:I3->O         11   0.704   0.968  cordic_rotator/z_rotator/anglet<6>1 (cordic_rotator/z_rotator/anglet<6>)
-     LUT4:I2->O           17   0.704   1.130  cordic_rotator/z_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_lut<0>1_SW0 (N244)
-     LUT3:I1->O           14   0.704   1.000  cordic_rotator/z_rotator/stages_instantiation[0].current_cordic_stage/Maddsub_Z_cy<8>11 (cordic_rotator/z_rotator/stages_instantiation[0].current_cordic_stage/Maddsub_Z_cy<8>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<0> (cordic_rotator/z_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<0>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<1> (cordic_rotator/z_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<1>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<2> (cordic_rotator/z_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<2>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<3> (cordic_rotator/z_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<3>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<4> (cordic_rotator/z_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<4>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<5> (cordic_rotator/z_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<5>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<6> (cordic_rotator/z_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<6>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<7> (cordic_rotator/z_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<7>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<8> (cordic_rotator/z_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<8>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<9> (cordic_rotator/z_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<9>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<10> (cordic_rotator/z_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<10>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<11> (cordic_rotator/z_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<11>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<12> (cordic_rotator/z_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<12>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<13> (cordic_rotator/z_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<13>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<14> (cordic_rotator/z_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<14>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<15> (cordic_rotator/z_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<15>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<16> (cordic_rotator/z_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<16>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<17> (cordic_rotator/z_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<17>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<18> (cordic_rotator/z_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<18>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<19> (cordic_rotator/z_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<19>)
-     MUXCY:CI->O           0   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<20> (cordic_rotator/z_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<20>)
-     XORCY:CI->O          49   0.804   1.347  cordic_rotator/z_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_xor<21> (cordic_rotator/z_rotator/sZ_array<2><23>)
-     LUT2:I1->O            1   0.704   0.000  cordic_rotator/z_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_lut<0> (cordic_rotator/z_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_lut<0>)
-     MUXCY:S->O            1   0.464   0.000  cordic_rotator/z_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<0> (cordic_rotator/z_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<0>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<1> (cordic_rotator/z_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<1>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<2> (cordic_rotator/z_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<2>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<3> (cordic_rotator/z_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<3>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<4> (cordic_rotator/z_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<4>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<5> (cordic_rotator/z_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<5>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<6> (cordic_rotator/z_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<6>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<7> (cordic_rotator/z_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<7>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<8> (cordic_rotator/z_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<8>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<9> (cordic_rotator/z_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<9>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<10> (cordic_rotator/z_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<10>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<11> (cordic_rotator/z_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<11>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<12> (cordic_rotator/z_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<12>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<13> (cordic_rotator/z_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<13>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<14> (cordic_rotator/z_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<14>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<15> (cordic_rotator/z_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<15>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<16> (cordic_rotator/z_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<16>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<17> (cordic_rotator/z_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<17>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<18> (cordic_rotator/z_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<18>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<19> (cordic_rotator/z_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<19>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<20> (cordic_rotator/z_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<20>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<21> (cordic_rotator/z_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<21>)
-     MUXCY:CI->O           0   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<22> (cordic_rotator/z_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<22>)
-     XORCY:CI->O          49   0.804   1.347  cordic_rotator/z_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_xor<23> (cordic_rotator/z_rotator/sZ_array<3><23>)
-     LUT2:I1->O            1   0.704   0.000  cordic_rotator/z_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_lut<0> (cordic_rotator/z_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_lut<0>)
-     MUXCY:S->O            1   0.464   0.000  cordic_rotator/z_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<0> (cordic_rotator/z_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<0>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<1> (cordic_rotator/z_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<1>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<2> (cordic_rotator/z_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<2>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<3> (cordic_rotator/z_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<3>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<4> (cordic_rotator/z_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<4>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<5> (cordic_rotator/z_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<5>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<6> (cordic_rotator/z_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<6>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<7> (cordic_rotator/z_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<7>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<8> (cordic_rotator/z_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<8>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<9> (cordic_rotator/z_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<9>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<10> (cordic_rotator/z_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<10>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<11> (cordic_rotator/z_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<11>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<12> (cordic_rotator/z_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<12>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<13> (cordic_rotator/z_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<13>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<14> (cordic_rotator/z_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<14>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<15> (cordic_rotator/z_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<15>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<16> (cordic_rotator/z_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<16>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<17> (cordic_rotator/z_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<17>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<18> (cordic_rotator/z_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<18>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<19> (cordic_rotator/z_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<19>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<20> (cordic_rotator/z_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<20>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<21> (cordic_rotator/z_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<21>)
-     MUXCY:CI->O           0   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<22> (cordic_rotator/z_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<22>)
-     XORCY:CI->O          49   0.804   1.347  cordic_rotator/z_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_xor<23> (cordic_rotator/z_rotator/sZ_array<4><23>)
-     LUT2:I1->O            1   0.704   0.000  cordic_rotator/z_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_lut<0> (cordic_rotator/z_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_lut<0>)
-     MUXCY:S->O            1   0.464   0.000  cordic_rotator/z_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<0> (cordic_rotator/z_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<0>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<1> (cordic_rotator/z_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<1>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<2> (cordic_rotator/z_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<2>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<3> (cordic_rotator/z_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<3>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<4> (cordic_rotator/z_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<4>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<5> (cordic_rotator/z_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<5>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<6> (cordic_rotator/z_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<6>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<7> (cordic_rotator/z_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<7>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<8> (cordic_rotator/z_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<8>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<9> (cordic_rotator/z_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<9>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<10> (cordic_rotator/z_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<10>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<11> (cordic_rotator/z_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<11>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<12> (cordic_rotator/z_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<12>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<13> (cordic_rotator/z_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<13>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<14> (cordic_rotator/z_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<14>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<15> (cordic_rotator/z_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<15>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<16> (cordic_rotator/z_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<16>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<17> (cordic_rotator/z_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<17>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<18> (cordic_rotator/z_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<18>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<19> (cordic_rotator/z_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<19>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<20> (cordic_rotator/z_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<20>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<21> (cordic_rotator/z_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<21>)
-     MUXCY:CI->O           0   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<22> (cordic_rotator/z_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<22>)
-     XORCY:CI->O          49   0.804   1.347  cordic_rotator/z_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_xor<23> (cordic_rotator/z_rotator/sZ_array<5><23>)
-     LUT2:I1->O            1   0.704   0.000  cordic_rotator/z_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_lut<0> (cordic_rotator/z_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_lut<0>)
-     MUXCY:S->O            1   0.464   0.000  cordic_rotator/z_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<0> (cordic_rotator/z_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<0>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<1> (cordic_rotator/z_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<1>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<2> (cordic_rotator/z_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<2>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<3> (cordic_rotator/z_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<3>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<4> (cordic_rotator/z_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<4>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<5> (cordic_rotator/z_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<5>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<6> (cordic_rotator/z_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<6>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<7> (cordic_rotator/z_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<7>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<8> (cordic_rotator/z_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<8>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<9> (cordic_rotator/z_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<9>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<10> (cordic_rotator/z_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<10>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<11> (cordic_rotator/z_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<11>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<12> (cordic_rotator/z_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<12>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<13> (cordic_rotator/z_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<13>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<14> (cordic_rotator/z_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<14>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<15> (cordic_rotator/z_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<15>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<16> (cordic_rotator/z_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<16>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<17> (cordic_rotator/z_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<17>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<18> (cordic_rotator/z_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<18>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<19> (cordic_rotator/z_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<19>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<20> (cordic_rotator/z_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<20>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<21> (cordic_rotator/z_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<21>)
-     MUXCY:CI->O           0   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<22> (cordic_rotator/z_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<22>)
-     XORCY:CI->O          49   0.804   1.347  cordic_rotator/z_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_xor<23> (cordic_rotator/z_rotator/sZ_array<6><23>)
-     LUT2:I1->O            1   0.704   0.000  cordic_rotator/z_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_lut<0> (cordic_rotator/z_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_lut<0>)
-     MUXCY:S->O            1   0.464   0.000  cordic_rotator/z_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<0> (cordic_rotator/z_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<0>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<1> (cordic_rotator/z_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<1>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<2> (cordic_rotator/z_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<2>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<3> (cordic_rotator/z_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<3>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<4> (cordic_rotator/z_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<4>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<5> (cordic_rotator/z_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<5>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<6> (cordic_rotator/z_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<6>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<7> (cordic_rotator/z_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<7>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<8> (cordic_rotator/z_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<8>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<9> (cordic_rotator/z_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<9>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<10> (cordic_rotator/z_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<10>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<11> (cordic_rotator/z_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<11>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<12> (cordic_rotator/z_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<12>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<13> (cordic_rotator/z_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<13>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<14> (cordic_rotator/z_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<14>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<15> (cordic_rotator/z_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<15>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<16> (cordic_rotator/z_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<16>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<17> (cordic_rotator/z_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<17>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<18> (cordic_rotator/z_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<18>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<19> (cordic_rotator/z_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<19>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<20> (cordic_rotator/z_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<20>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<21> (cordic_rotator/z_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<21>)
-     MUXCY:CI->O           0   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<22> (cordic_rotator/z_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<22>)
-     XORCY:CI->O          26   0.804   1.295  cordic_rotator/z_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_xor<23> (cordic_rotator/z_rotator/sZ_array<7><23>)
-     LUT3:I2->O            1   0.704   0.000  cordic_rotator/z_rotator/stages_instantiation[7].current_cordic_stage/Maddsub_Y_lut<0> (cordic_rotator/z_rotator/stages_instantiation[7].current_cordic_stage/Maddsub_Y_lut<0>)
-     MUXCY:S->O            1   0.464   0.000  cordic_rotator/z_rotator/stages_instantiation[7].current_cordic_stage/Maddsub_Y_cy<0> (cordic_rotator/z_rotator/stages_instantiation[7].current_cordic_stage/Maddsub_Y_cy<0>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[7].current_cordic_stage/Maddsub_Y_cy<1> (cordic_rotator/z_rotator/stages_instantiation[7].current_cordic_stage/Maddsub_Y_cy<1>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[7].current_cordic_stage/Maddsub_Y_cy<2> (cordic_rotator/z_rotator/stages_instantiation[7].current_cordic_stage/Maddsub_Y_cy<2>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[7].current_cordic_stage/Maddsub_Y_cy<3> (cordic_rotator/z_rotator/stages_instantiation[7].current_cordic_stage/Maddsub_Y_cy<3>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[7].current_cordic_stage/Maddsub_Y_cy<4> (cordic_rotator/z_rotator/stages_instantiation[7].current_cordic_stage/Maddsub_Y_cy<4>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[7].current_cordic_stage/Maddsub_Y_cy<5> (cordic_rotator/z_rotator/stages_instantiation[7].current_cordic_stage/Maddsub_Y_cy<5>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[7].current_cordic_stage/Maddsub_Y_cy<6> (cordic_rotator/z_rotator/stages_instantiation[7].current_cordic_stage/Maddsub_Y_cy<6>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[7].current_cordic_stage/Maddsub_Y_cy<7> (cordic_rotator/z_rotator/stages_instantiation[7].current_cordic_stage/Maddsub_Y_cy<7>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[7].current_cordic_stage/Maddsub_Y_cy<8> (cordic_rotator/z_rotator/stages_instantiation[7].current_cordic_stage/Maddsub_Y_cy<8>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[7].current_cordic_stage/Maddsub_Y_cy<9> (cordic_rotator/z_rotator/stages_instantiation[7].current_cordic_stage/Maddsub_Y_cy<9>)
-     MUXCY:CI->O           0   0.059   0.000  cordic_rotator/z_rotator/stages_instantiation[7].current_cordic_stage/Maddsub_Y_cy<10> (cordic_rotator/z_rotator/stages_instantiation[7].current_cordic_stage/Maddsub_Y_cy<10>)
-     XORCY:CI->O           7   0.804   0.708  cordic_rotator/z_rotator/stages_instantiation[7].current_cordic_stage/Maddsub_Y_xor<11> (cordic_rotator/z_rotator/sY_array<8><11>)
-     MULT18X18SIO:A11->P11    2   4.654   0.622  cordic_rotator/z_rotator/Mmult_sY_multiplication_buffer (cordic_rotator/z_rotator/sY_multiplication_buffer<11>)
-     LUT1:I0->O            1   0.704   0.000  cordic_rotator/z_rotator/Madd_X_share0000_cy<0>_rt (cordic_rotator/z_rotator/Madd_X_share0000_cy<0>_rt)
-     MUXCY:S->O            1   0.464   0.000  cordic_rotator/z_rotator/Madd_X_share0000_cy<0> (cordic_rotator/z_rotator/Madd_X_share0000_cy<0>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/Madd_X_share0000_cy<1> (cordic_rotator/z_rotator/Madd_X_share0000_cy<1>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/Madd_X_share0000_cy<2> (cordic_rotator/z_rotator/Madd_X_share0000_cy<2>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/Madd_X_share0000_cy<3> (cordic_rotator/z_rotator/Madd_X_share0000_cy<3>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/Madd_X_share0000_cy<4> (cordic_rotator/z_rotator/Madd_X_share0000_cy<4>)
-     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/z_rotator/Madd_X_share0000_cy<5> (cordic_rotator/z_rotator/Madd_X_share0000_cy<5>)
-     MUXCY:CI->O           0   0.059   0.000  cordic_rotator/z_rotator/Madd_X_share0000_cy<6> (cordic_rotator/z_rotator/Madd_X_share0000_cy<6>)
-     XORCY:CI->O           1   0.804   0.455  cordic_rotator/z_rotator/Madd_X_share0000_xor<7> (cordic_rotator/z_rotator/X_share0000<7>)
-     LUT3:I2->O            1   0.704   0.000  cordic_rotator/z_rotator/X<7>1 (cordic_rotator/Z_rotator_X<7>)
-     FD:D                      0.308          cordic_rotator/X_7
+     FD:C->Q               7   0.591   0.883  cordic_rotator/X_angle_7 (cordic_rotator/X_angle_7)
+     LUT2:I0->O            2   0.704   0.451  cordic_rotator/x_rotator/X_cmp_lt000013 (cordic_rotator/x_rotator/X_cmp_lt000013)
+     LUT4_D:I3->O         14   0.704   1.035  cordic_rotator/x_rotator/X_cmp_lt0000139 (cordic_rotator/x_rotator/X_cmp_lt00002)
+     LUT3:I2->O            1   0.704   0.000  cordic_rotator/x_rotator/Maddsub_anglet_share0000_lut<0> (cordic_rotator/x_rotator/Maddsub_anglet_share0000_lut<0>)
+     MUXCY:S->O            1   0.464   0.000  cordic_rotator/x_rotator/Maddsub_anglet_share0000_cy<0> (cordic_rotator/x_rotator/Maddsub_anglet_share0000_cy<0>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/Maddsub_anglet_share0000_cy<1> (cordic_rotator/x_rotator/Maddsub_anglet_share0000_cy<1>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/Maddsub_anglet_share0000_cy<2> (cordic_rotator/x_rotator/Maddsub_anglet_share0000_cy<2>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/Maddsub_anglet_share0000_cy<3> (cordic_rotator/x_rotator/Maddsub_anglet_share0000_cy<3>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/Maddsub_anglet_share0000_cy<4> (cordic_rotator/x_rotator/Maddsub_anglet_share0000_cy<4>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/Maddsub_anglet_share0000_cy<5> (cordic_rotator/x_rotator/Maddsub_anglet_share0000_cy<5>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/Maddsub_anglet_share0000_cy<6> (cordic_rotator/x_rotator/Maddsub_anglet_share0000_cy<6>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/Maddsub_anglet_share0000_cy<7> (cordic_rotator/x_rotator/Maddsub_anglet_share0000_cy<7>)
+     MUXCY:CI->O           0   0.059   0.000  cordic_rotator/x_rotator/Maddsub_anglet_share0000_cy<8> (cordic_rotator/x_rotator/Maddsub_anglet_share0000_cy<8>)
+     XORCY:CI->O           7   0.804   0.712  cordic_rotator/x_rotator/Maddsub_anglet_share0000_xor<9> (cordic_rotator/x_rotator/anglet_share0000<9>)
+     LUT4:I3->O           19   0.704   1.089  cordic_rotator/x_rotator/anglet<9>2 (cordic_rotator/x_rotator/anglet<9>)
+     LUT4:I3->O            1   0.704   0.000  cordic_rotator/x_rotator/stages_instantiation[0].current_cordic_stage/Maddsub_Z_lut<5> (cordic_rotator/x_rotator/stages_instantiation[0].current_cordic_stage/Maddsub_Z_lut<5>)
+     MUXCY:S->O            1   0.464   0.000  cordic_rotator/x_rotator/stages_instantiation[0].current_cordic_stage/Maddsub_Z_cy<5> (cordic_rotator/x_rotator/stages_instantiation[0].current_cordic_stage/Maddsub_Z_cy<5>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[0].current_cordic_stage/Maddsub_Z_cy<6> (cordic_rotator/x_rotator/stages_instantiation[0].current_cordic_stage/Maddsub_Z_cy<6>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[0].current_cordic_stage/Maddsub_Z_cy<7> (cordic_rotator/x_rotator/stages_instantiation[0].current_cordic_stage/Maddsub_Z_cy<7>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[0].current_cordic_stage/Maddsub_Z_cy<8> (cordic_rotator/x_rotator/stages_instantiation[0].current_cordic_stage/Maddsub_Z_cy<8>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[0].current_cordic_stage/Maddsub_Z_cy<9> (cordic_rotator/x_rotator/stages_instantiation[0].current_cordic_stage/Maddsub_Z_cy<9>)
+     MUXCY:CI->O           0   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[0].current_cordic_stage/Maddsub_Z_cy<10> (cordic_rotator/x_rotator/stages_instantiation[0].current_cordic_stage/Maddsub_Z_cy<10>)
+     XORCY:CI->O          49   0.804   1.347  cordic_rotator/x_rotator/stages_instantiation[0].current_cordic_stage/Maddsub_Z_xor<11> (cordic_rotator/x_rotator/sZ_array<1><25>)
+     LUT2:I1->O            1   0.704   0.000  cordic_rotator/x_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_lut<0> (cordic_rotator/x_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_lut<0>)
+     MUXCY:S->O            1   0.464   0.000  cordic_rotator/x_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<0> (cordic_rotator/x_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<0>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<1> (cordic_rotator/x_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<1>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<2> (cordic_rotator/x_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<2>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<3> (cordic_rotator/x_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<3>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<4> (cordic_rotator/x_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<4>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<5> (cordic_rotator/x_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<5>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<6> (cordic_rotator/x_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<6>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<7> (cordic_rotator/x_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<7>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<8> (cordic_rotator/x_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<8>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<9> (cordic_rotator/x_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<9>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<10> (cordic_rotator/x_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<10>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<11> (cordic_rotator/x_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<11>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<12> (cordic_rotator/x_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<12>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<13> (cordic_rotator/x_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<13>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<14> (cordic_rotator/x_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<14>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<15> (cordic_rotator/x_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<15>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<16> (cordic_rotator/x_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<16>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<17> (cordic_rotator/x_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<17>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<18> (cordic_rotator/x_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<18>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<19> (cordic_rotator/x_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<19>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<20> (cordic_rotator/x_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<20>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<21> (cordic_rotator/x_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<21>)
+     MUXCY:CI->O           0   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<22> (cordic_rotator/x_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_cy<22>)
+     XORCY:CI->O          51   0.804   1.347  cordic_rotator/x_rotator/stages_instantiation[1].current_cordic_stage/Maddsub_Z_xor<23> (cordic_rotator/x_rotator/sZ_array<2><25>)
+     LUT2:I1->O            1   0.704   0.000  cordic_rotator/x_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_lut<0> (cordic_rotator/x_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_lut<0>)
+     MUXCY:S->O            1   0.464   0.000  cordic_rotator/x_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<0> (cordic_rotator/x_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<0>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<1> (cordic_rotator/x_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<1>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<2> (cordic_rotator/x_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<2>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<3> (cordic_rotator/x_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<3>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<4> (cordic_rotator/x_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<4>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<5> (cordic_rotator/x_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<5>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<6> (cordic_rotator/x_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<6>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<7> (cordic_rotator/x_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<7>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<8> (cordic_rotator/x_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<8>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<9> (cordic_rotator/x_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<9>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<10> (cordic_rotator/x_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<10>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<11> (cordic_rotator/x_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<11>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<12> (cordic_rotator/x_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<12>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<13> (cordic_rotator/x_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<13>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<14> (cordic_rotator/x_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<14>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<15> (cordic_rotator/x_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<15>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<16> (cordic_rotator/x_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<16>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<17> (cordic_rotator/x_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<17>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<18> (cordic_rotator/x_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<18>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<19> (cordic_rotator/x_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<19>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<20> (cordic_rotator/x_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<20>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<21> (cordic_rotator/x_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<21>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<22> (cordic_rotator/x_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<22>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<23> (cordic_rotator/x_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<23>)
+     MUXCY:CI->O           0   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<24> (cordic_rotator/x_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_cy<24>)
+     XORCY:CI->O          51   0.804   1.347  cordic_rotator/x_rotator/stages_instantiation[2].current_cordic_stage/Maddsub_Z_xor<25> (cordic_rotator/x_rotator/sZ_array<3><25>)
+     LUT2:I1->O            1   0.704   0.000  cordic_rotator/x_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_lut<0> (cordic_rotator/x_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_lut<0>)
+     MUXCY:S->O            1   0.464   0.000  cordic_rotator/x_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<0> (cordic_rotator/x_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<0>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<1> (cordic_rotator/x_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<1>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<2> (cordic_rotator/x_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<2>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<3> (cordic_rotator/x_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<3>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<4> (cordic_rotator/x_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<4>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<5> (cordic_rotator/x_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<5>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<6> (cordic_rotator/x_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<6>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<7> (cordic_rotator/x_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<7>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<8> (cordic_rotator/x_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<8>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<9> (cordic_rotator/x_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<9>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<10> (cordic_rotator/x_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<10>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<11> (cordic_rotator/x_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<11>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<12> (cordic_rotator/x_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<12>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<13> (cordic_rotator/x_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<13>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<14> (cordic_rotator/x_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<14>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<15> (cordic_rotator/x_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<15>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<16> (cordic_rotator/x_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<16>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<17> (cordic_rotator/x_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<17>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<18> (cordic_rotator/x_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<18>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<19> (cordic_rotator/x_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<19>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<20> (cordic_rotator/x_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<20>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<21> (cordic_rotator/x_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<21>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<22> (cordic_rotator/x_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<22>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<23> (cordic_rotator/x_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<23>)
+     MUXCY:CI->O           0   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<24> (cordic_rotator/x_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_cy<24>)
+     XORCY:CI->O          51   0.804   1.347  cordic_rotator/x_rotator/stages_instantiation[3].current_cordic_stage/Maddsub_Z_xor<25> (cordic_rotator/x_rotator/sZ_array<4><25>)
+     LUT2:I1->O            1   0.704   0.000  cordic_rotator/x_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_lut<0> (cordic_rotator/x_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_lut<0>)
+     MUXCY:S->O            1   0.464   0.000  cordic_rotator/x_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<0> (cordic_rotator/x_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<0>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<1> (cordic_rotator/x_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<1>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<2> (cordic_rotator/x_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<2>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<3> (cordic_rotator/x_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<3>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<4> (cordic_rotator/x_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<4>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<5> (cordic_rotator/x_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<5>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<6> (cordic_rotator/x_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<6>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<7> (cordic_rotator/x_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<7>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<8> (cordic_rotator/x_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<8>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<9> (cordic_rotator/x_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<9>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<10> (cordic_rotator/x_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<10>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<11> (cordic_rotator/x_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<11>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<12> (cordic_rotator/x_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<12>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<13> (cordic_rotator/x_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<13>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<14> (cordic_rotator/x_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<14>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<15> (cordic_rotator/x_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<15>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<16> (cordic_rotator/x_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<16>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<17> (cordic_rotator/x_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<17>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<18> (cordic_rotator/x_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<18>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<19> (cordic_rotator/x_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<19>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<20> (cordic_rotator/x_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<20>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<21> (cordic_rotator/x_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<21>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<22> (cordic_rotator/x_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<22>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<23> (cordic_rotator/x_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<23>)
+     MUXCY:CI->O           0   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<24> (cordic_rotator/x_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_cy<24>)
+     XORCY:CI->O          51   0.804   1.347  cordic_rotator/x_rotator/stages_instantiation[4].current_cordic_stage/Maddsub_Z_xor<25> (cordic_rotator/x_rotator/sZ_array<5><25>)
+     LUT2:I1->O            1   0.704   0.000  cordic_rotator/x_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_lut<0> (cordic_rotator/x_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_lut<0>)
+     MUXCY:S->O            1   0.464   0.000  cordic_rotator/x_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<0> (cordic_rotator/x_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<0>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<1> (cordic_rotator/x_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<1>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<2> (cordic_rotator/x_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<2>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<3> (cordic_rotator/x_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<3>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<4> (cordic_rotator/x_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<4>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<5> (cordic_rotator/x_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<5>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<6> (cordic_rotator/x_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<6>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<7> (cordic_rotator/x_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<7>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<8> (cordic_rotator/x_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<8>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<9> (cordic_rotator/x_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<9>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<10> (cordic_rotator/x_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<10>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<11> (cordic_rotator/x_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<11>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<12> (cordic_rotator/x_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<12>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<13> (cordic_rotator/x_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<13>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<14> (cordic_rotator/x_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<14>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<15> (cordic_rotator/x_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<15>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<16> (cordic_rotator/x_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<16>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<17> (cordic_rotator/x_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<17>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<18> (cordic_rotator/x_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<18>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<19> (cordic_rotator/x_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<19>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<20> (cordic_rotator/x_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<20>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<21> (cordic_rotator/x_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<21>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<22> (cordic_rotator/x_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<22>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<23> (cordic_rotator/x_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<23>)
+     MUXCY:CI->O           0   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<24> (cordic_rotator/x_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_cy<24>)
+     XORCY:CI->O          51   0.804   1.347  cordic_rotator/x_rotator/stages_instantiation[5].current_cordic_stage/Maddsub_Z_xor<25> (cordic_rotator/x_rotator/sZ_array<6><25>)
+     LUT2:I1->O            1   0.704   0.000  cordic_rotator/x_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_lut<0> (cordic_rotator/x_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_lut<0>)
+     MUXCY:S->O            1   0.464   0.000  cordic_rotator/x_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<0> (cordic_rotator/x_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<0>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<1> (cordic_rotator/x_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<1>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<2> (cordic_rotator/x_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<2>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<3> (cordic_rotator/x_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<3>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<4> (cordic_rotator/x_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<4>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<5> (cordic_rotator/x_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<5>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<6> (cordic_rotator/x_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<6>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<7> (cordic_rotator/x_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<7>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<8> (cordic_rotator/x_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<8>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<9> (cordic_rotator/x_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<9>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<10> (cordic_rotator/x_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<10>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<11> (cordic_rotator/x_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<11>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<12> (cordic_rotator/x_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<12>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<13> (cordic_rotator/x_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<13>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<14> (cordic_rotator/x_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<14>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<15> (cordic_rotator/x_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<15>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<16> (cordic_rotator/x_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<16>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<17> (cordic_rotator/x_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<17>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<18> (cordic_rotator/x_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<18>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<19> (cordic_rotator/x_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<19>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<20> (cordic_rotator/x_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<20>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<21> (cordic_rotator/x_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<21>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<22> (cordic_rotator/x_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<22>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<23> (cordic_rotator/x_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<23>)
+     MUXCY:CI->O           0   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<24> (cordic_rotator/x_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_cy<24>)
+     XORCY:CI->O          26   0.804   1.295  cordic_rotator/x_rotator/stages_instantiation[6].current_cordic_stage/Maddsub_Z_xor<25> (cordic_rotator/x_rotator/sZ_array<7><25>)
+     LUT3:I2->O            1   0.704   0.000  cordic_rotator/x_rotator/stages_instantiation[7].current_cordic_stage/Maddsub_Y_lut<0> (cordic_rotator/x_rotator/stages_instantiation[7].current_cordic_stage/Maddsub_Y_lut<0>)
+     MUXCY:S->O            1   0.464   0.000  cordic_rotator/x_rotator/stages_instantiation[7].current_cordic_stage/Maddsub_Y_cy<0> (cordic_rotator/x_rotator/stages_instantiation[7].current_cordic_stage/Maddsub_Y_cy<0>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[7].current_cordic_stage/Maddsub_Y_cy<1> (cordic_rotator/x_rotator/stages_instantiation[7].current_cordic_stage/Maddsub_Y_cy<1>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[7].current_cordic_stage/Maddsub_Y_cy<2> (cordic_rotator/x_rotator/stages_instantiation[7].current_cordic_stage/Maddsub_Y_cy<2>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[7].current_cordic_stage/Maddsub_Y_cy<3> (cordic_rotator/x_rotator/stages_instantiation[7].current_cordic_stage/Maddsub_Y_cy<3>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[7].current_cordic_stage/Maddsub_Y_cy<4> (cordic_rotator/x_rotator/stages_instantiation[7].current_cordic_stage/Maddsub_Y_cy<4>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[7].current_cordic_stage/Maddsub_Y_cy<5> (cordic_rotator/x_rotator/stages_instantiation[7].current_cordic_stage/Maddsub_Y_cy<5>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[7].current_cordic_stage/Maddsub_Y_cy<6> (cordic_rotator/x_rotator/stages_instantiation[7].current_cordic_stage/Maddsub_Y_cy<6>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[7].current_cordic_stage/Maddsub_Y_cy<7> (cordic_rotator/x_rotator/stages_instantiation[7].current_cordic_stage/Maddsub_Y_cy<7>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[7].current_cordic_stage/Maddsub_Y_cy<8> (cordic_rotator/x_rotator/stages_instantiation[7].current_cordic_stage/Maddsub_Y_cy<8>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[7].current_cordic_stage/Maddsub_Y_cy<9> (cordic_rotator/x_rotator/stages_instantiation[7].current_cordic_stage/Maddsub_Y_cy<9>)
+     MUXCY:CI->O           0   0.059   0.000  cordic_rotator/x_rotator/stages_instantiation[7].current_cordic_stage/Maddsub_Y_cy<10> (cordic_rotator/x_rotator/stages_instantiation[7].current_cordic_stage/Maddsub_Y_cy<10>)
+     XORCY:CI->O           7   0.804   0.708  cordic_rotator/x_rotator/stages_instantiation[7].current_cordic_stage/Maddsub_Y_xor<11> (cordic_rotator/x_rotator/sY_array<8><11>)
+     MULT18X18SIO:A11->P11    2   4.654   0.622  cordic_rotator/x_rotator/Mmult_sY_multiplication_buffer (cordic_rotator/x_rotator/sY_multiplication_buffer<11>)
+     LUT1:I0->O            1   0.704   0.000  cordic_rotator/x_rotator/Madd_X_share0000_cy<0>_rt (cordic_rotator/x_rotator/Madd_X_share0000_cy<0>_rt)
+     MUXCY:S->O            1   0.464   0.000  cordic_rotator/x_rotator/Madd_X_share0000_cy<0> (cordic_rotator/x_rotator/Madd_X_share0000_cy<0>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/Madd_X_share0000_cy<1> (cordic_rotator/x_rotator/Madd_X_share0000_cy<1>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/Madd_X_share0000_cy<2> (cordic_rotator/x_rotator/Madd_X_share0000_cy<2>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/Madd_X_share0000_cy<3> (cordic_rotator/x_rotator/Madd_X_share0000_cy<3>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/Madd_X_share0000_cy<4> (cordic_rotator/x_rotator/Madd_X_share0000_cy<4>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/Madd_X_share0000_cy<5> (cordic_rotator/x_rotator/Madd_X_share0000_cy<5>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/Madd_X_share0000_cy<6> (cordic_rotator/x_rotator/Madd_X_share0000_cy<6>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/Madd_X_share0000_cy<7> (cordic_rotator/x_rotator/Madd_X_share0000_cy<7>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/Madd_X_share0000_cy<8> (cordic_rotator/x_rotator/Madd_X_share0000_cy<8>)
+     MUXCY:CI->O           1   0.059   0.000  cordic_rotator/x_rotator/Madd_X_share0000_cy<9> (cordic_rotator/x_rotator/Madd_X_share0000_cy<9>)
+     MUXCY:CI->O           0   0.059   0.000  cordic_rotator/x_rotator/Madd_X_share0000_cy<10> (cordic_rotator/x_rotator/Madd_X_share0000_cy<10>)
+     XORCY:CI->O           1   0.804   0.455  cordic_rotator/x_rotator/Madd_X_share0000_xor<11> (cordic_rotator/x_rotator/X_share0000<11>)
+     LUT3:I2->O            1   0.704   0.000  cordic_rotator/x_rotator/X<11>1 (cordic_rotator/X_rotator_X<11>)
+     FD:D                      0.308          cordic_rotator/Z_rotator_Y0_11
     ----------------------------------------
-    Total                     51.930ns (35.170ns logic, 16.760ns route)
-                                       (67.7% logic, 32.3% route)
+    Total                     53.747ns (38.414ns logic, 15.333ns route)
+                                       (71.5% logic, 28.5% route)
 
 =========================================================================
 Timing constraint: Default period analysis for Clock 'seven_segments/Count1_9'
@@ -1466,18 +1536,18 @@ Timing constraint: Default OFFSET IN BEFORE for Clock 'clk_tl'
   Total number of paths / destination ports: 78 / 21
 -------------------------------------------------------------------------
 Offset:              5.407ns (Levels of Logic = 3)
-  Source:            matrix_btn_row_tl<0> (PAD)
-  Destination:       keyboard/down_x (FF)
+  Source:            matrix_btn_col_tl<3> (PAD)
+  Destination:       input_processor_tl/keyboard/up_x (FF)
   Destination Clock: clk_tl rising
 
-  Data Path: matrix_btn_row_tl<0> to keyboard/down_x
+  Data Path: matrix_btn_col_tl<3> to input_processor_tl/keyboard/up_x
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     IBUF:I->O             9   1.218   0.995  matrix_btn_row_tl_0_IBUF (matrix_btn_row_tl_0_IBUF)
-     LUT3:I0->O            1   0.704   0.455  keyboard/down_x_and0000_inv_SW0 (N17)
-     LUT4:I2->O            1   0.704   0.420  keyboard/down_x_and0000_inv (keyboard/down_x_and0000_inv)
-     FDR:R                     0.911          keyboard/down_x
+     IBUF:I->O             9   1.218   0.855  matrix_btn_col_tl_3_IBUF (matrix_btn_col_tl_3_IBUF)
+     LUT4:I2->O            1   0.704   0.595  input_processor_tl/keyboard/up_x_not000111 (input_processor_tl/keyboard/up_x_not000111)
+     LUT2:I0->O            1   0.704   0.420  input_processor_tl/keyboard/up_x_not000124 (input_processor_tl/keyboard/up_x_not0001)
+     FDR:R                     0.911          input_processor_tl/keyboard/up_x
     ----------------------------------------
     Total                      5.407ns (3.537ns logic, 1.870ns route)
                                        (65.4% logic, 34.6% route)
@@ -1486,7 +1556,7 @@ Offset:              5.407ns (Levels of Logic = 3)
 Timing constraint: Default OFFSET OUT AFTER for Clock 'clk_tl'
   Total number of paths / destination ports: 330 / 14
 -------------------------------------------------------------------------
-Offset:              11.665ns (Levels of Logic = 6)
+Offset:              11.621ns (Levels of Logic = 6)
   Source:            vga_control/hc_0 (FF)
   Destination:       red_out_tl<2> (PAD)
   Source Clock:      clk_tl rising
@@ -1498,13 +1568,13 @@ Offset:              11.665ns (Levels of Logic = 6)
      FDRE:C->Q             5   0.591   0.808  vga_control/hc_0 (vga_control/hc_0)
      LUT4:I0->O            2   0.704   0.447  vga_control/vidon_and000019 (vga_control/vidon_and000019)
      MUXF5:S->O            1   0.739   0.420  vga_control/vidon_and000032_f5 (vga_control/vidon_and000032)
-     MUXF5:S->O            1   0.739   0.499  vga_control/vidon_and000060_f5 (vga_control/vidon_and000060)
-     LUT4:I1->O           23   0.704   1.281  vga_control/vidon_and0000147 (vga_control/vidon)
+     MUXF5:S->O            1   0.739   0.455  vga_control/vidon_and000060_f5 (vga_control/vidon_and000060)
+     LUT4:I2->O           23   0.704   1.281  vga_control/vidon_and0000147 (vga_control/vidon)
      LUT2:I1->O            8   0.704   0.757  vga_control/red_o_and00001 (blu_out_tl_0_OBUF)
      OBUF:I->O                 3.272          blu_out_tl_1_OBUF (blu_out_tl<1>)
     ----------------------------------------
-    Total                     11.665ns (7.453ns logic, 4.212ns route)
-                                       (63.9% logic, 36.1% route)
+    Total                     11.621ns (7.453ns logic, 4.168ns route)
+                                       (64.1% logic, 35.9% route)
 
 =========================================================================
 Timing constraint: Default OFFSET OUT AFTER for Clock 'seven_segments/Count1_9'
@@ -1529,15 +1599,15 @@ Offset:              5.870ns (Levels of Logic = 2)
 =========================================================================
 
 
-Total REAL time to Xst completion: 20.00 secs
-Total CPU time to Xst completion: 19.64 secs
+Total REAL time to Xst completion: 21.00 secs
+Total CPU time to Xst completion: 20.20 secs
  
 --> 
 
 
-Total memory usage is 598520 kilobytes
+Total memory usage is 599448 kilobytes
 
 Number of errors   :    0 (   0 filtered)
-Number of warnings :  128 (   0 filtered)
+Number of warnings :  132 (   0 filtered)
 Number of infos    :   16 (   0 filtered)
 

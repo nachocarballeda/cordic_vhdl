@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <report-views version="2.0" >
  <header>
-  <DateModified>2020-08-09T15:47:27</DateModified>
+  <DateModified>2020-09-29T22:16:21</DateModified>
   <ModuleName>top_level</ModuleName>
   <SummaryTimeStamp>2020-07-20T17:26:57</SummaryTimeStamp>
   <SavedFilePath>/home/ignatius/Documents/repos/cordic_vhdl/tp_cordic/iseconfig/top_level.xreport</SavedFilePath>

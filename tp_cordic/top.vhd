@@ -330,22 +330,26 @@ begin
                 xyz_selector_next <= 0;
                 sig_sram_address_next <= 0;
             else
-                sig_sram_address_next <= sig_sram_address_current + 1;
                 sig_vram_ena_wr_next <= '0';
                 case xyz_selector_current is
                     when 0 =>
+                        sig_sram_address_next <= sig_sram_address_current + 1;
                         x_coord_next <= sig_sram_data_out;
                         xyz_selector_next <= xyz_selector_current + 1;
                         state_next <= state_read_from_sram;
                     when 1 =>
+                        sig_sram_address_next <= sig_sram_address_current + 1;
                         y_coord_next <= sig_sram_data_out;
                         xyz_selector_next <= xyz_selector_current + 1;
                         state_next <= state_read_from_sram;
-                    when others =>
+                    when 2 =>
+                        sig_sram_address_next <= sig_sram_address_current + 1;
                         z_coord_next <= sig_sram_data_out;
                         xyz_selector_next <= 0;
-                        state_next <= state_process_coords;
                         cycles_next <= 0;
+                        state_next <= state_process_coords;
+                    when others =>
+                        state_next <= state_idle;
                 end case;
             end if;
         when state_process_coords =>

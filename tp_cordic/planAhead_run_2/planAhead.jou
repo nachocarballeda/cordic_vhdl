@@ -1,0 +1,10 @@
+#-----------------------------------------------------------
+# PlanAhead v14.7 (64-bit)
+# Build 321239 by xbuild on Fri Sep 27 19:24:36 MDT 2013
+# Start of session at: Sun Aug  9 16:57:40 2020
+# Process ID: 20550
+# Log file: /home/ignatius/Documents/repos/cordic_vhdl/tp_cordic/planAhead_run_2/planAhead.log
+# Journal file: /home/ignatius/Documents/repos/cordic_vhdl/tp_cordic/planAhead_run_2/planAhead.jou
+#-----------------------------------------------------------
+start_gui
+source /home/ignatius/Documents/repos/cordic_vhdl/tp_cordic/pa.fromNetlist.tcl
