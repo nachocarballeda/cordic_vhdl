@@ -1,0 +1,40 @@
+# top_level.lpc  
+#   The constraints in this file were created simply to be viewed.  
+#   If you wish to use these constraints, please copy them into your  
+#   project's constraint file. If you do not have a project constraints  
+#   file yet, please use the "Project->New Source" menu to create one.
+
+
+
+#pin2ucf - Sat Sep 05 17:44:25 2020
+#The following constraints were newly added
+NET "red_out_tl<0>" LOC = P96;
+NET "led_out_tl<0>" LOC = P160;
+NET "red_out_tl<1>" LOC = P98;
+NET "led_out_tl<1>" LOC = P152;
+NET "red_out_tl<2>" LOC = P100;
+NET "led_out_tl<2>" LOC = P150;
+NET "hs_tl" LOC = P115;
+NET "led_tl<0>" LOC = P68;
+NET "led_out_tl<3>" LOC = P146;
+NET "led_tl<1>" LOC = P78;
+NET "led_out_tl<4>" LOC = P144;
+NET "led_tl<2>" LOC = P83;
+NET "led_out_tl<5>" LOC = P139;
+NET "led_tl<3>" LOC = P89;
+NET "led_out_tl<6>" LOC = P137;
+NET "tx_tl" LOC = P76;
+NET "led_out_tl<7>" LOC = P134;
+NET "rst_tl" LOC = P129;
+NET "grn_out_tl<0>" LOC = P106;
+NET "grn_out_tl<1>" LOC = P108;
+NET "grn_out_tl<2>" LOC = P102;
+NET "vs_tl" LOC = P113;
+NET "blu_out_tl<0>" LOC = P94;
+NET "blu_out_tl<1>" LOC = P97;
+NET "rx_tl" LOC = P75;
+NET "clk_tl" LOC = P184;
+NET "led_select_tl<0>" LOC = P145;
+NET "led_select_tl<1>" LOC = P147;
+NET "led_select_tl<2>" LOC = P151;
+NET "led_select_tl<3>" LOC = P153;

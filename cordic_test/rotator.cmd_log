@@ -1,0 +1,5 @@
+xst -intstyle ise -ifn "/home/ignatius/Documents/repos/cordic_vhdl/cordic_test/rotator.xst" -ofn "/home/ignatius/Documents/repos/cordic_vhdl/cordic_test/rotator.syr" 
+ngdbuild -intstyle ise -dd _ngo -nt timestamp -i -p xc3s500e-pq208-4 rotator.ngc rotator.ngd  
+map -intstyle ise -p xc3s500e-pq208-4 -cm area -ir off -pr off -c 100 -o rotator_map.ncd rotator.ngd rotator.pcf 
+par -w -intstyle ise -ol high -t 1 rotator_map.ncd rotator.ncd rotator.pcf 
+trce -intstyle ise -v 3 -s 4 -n 3 -fastpaths -xml rotator.twx rotator.ncd -o rotator.twr rotator.pcf 
