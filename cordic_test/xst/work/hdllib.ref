@@ -1,6 +1,0 @@
-AR rotator behavioral /home/ignatius/Documents/fiuba/SistemasDigitales/proyectos_de_otra_gente/sdigitales-tfinal/rotator/src/rotator.vhdl sub00/vhpl05 1600626389
-EN cordic NULL /home/ignatius/Documents/fiuba/SistemasDigitales/proyectos_de_otra_gente/sdigitales-tfinal/rotator/src/cordic.vhdl sub00/vhpl02 1600626386
-EN rotator NULL /home/ignatius/Documents/fiuba/SistemasDigitales/proyectos_de_otra_gente/sdigitales-tfinal/rotator/src/rotator.vhdl sub00/vhpl04 1600626388
-AR cordic behavioral /home/ignatius/Documents/fiuba/SistemasDigitales/proyectos_de_otra_gente/sdigitales-tfinal/rotator/src/cordic.vhdl sub00/vhpl03 1600626387
-EN cordic_stage NULL /home/ignatius/Documents/fiuba/SistemasDigitales/proyectos_de_otra_gente/sdigitales-tfinal/rotator/src/cordic_stage.vhdl sub00/vhpl00 1600626384
-AR cordic_stage behavioral /home/ignatius/Documents/fiuba/SistemasDigitales/proyectos_de_otra_gente/sdigitales-tfinal/rotator/src/cordic_stage.vhdl sub00/vhpl01 1600626385
